@@ -7,7 +7,6 @@ i18n.use(initReactI18next).init({
   fallbackLng: 'en',
   lng: 'en',
   resources: languages,
-
   // have a common namespace used around the full app
   ns: ['common'],
   defaultNS: 'common',
