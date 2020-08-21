@@ -99,7 +99,9 @@ class ButtonGroup extends React.Component<ButtonGroupProps, State> {
   };
 
   render() {
-    const { titleList, flatListProps, defaultActiveIndex, propsChange } = this.props;
+    const {
+      titleList, flatListProps, defaultActiveIndex, propsChange,
+    } = this.props;
     const { activeIndex } = this.state;
     const FlatListButton: any = FlatList;
     return (

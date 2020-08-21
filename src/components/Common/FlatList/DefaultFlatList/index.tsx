@@ -100,7 +100,9 @@ class FlatList extends PureComponent<FlatListProps, State> {
   };
 
   renderFooter = () => {
-    const { list, loadingColor: loadingColorProp, themeName, getList } = this.props;
+    const {
+      list, loadingColor: loadingColorProp, themeName, getList,
+    } = this.props;
     if (list && getList) {
       const { refreshing } = this.state;
       /**

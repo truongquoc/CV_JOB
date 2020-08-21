@@ -15,7 +15,9 @@ class BackIcon extends PureComponent<any> {
         left={17}
         style={{ zIndex: 1 }}
         onPress={() => NavigationService.goBack()}
-        hitSlop={{ top: 20, left: 20, bottom: 20, right: 20 }}
+        hitSlop={{
+          top: 20, left: 20, bottom: 20, right: 20,
+        }}
       >
         <Icon
           name="arrowleft"
