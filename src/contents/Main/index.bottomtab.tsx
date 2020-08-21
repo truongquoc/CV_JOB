@@ -3,21 +3,24 @@
 import * as React from 'react';
 import { Icon, withTheme } from 'react-native-elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { bottomNavigationBarHeight } from '@themes/ThemeComponent/Common/CommonProps';
+import { bottomNavigationBarHeight, shadowViewLight } from '@themes/ThemeComponent/Common/CommonProps';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'recompose';
 import { lightTheme } from '@themes';
 import { useSelector } from 'react-redux';
 import { applyObjectSelector } from '@utils/selector';
 import { loginSelector } from '@contents/Auth/containers/Login/redux/selector';
+import { StyleSheet } from 'react-native';
 import mainBottomTab from './routes';
 import HomeStack from './containers/Home/index.stack';
 import MoreStack from './containers/More/index.stack';
+import MailStack from './containers/Mail/index.stack';
+import SavedStack from './containers/Saved/index.stack';
 
 const BottomTabs = createBottomTabNavigator();
 
 function MainBottomTab(props: any) {
-  const { theme: { colors: { bgColorSecondary, primary } }, t } = props;
+  const { theme: { colors: { bgColor, primary } }, t } = props;
   const loginSelectorData = useSelector((state) => applyObjectSelector(loginSelector, state));
   const isNotLogin = !loginSelectorData.data.get('token');
 
@@ -27,14 +30,29 @@ function MainBottomTab(props: any) {
         showLabel: true,
         activeTintColor: primary,
         inactiveTintColor: primary,
-        style: {
-          height: bottomNavigationBarHeight,
-          borderRadius: 20,
-          borderTopColor: 'transparent',
-          backgroundColor: bgColorSecondary,
-        },
+        style: StyleSheet.flatten([
+          {
+            height: bottomNavigationBarHeight,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            paddingTop: 5,
+            borderTopColor: 'transparent',
+            padding: 10,
+            backgroundColor: bgColor,
+          },
+          {
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 4,
+            },
+            shadowOpacity: 0.32,
+            shadowRadius: 5.46,
+            elevation: 9,
+          },
+        ]),
         tabStyle: {
-          backgroundColor: bgColorSecondary,
+          backgroundColor: bgColor,
           height: 55,
           paddingTop: 8,
           borderRadius: 20,
@@ -59,6 +77,40 @@ function MainBottomTab(props: any) {
             />
           ) : (
             <Icon name="home-outline" type="material-community" color={color} size={22} />
+          )),
+        }}
+      />
+      <BottomTabs.Screen
+        name={mainBottomTab.bookmarkStack}
+        component={SavedStack}
+        options={{
+          tabBarLabel: t('bottom_tab:saved'),
+          tabBarIcon: ({ focused, color, size }) => (focused ? (
+            <Icon
+              name="bookmark"
+              type="material-community"
+              color={color}
+              size={26}
+            />
+          ) : (
+            <Icon name="bookmark-outline" type="material-community" color={color} size={22} />
+          )),
+        }}
+      />
+      <BottomTabs.Screen
+        name={mainBottomTab.mailStack}
+        component={MailStack}
+        options={{
+          tabBarLabel: t('bottom_tab:mail'),
+          tabBarIcon: ({ focused, color, size }) => (focused ? (
+            <Icon
+              name="email"
+              type="material-community"
+              color={color}
+              size={26}
+            />
+          ) : (
+            <Icon name="email-outline" type="material-community" color={color} size={22} />
           )),
         }}
       />

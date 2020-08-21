@@ -1,6 +1,6 @@
 {
   "exception": {
-    "400": "Email or password is incorrect",
+    "401": "Email or password is incorrect",
     "403": "Forbidden",
     "404": "Cannot find Item",
     "500": "Something went wrong. Please try again later"
@@ -11,6 +11,8 @@
   },
   "bottom_tab": {
     "home": "Home",
+    "saved": "Saved",
+    "mail": "Mail",
     "more": "More"
   },
   "header":{

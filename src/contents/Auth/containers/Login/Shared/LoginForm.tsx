@@ -31,7 +31,7 @@ class LoginForm extends PureComponent<Props> {
           ref={(ref: any) => {
             this.email = ref;
           }}
-          value="realtor@gmail.com"
+          value="admin@gmail.com"
           leftIconName="email-outline"
           placeholder="Email"
           validationField="email"
@@ -41,7 +41,7 @@ class LoginForm extends PureComponent<Props> {
           ref={(ref: any) => {
             this.password = ref;
           }}
-          value="123456"
+          value="admin"
           leftIconName="lock-outline"
           textContentType="oneTimeCode"
           placeholder="Password"

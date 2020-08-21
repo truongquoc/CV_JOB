@@ -1,6 +1,6 @@
 {
   "exception": {
-    "400": "Số điện thoại hoặc mật khẩu không chính xác",
+    "401": "Số điện thoại hoặc mật khẩu không chính xác",
     "403": "Tài khoản hiện tại không có quyền truy cập vào trang này",
     "404": "Nội dung hiện không có sẵn. Vui lòng thử lại sau",
     "500": "Đã có lỗi xảy ra. Vui lòng thử lại sau"
@@ -11,6 +11,8 @@
   },
   "bottom_tab": {
     "home": "Trang chủ",
+    "saved": "Lưu",
+    "mail": "Hộp thư",
     "more": "Khác"
   },
   "header":{
