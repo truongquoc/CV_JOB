@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
 import { immutableTransform } from '@utils/redux';
+import { Platform } from 'react-native';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
 
@@ -17,10 +18,10 @@ const composeEnhancers = compose;
 
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware];
-// if (__DEV__) {
-//   const createDebugger = require('redux-flipper').default;
-//   middlewares.push(createDebugger());
-// }
+if (__DEV__ && Platform.OS === 'ios') {
+  const createDebugger = require('redux-flipper').default;
+  middlewares.push(createDebugger());
+}
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
