@@ -33,7 +33,7 @@ export const Color = {
  */
 export const darkPrimaryColor = '#9EB6FF';
 export const darkSecondaryColor = Color.grey4;
-export const lightPrimaryColor = '#012066';
+export const lightPrimaryColor = '#5760EB';
 export const lightSecondaryColor = Color.grey5;
 
 /**

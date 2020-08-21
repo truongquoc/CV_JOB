@@ -4,7 +4,7 @@ exports[`Button Component should render without issues 1`] = `
 <ForwardRef(Themed.Button)
   buttonStyle={
     Object {
-      "backgroundColor": "#012066",
+      "backgroundColor": "#5760EB",
       "borderColor": "#ffffff",
       "borderRadius": 20,
       "borderWidth": 0,
