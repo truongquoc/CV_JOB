@@ -9,7 +9,7 @@ import { compose } from 'recompose';
 import { lightTheme } from '@themes';
 import { useSelector } from 'react-redux';
 import { applyObjectSelector } from '@utils/selector';
-import { loginSelector } from '@contents/Auth/containers/Login/redux/selector';
+import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
 import { StyleSheet } from 'react-native';
 import mainBottomTab from './routes';
 import HomeStack from './containers/Home/index.stack';

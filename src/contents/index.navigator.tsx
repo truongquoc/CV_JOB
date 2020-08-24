@@ -9,7 +9,7 @@ import rootStack from './routes';
 import ModalStack from './Modal/index.stack';
 import ExampleStack from './Example/index.stack';
 import { requireLoginSelector, themeSelector } from './Config/redux/selector';
-import { loginSelector } from './Auth/containers/Login/redux/selector';
+import { loginSelector } from './Auth/containers/Index/Login/redux/selector';
 import { ThemeEnum } from './Config/redux/constant';
 
 const Stack = createStackNavigator();

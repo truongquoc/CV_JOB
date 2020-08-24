@@ -5,9 +5,8 @@ import { applyObjectSelector } from '@utils/selector';
 import { TObjectRedux } from '@utils/redux';
 import { Color } from '@themes/Theme';
 import { withTheme } from 'react-native-elements';
-import { QuickView, TextError } from '@components';
-import AuthButton from '../../Shared/AuthButton';
-import AuthInput from '../../Shared/AuthInput';
+import { QuickView, TextError, AuthButton } from '@components';
+import AuthInput from '@contents/Auth/containers/Index/Shared/AuthInput';
 import { ILogInInput } from '../redux/model';
 import { login, logout } from '../redux/slice';
 import { loginSelector } from '../redux/selector';
@@ -17,7 +16,7 @@ interface Props {
   reduxLogin: (data: ILogInInput) => any;
   theme?: any;
 }
-class LoginForm extends PureComponent<Props> {
+class EmployeeLoginForm extends PureComponent<Props> {
   private email: any;
 
   private password: any;
@@ -31,7 +30,7 @@ class LoginForm extends PureComponent<Props> {
           ref={(ref: any) => {
             this.email = ref;
           }}
-          value="admin@gmail.com"
+          value="ngotruongquoc0102@gmail.com"
           leftIconName="email-outline"
           placeholder="Email"
           validationField="email"
@@ -93,4 +92,4 @@ const mapDispatchToProps = (dispatch: any) => ({
   reduxLogout: () => dispatch(logout()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTheme(LoginForm as any));
+export default connect(mapStateToProps, mapDispatchToProps)(withTheme(EmployeeLoginForm as any));

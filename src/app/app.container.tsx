@@ -13,7 +13,7 @@ import { languageSelector, themeSelector } from '@contents/Config/redux/selector
 import { ThemeEnum } from '@contents/Config/redux/constant';
 import { Global } from '@utils/appHelper';
 import { applyObjectSelector } from '@utils/selector';
-import { loginSelector } from '@contents/Auth/containers/Login/redux/selector';
+import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
 import { TObjectRedux } from '@utils/redux';
 import AppNavigator from './app.navigator';
 

@@ -9,8 +9,8 @@ import { ListItem, Divider } from 'react-native-elements';
 import { withTranslation } from 'react-i18next';
 import SwitchChangeTheme from '@contents/Config/Shared/SwitchChangeTheme';
 import PickerChangeLanguage from '@contents/Config/Shared/PickerChangeLanguage';
-import LogoutButton from '@contents/Auth/containers/Login/Shared/LogoutButton';
-import LoginButton from '@contents/Auth/containers/Login/Shared/LoginButton';
+import LogoutButton from '@contents/Auth/containers/Index/Login/Shared/LogoutButton';
+import LoginButton from '@contents/Auth/containers/Index/Login/Shared/LoginButton';
 
 const BLUE = '#007AFF';
 const GREY = '#8E8E93';

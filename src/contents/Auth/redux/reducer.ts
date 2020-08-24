@@ -1,4 +1,4 @@
-import login from '@contents/Auth/containers/Login/redux/slice';
+import login from '@contents/Auth/containers/Index/Login/redux/slice';
 import { combineReducers } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-community/async-storage';
 import { persistReducer } from 'redux-persist';
