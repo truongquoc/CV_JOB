@@ -6,15 +6,25 @@ import NavigationService from '@utils/navigation';
 import { QuickView } from '@components';
 import { Color } from '@themes/Theme';
 
-class LoginBackIcon extends PureComponent<any> {
+interface LoginBackIconProps {
+  color?: string;
+  zIndex?: number;
+  requireLogin?: boolean;
+}
+class LoginBackIcon extends PureComponent<LoginBackIconProps> {
+  static defaultProps = {
+    color: Color.white,
+  };
+
   render() {
-    const { requireLogin } = this.props;
+    const { requireLogin, color, zIndex } = this.props;
     if (!requireLogin) {
       return (
         <Icon
+          style={{ zIndex }}
           name="arrowleft"
           type="antdesign"
-          color={Color.white}
+          color={color}
           size={30}
           onPress={() => NavigationService.goBack()}
           containerStyle={{ position: 'absolute', top: 50, left: 20 }}

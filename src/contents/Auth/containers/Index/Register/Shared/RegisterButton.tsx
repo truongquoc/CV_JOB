@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import NavigationService from '@utils/navigation';
 import rootStack from '@contents/routes';
+import authStack from '@contents/Auth/containers/routes';
 import AuthButton, { AuthButtonProps } from '../../Shared/AuthButton';
-import authStack from '../../routes';
 
 interface Props extends AuthButtonProps {
 }

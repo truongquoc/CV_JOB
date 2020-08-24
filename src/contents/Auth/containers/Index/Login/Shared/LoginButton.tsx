@@ -6,7 +6,6 @@ import NavigationService from '@utils/navigation';
 import rootStack from '@contents/routes';
 import { applyObjectSelector } from '@utils/selector';
 import AuthButton, { AuthButtonProps } from '../../Shared/AuthButton';
-import authStack from '../../routes';
 import { loginSelector } from '../redux/selector';
 
 interface Props extends AuthButtonProps {
@@ -29,9 +28,7 @@ class LoginButton extends PureComponent<Props> {
           <AuthButton
             t="auth:login"
             {...otherProps}
-            onPress={() => NavigationService.navigate(rootStack.authStack, {
-              screen: authStack.loginScreen,
-            })}
+            onPress={() => NavigationService.navigate(rootStack.authStack)}
           />
         </QuickView>
       );

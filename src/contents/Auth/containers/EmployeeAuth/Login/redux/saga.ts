@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { requireLoginSelector } from '@contents/Config/redux/selector';
 import NavigationService from '@utils/navigation';
 import exampleStack from '@contents/Example/routes';
+import mainBottomTab from '@contents/Main/routes';
 import {
   loginSuccess, loginFail, login, logout,
 } from './slice';
@@ -14,13 +15,14 @@ import { realtorLoginApi } from './api';
 
 export function* realtorLoginSaga({ payload }: { payload: any }) {
   try {
-    const response = yield call(realtorLoginApi, payload.data);
+    const preResponse = yield call(realtorLoginApi, payload.data);
+    const response = preResponse.data;
     Global.token = response.token;
     yield put(loginSuccess(response));
     const requiredLogin = yield select((state) => requireLoginSelector(state));
     if (!requiredLogin) {
-      yield call(NavigationService.goBack);
-      // yield call(NavigationService.navigate, mainBottomTab.homeStack);
+      // yield call(NavigationService.goBack);
+      yield call(NavigationService.navigate, mainBottomTab.homeStack);
     }
     return true;
   } catch (error) {
