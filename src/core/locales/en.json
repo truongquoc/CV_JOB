@@ -15,7 +15,7 @@
     "mail": "Mail",
     "more": "More"
   },
-  "header":{
+  "header": {
     "setting": "Setting",
     "example": "Component List Example"
   },
@@ -44,11 +44,12 @@
     "button_verify": "Verify Now",
     "fill_verify_otp": "Please validate OTP",
     "success_verify_otp": "verified!",
-    "resend_otp": "Resend verification code?"
+    "resend_otp": "Resend verification code?",
+    "checked": "remember me ",
+    "create": "Do not have an account?"
   },
-  "home": {
-  },
-  "validator" : {
+  "home": {},
+  "validator": {
     "email": "E-Mail does not appear to be valid!",
     "password": "Password must be between 6 and 20 characters!",
     "first_name": "First Name must be between 1 and 32 characters!",

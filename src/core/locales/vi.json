@@ -15,7 +15,7 @@
     "mail": "Hộp thư",
     "more": "Khác"
   },
-  "header":{
+  "header": {
     "setting": "Cài đặt",
     "example": "Danh sách các component"
   },
@@ -44,11 +44,12 @@
     "button_verify": "Xác nhận ngay bây giờ",
     "fill_verify_otp": "Vui lòng xác nhận OTP",
     "success_verify_otp": "Đã xác nhận",
-    "resend_otp": "Gửi lại mã OTP"
+    "resend_otp": "Gửi lại mã OTP",
+    "checked": "lưu đăng nhập ",
+    "create": "Chưa có tài khoản? đăng kí tại đây"
   },
-  "home": {
-  },
-  "validator" : {
+  "home": {},
+  "validator": {
     "email": "E-Mail không đúng định dạng!",
     "password": "Mật khẩu phải chứa từ 6 - 20 ký tự!",
     "first_name": "Tên không được chứa ký tự đặc biệt!",

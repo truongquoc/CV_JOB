@@ -4,25 +4,40 @@ import { Keyboard } from 'react-native';
 import { applyObjectSelector } from '@utils/selector';
 import { TObjectRedux } from '@utils/redux';
 import { Color } from '@themes/Theme';
-import { withTheme } from 'react-native-elements';
-import { QuickView, TextError, AuthButton } from '@components';
+import { withTheme, Icon } from 'react-native-elements';
+import { QuickView, TextError, AuthButton, Text } from '@components';
 import AuthInput from '@contents/Auth/containers/Index/Shared/AuthInput';
 import { ILogInInput } from '../redux/model';
 import { login, logout } from '../redux/slice';
 import { loginSelector } from '../redux/selector';
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 
 interface Props {
   loginData: TObjectRedux;
   reduxLogin: (data: ILogInInput) => any;
   theme?: any;
 }
-class EmployeeLoginForm extends PureComponent<Props> {
+interface State {
+  check: boolean;
+}
+class EmployeeLoginForm extends PureComponent<Props, State> {
   private email: any;
 
   private password: any;
 
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      check: false,
+    };
+  }
+
   render() {
     const { loginData, reduxLogin, theme } = this.props;
+    const { check } = this.state;
     return (
       <>
         <TextError error={loginData.error} color="#FA8072" />
@@ -31,24 +46,29 @@ class EmployeeLoginForm extends PureComponent<Props> {
             this.email = ref;
           }}
           value="ngotruongquoc0102@gmail.com"
-          leftIconName="email-outline"
+          leftIcon={{ name: 'email-outline', color: '#ffffff' }}
           placeholder="Email"
           validationField="email"
+          color="#ffffff"
           keyboardType="email-address"
+          backgroundColor="#343434"
         />
         <AuthInput
           ref={(ref: any) => {
             this.password = ref;
           }}
           value="admin"
-          leftIconName="lock-outline"
+          leftIcon={{ name: 'lock-outline', color: '#ffffff' }}
           textContentType="oneTimeCode"
           placeholder="Password"
+          color="#ffffff"
+          rightIconColor="#28D8A1"
           validationField="password"
           onSubmitEditing={() => Keyboard.dismiss()}
           blurOnSubmit={false}
           secureTextEntry
           marginVertical={10}
+          backgroundColor="#343434"
         />
         {/* <AuthButton
           title="Log data"
@@ -60,23 +80,49 @@ class EmployeeLoginForm extends PureComponent<Props> {
             console.log('loginData error: ', loginData.error);
           }}
         /> */}
-        <QuickView marginTop={20}>
+
+        <QuickView row justifyContent="space-between">
+          <TouchableWithoutFeedback
+            onPress={() => {
+              this.setState({ check: !check });
+            }}>
+            <QuickView row alignItems="center">
+              {check ? (
+                <Icon
+                  name="downcircleo"
+                  type="antdesign"
+                  color="#28D8A1"
+                  size={16}
+                />
+              ) : (
+                <Icon name="circle" type="entypo" color="#28D8A1" size={16} />
+              )}
+              <Text marginLeft={5} color="#bbbbbb" t="auth:checked" />
+            </QuickView>
+          </TouchableWithoutFeedback>
+          <QuickView>
+            <Text t="auth:forgot" color="#28D8A1" />
+          </QuickView>
+        </QuickView>
+        <QuickView marginTop={30}>
           <AuthButton
             t="auth:login"
-              // onPress={this.onSignIn}
+            // onPress={this.onSignIn}
             color={Color.white}
-            outline
+            backgroundColor="#28d8a1"
+            shadow
             onPress={() => {
-              reduxLogin({ email: this.email.getText(), password: this.password.getText() });
+              reduxLogin({
+                email: this.email.getText(),
+                password: this.password.getText(),
+              });
             }}
             loading={loginData.loading}
           />
-          <AuthButton
-            t="auth:register"
-            titleColor={theme.colors.primary}
-            backgroundColor={Color.white}
-            onPress={() => {}}
-          />
+        </QuickView>
+        <QuickView row center>
+          <Text t="auth:create" color="#BBBBBB"></Text>
+          <Text t="auth:register" color="#28D8A1" marginLeft={5} />
         </QuickView>
       </>
     );
@@ -92,4 +138,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   reduxLogout: () => dispatch(logout()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTheme(EmployeeLoginForm as any));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTheme(EmployeeLoginForm as any));

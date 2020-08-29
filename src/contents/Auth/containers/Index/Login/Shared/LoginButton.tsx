@@ -13,15 +13,10 @@ interface Props extends AuthButtonProps {
   loginSelectorData: any;
 }
 class LoginButton extends PureComponent<Props> {
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   render() {
-    const {
-      requireLogin,
-      loginSelectorData,
-      ...otherProps
-    } = this.props;
+    const { requireLogin, loginSelectorData, ...otherProps } = this.props;
     if (!requireLogin && !loginSelectorData.data.get('token')) {
       return (
         <QuickView>
@@ -42,4 +37,6 @@ const mapStateToProps = (state: any) => ({
   loginSelectorData: applyObjectSelector(loginSelector, state),
 });
 
-export default connect(mapStateToProps, null, null, { forwardRef: true })(LoginButton);
+export default connect(mapStateToProps, null, null, { forwardRef: true })(
+  LoginButton,
+);
