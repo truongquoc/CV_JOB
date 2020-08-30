@@ -3,8 +3,7 @@ import { Button } from '@components';
 import { ButtonProps } from '@components/Common/Button/DefaultButton';
 import { withTheme, ThemeProps } from 'react-native-elements';
 
-export interface AuthButtonProps extends ButtonProps{
-}
+export interface AuthButtonProps extends ButtonProps {}
 
 class AuthButton extends PureComponent<AuthButtonProps> {
   static defaultProps = {
@@ -15,19 +14,14 @@ class AuthButton extends PureComponent<AuthButtonProps> {
   };
 
   render() {
-    const {
-      theme,
-      ...otherProps
-    } = this.props;
+    const { theme, ...otherProps } = this.props;
 
-    return (
-      <Button
-        {...otherProps}
-      />
-    );
+    return <Button {...otherProps} />;
   }
 }
 
 export default withTheme(
-  AuthButton as unknown as React.ComponentType<AuthButtonProps & ThemeProps<any>>,
+  (AuthButton as unknown) as React.ComponentType<
+  AuthButtonProps & ThemeProps<any>
+  >,
 );

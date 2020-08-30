@@ -27,14 +27,16 @@ class AuthInput extends PureComponent<AuthInputProps> {
   focus = () => this.input.focus();
 
   render() {
-    const { leftIconName, theme, leftIcon, ...otherProps } = this.props;
+    const {
+      leftIconName, theme, leftIcon, ...otherProps
+    } = this.props;
     const defaultLeftIcon = leftIconName
       ? {
-          name: leftIconName,
-          size: 22,
-          color: '#315DF7',
-          marginTop: 3,
-        }
+        name: leftIconName,
+        size: 22,
+        color: '#315DF7',
+        marginTop: 3,
+      }
       : undefined;
 
     return (
@@ -51,6 +53,6 @@ class AuthInput extends PureComponent<AuthInputProps> {
 }
 export default withTheme(
   (AuthInput as unknown) as React.ComponentType<
-    AuthInputProps & ThemeProps<any>
+  AuthInputProps & ThemeProps<any>
   >,
 );

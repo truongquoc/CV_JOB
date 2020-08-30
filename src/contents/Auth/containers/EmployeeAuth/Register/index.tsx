@@ -1,23 +1,15 @@
 import React, { PureComponent } from 'react';
-import {
-  QuickView, Container, Text, Image,
-} from '@components';
-import EmployeeLoginForm from './Shared/EmployeeLoginForm';
-import LoginBackIcon from '../../Index/Login/Shared/LoginBackIcon';
+import { QuickView, Container, Text } from '@components';
+import RegisterBackIcon from './Shared/RegisterBackIcon';
+import RegisterForm from './Shared/RegisterForm';
 
-class EmployeeLoginScreen extends PureComponent {
+class RegisterScreen extends PureComponent {
   render() {
     return (
       <Container>
         <QuickView paddingHorizontal={20} backgroundColor="#0E0E0E" flex={1}>
-          <LoginBackIcon />
-          <QuickView alignItems="center" marginTop={30}>
-            <Image
-              source={require('@assets/images/illustration.png')}
-              width={232}
-            />
-          </QuickView>
-          <QuickView marginBottom={20} marginTop={30} center>
+          <RegisterBackIcon />
+          <QuickView marginBottom={20} marginTop={130} center>
             <Text
               fontSize={30}
               color="#ffffffff"
@@ -45,11 +37,11 @@ class EmployeeLoginScreen extends PureComponent {
               </Text>
             </Text>
           </QuickView>
-          <EmployeeLoginForm />
+          <RegisterForm />
         </QuickView>
       </Container>
     );
   }
 }
 
-export default EmployeeLoginScreen;
+export default RegisterScreen;

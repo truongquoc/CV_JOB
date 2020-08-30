@@ -13,9 +13,9 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
+import authStack from '@contents/Auth/containers/routes';
 import NavigationService from '@utils/navigation';
 import rootStack from '@contents/routes';
-import authStack from '@contents/Auth/containers/routes';
 import { ILogInInput } from '../redux/model';
 import { login, logout } from '../redux/slice';
 import { loginSelector } from '../redux/selector';
@@ -28,10 +28,14 @@ interface Props {
 interface State {
   check: boolean;
 }
-class EmployeeLoginForm extends PureComponent<Props, State> {
+class RegisterForm extends PureComponent<Props, State> {
   private email: any;
 
   private password: any;
+
+  private name: any;
+
+  private confirmPassword: any;
 
   constructor(props: any) {
     super(props);
@@ -50,9 +54,9 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
           ref={(ref: any) => {
             this.email = ref;
           }}
-          value="ngotruongquoc0102@gmail.com"
           leftIcon={{ name: 'email-outline', color: '#ffffff' }}
           placeholder="Email"
+          fontSize={10}
           validationField="email"
           color="#ffffff"
           keyboardType="email-address"
@@ -60,9 +64,19 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
         />
         <AuthInput
           ref={(ref: any) => {
+            this.name = ref;
+          }}
+          leftIcon={{ name: 'user', color: '#ffffff', type: 'antdesign' }}
+          placeholder="Name"
+          color="#ffffff"
+          marginTop={10}
+          keyboardType="email-address"
+          backgroundColor="#343434"
+        />
+        <AuthInput
+          ref={(ref: any) => {
             this.password = ref;
           }}
-          value="admin"
           leftIcon={{ name: 'lock-outline', color: '#ffffff' }}
           textContentType="oneTimeCode"
           placeholder="Password"
@@ -75,16 +89,22 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
           marginVertical={10}
           backgroundColor="#343434"
         />
-        {/* <AuthButton
-          title="Log data"
-              // onPress={this.onSignIn}
-          onPress={() => {
-            console.log('loginData: ', loginData);
-            console.log('loginData loading: ', loginData.loading);
-            console.log('loginData data: ', loginData.data.toJS());
-            console.log('loginData error: ', loginData.error);
+        <AuthInput
+          ref={(ref: any) => {
+            this.password = ref;
           }}
-        /> */}
+          leftIcon={{ name: 'lock-outline', color: '#ffffff' }}
+          textContentType="oneTimeCode"
+          placeholder="Confirm Password"
+          color="#ffffff"
+          rightIconColor="#28D8A1"
+          validationField="password"
+          onSubmitEditing={() => Keyboard.dismiss()}
+          blurOnSubmit={false}
+          secureTextEntry
+          marginVertical={10}
+          backgroundColor="#343434"
+        />
 
         <QuickView row justifyContent="space-between">
           <TouchableWithoutFeedback
@@ -103,16 +123,13 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
               ) : (
                 <Icon name="circle" type="entypo" color="#28D8A1" size={16} />
               )}
-              <Text marginLeft={5} color="#bbbbbb" t="auth:checked" />
+              <Text marginLeft={5} color="#bbbbbb" t="auth:terms" />
             </QuickView>
           </TouchableWithoutFeedback>
-          <QuickView>
-            <Text t="auth:forgot" color="#28D8A1" />
-          </QuickView>
         </QuickView>
         <QuickView marginTop={30}>
           <AuthButton
-            t="auth:login"
+            t="auth:register"
             // onPress={this.onSignIn}
             color={Color.white}
             backgroundColor="#28d8a1"
@@ -127,7 +144,6 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
           />
         </QuickView>
         <QuickView row center>
-          <Text t="auth:create" color="#BBBBBB" />
           <TouchableOpacity
             onPress={() => {
               NavigationService.navigate(rootStack.authStack, {
@@ -135,7 +151,7 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
               });
             }}
           >
-            <Text t="auth:register" color="#28D8A1" marginLeft={5} />
+            <Text t="auth:forgot" color="#28D8A1" marginLeft={5} />
           </TouchableOpacity>
         </QuickView>
       </>
@@ -155,4 +171,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTheme(EmployeeLoginForm as any));
+)(withTheme(RegisterForm as any));

@@ -46,7 +46,8 @@
     "success_verify_otp": "verified!",
     "resend_otp": "Resend verification code?",
     "checked": "remember me ",
-    "create": "Do not have an account?"
+    "create": "Do not have an account?",
+    "terms": "I agree with terms and licenses"
   },
   "home": {},
   "validator": {

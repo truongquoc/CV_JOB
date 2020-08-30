@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import {
   QuickView, Text, Container, Header, Body, Image,
 } from '@components';
-import { TouchableWithoutFeedback, TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import NavigationService from '@utils/navigation';
 import rootStack from '@contents/routes';
 import authStack from '../routes';
@@ -32,16 +35,15 @@ class GreetingScreen extends PureComponent {
                 marginLeft: 30,
                 marginTop: 50,
               }}
+              onPress={() => NavigationService.navigate(rootStack.authStack, {
+                screen: authStack.employeeLoginScreen,
+              })}
             >
               <Image
                 source={require('@assets/images/loginAsEmployer.png')}
                 width={250}
               />
-              <Text
-                color="#4E92DF"
-                center
-                style={{ width: 220 }}
-              >
+              <Text color="#4E92DF" center style={{ width: 220 }}>
                 Login as Employer
               </Text>
             </TouchableOpacity>
@@ -51,7 +53,7 @@ class GreetingScreen extends PureComponent {
                 alignSelf: 'flex-end',
               }}
               onPress={() => NavigationService.navigate(rootStack.authStack, {
-                screen: authStack.employeeLoginScreen,
+                screen: authStack.jobSeekerRegisterScreen,
               })}
             >
               <Text
@@ -59,7 +61,7 @@ class GreetingScreen extends PureComponent {
                 center
                 style={{ width: 250, marginLeft: 30 }}
               >
-                Login as Employee
+                Register as Employee
               </Text>
               <Image
                 source={require('@assets/images/loginAsEmployee.png')}
@@ -74,12 +76,8 @@ class GreetingScreen extends PureComponent {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: any) => ({});
 
-});
-
-const mapDispatchToProps = (dispatch: any) => ({
-
-});
+const mapDispatchToProps = (dispatch: any) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(GreetingScreen);

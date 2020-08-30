@@ -46,7 +46,8 @@
     "success_verify_otp": "Đã xác nhận",
     "resend_otp": "Gửi lại mã OTP",
     "checked": "lưu đăng nhập ",
-    "create": "Chưa có tài khoản? đăng kí tại đây"
+    "create": "Chưa có tài khoản? đăng kí tại đây",
+    "terms": "Tôi đồng ý với điều khoản và điều kiện"
   },
   "home": {},
   "validator": {
