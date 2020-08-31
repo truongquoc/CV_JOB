@@ -1,8 +1,5 @@
-/**
- * savedStack
- */
 const savedStack = {
-  index: 'SavedListScreen',
+  index: 'SavedScreen',
 };
 
 export default savedStack;

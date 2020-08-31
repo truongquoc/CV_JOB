@@ -5,11 +5,11 @@ import {
   QuickView, Text, Container, Header, Body,
 } from '@components';
 
-class MailListScreen extends PureComponent {
+class SavedListScreen extends PureComponent {
   render() {
     return (
       <Container>
-        <Header title="MailListScreen" />
+        <Header title="SavedListScreen" />
         <Body>
           <QuickView>
             <Text center>Example Screen</Text>
@@ -28,4 +28,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MailListScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(SavedListScreen);

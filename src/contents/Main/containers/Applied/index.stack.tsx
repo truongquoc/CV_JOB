@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import SavedScreen from './screens';
-import savedStack from './router';
+import AppliedScreen from './screens';
+import appliedStack from './router';
 
 const Stack = createStackNavigator();
 
-export default function SavedStack() {
+export default function AppliedStack() {
   return (
     <Stack.Navigator headerMode="none">
-      <Stack.Screen name={savedStack.index} component={SavedScreen} />
+      <Stack.Screen name={appliedStack.index} component={AppliedScreen} />
     </Stack.Navigator>
   );
 }

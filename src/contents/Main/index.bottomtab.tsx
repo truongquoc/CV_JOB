@@ -14,8 +14,8 @@ import { StyleSheet } from 'react-native';
 import mainBottomTab from './routes';
 import HomeStack from './containers/Home/index.stack';
 import MoreStack from './containers/More/index.stack';
-import MailStack from './containers/Mail/index.stack';
-import SavedStack from './containers/Saved/index.stack';
+import MyJobsStack from './containers/MyJobs/index.stack';
+import ExploreStack from './containers/Explore/index.stack';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -23,6 +23,7 @@ function MainBottomTab(props: any) {
   const { theme: { colors: { bgColor, primary } }, t } = props;
   const loginSelectorData = useSelector((state) => applyObjectSelector(loginSelector, state));
   const isNotLogin = !loginSelectorData.data.get('token');
+  const role = loginSelectorData.data.get('role');
 
   return (
     <BottomTabs.Navigator
@@ -81,36 +82,36 @@ function MainBottomTab(props: any) {
         }}
       />
       <BottomTabs.Screen
-        name={mainBottomTab.bookmarkStack}
-        component={SavedStack}
+        name={mainBottomTab.briefcaseStack}
+        component={MyJobsStack}
         options={{
-          tabBarLabel: t('bottom_tab:saved'),
+          tabBarLabel: t('bottom_tab:My Job'),
           tabBarIcon: ({ focused, color, size }) => (focused ? (
             <Icon
-              name="bookmark"
+              name="briefcase"
               type="material-community"
               color={color}
               size={26}
             />
           ) : (
-            <Icon name="bookmark-outline" type="material-community" color={color} size={22} />
+            <Icon name="briefcase-outline" type="material-community" color={color} size={22} />
           )),
         }}
       />
       <BottomTabs.Screen
-        name={mainBottomTab.mailStack}
-        component={MailStack}
+        name={mainBottomTab.exploreStack}
+        component={ExploreStack}
         options={{
-          tabBarLabel: t('bottom_tab:mail'),
+          tabBarLabel: t('bottom_tab:Explore'),
           tabBarIcon: ({ focused, color, size }) => (focused ? (
             <Icon
-              name="email"
+              name="newspaper"
               type="material-community"
               color={color}
               size={26}
             />
           ) : (
-            <Icon name="email-outline" type="material-community" color={color} size={22} />
+            <Icon name="newspaper" type="material-community" color={color} size={22} />
           )),
         }}
       />

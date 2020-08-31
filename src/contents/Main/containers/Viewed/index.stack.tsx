@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import MailListScreen from './screens';
-import mailStack from './routes';
+import ViewedScreen from './screens';
+import viewedStack from './router';
 
 const Stack = createStackNavigator();
 
-export default function MailStack() {
+export default function ViewedStack() {
   return (
     <Stack.Navigator headerMode="none">
-      <Stack.Screen name={mailStack.index} component={MailListScreen} />
+      <Stack.Screen name={viewedStack.index} component={ViewedScreen} />
     </Stack.Navigator>
   );
 }
