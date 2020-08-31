@@ -2,19 +2,17 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import { Icon, withTheme } from 'react-native-elements';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { bottomNavigationBarHeight, shadowViewLight } from '@themes/ThemeComponent/Common/CommonProps';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'recompose';
-import { lightTheme } from '@themes';
 import { useSelector } from 'react-redux';
 import { applyObjectSelector } from '@utils/selector';
 import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
-import { StyleSheet } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import MyJobTab from './routes';
 
 import AppliedStack from '../Applied/index.stack';
+import ViewedStack from '../Viewed/index.stack';
+import SavedStack from '../Saved/index.stack';
 
 const Drawer = createDrawerNavigator();
 
