@@ -3,14 +3,22 @@ import { StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-elements';
 import { lightTheme, darkTheme } from '@themes';
-import { themeSelector, requireLoginSelector } from '@contents/Config/redux/selector';
+import {
+  themeSelector,
+  requireLoginSelector,
+} from '@contents/Config/redux/selector';
 import { INITIAL_STATE, ThemeEnum } from '@contents/Config/redux/constant';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import RootStack from '@contents/index.navigator';
 import NavigationService from '@utils/navigation';
 import { resetRequireLogin } from '@contents/Config/redux/slice';
-
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+} from '@react-navigation/drawer';
+import { QuickView, Text, Button } from '@components';
+const Drawer = createDrawerNavigator();
 interface Props {
   theme: any;
   themeRedux: any;
@@ -41,12 +49,22 @@ class AppNavigator extends Component<Props, State> {
       const newTheme = lightTheme.key === themeRedux ? lightTheme : darkTheme;
       updateTheme(newTheme);
     }
-    const barStyle = themeRedux === ThemeEnum.DARK ? 'dark-content' : 'light-content';
+    const barStyle =
+      themeRedux === ThemeEnum.DARK ? 'dark-content' : 'light-content';
     StatusBar.setBarStyle(barStyle, true);
 
     return (
       <NavigationContainer ref={NavigationService.navigationRef}>
-        <Stack.Navigator>
+        <Drawer.Navigator
+          drawerContent={(props) => {
+            return (
+              <DrawerContentScrollView {...props}>
+                <QuickView>
+                  <Button title="Open Profile" />
+                </QuickView>
+              </DrawerContentScrollView>
+            );
+          }}>
           <Stack.Screen
             name="rootStack"
             component={RootStack}
@@ -54,7 +72,7 @@ class AppNavigator extends Component<Props, State> {
               headerShown: false,
             }}
           />
-        </Stack.Navigator>
+        </Drawer.Navigator>
       </NavigationContainer>
     );
   }
@@ -68,4 +86,7 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   reduxResetRequireLogin: () => dispatch(resetRequireLogin()),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(withTheme(AppNavigator as any));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTheme(AppNavigator as any));

@@ -16,49 +16,36 @@ const Stack = createStackNavigator();
 
 export default function RootStack() {
   const requireLogin = useSelector((state) => requireLoginSelector(state));
-  const loginSelectorData = useSelector((state) => applyObjectSelector(loginSelector, state));
+  const loginSelectorData = useSelector((state) =>
+    applyObjectSelector(loginSelector, state),
+  );
   const themeSelectorData = useSelector((state) => themeSelector(state));
   const isNotLogin = !!(requireLogin && !loginSelectorData.data.get('token'));
-  const backgroundColor = themeSelectorData === ThemeEnum.LIGHT
-    ? lightTheme.colors.bgColor
-    : darkTheme.colors.bgColor;
+  const backgroundColor =
+    themeSelectorData === ThemeEnum.LIGHT
+      ? lightTheme.colors.bgColor
+      : darkTheme.colors.bgColor;
   return (
     <Stack.Navigator
       headerMode="none"
       screenOptions={{
         headerShown: false,
         cardStyle: { backgroundColor },
-      }}
-    >
-      {
-        isNotLogin ? (
-          <Stack.Screen
-            name={rootStack.authStack}
-            component={AuthStack}
-          />
-        ) : (
-          <Stack.Screen
-            name={rootStack.mainBottomTab}
-            component={MainBottomTab}
-          />
-        )
-      }
-      {
-        !requireLogin ? (
-          <Stack.Screen
-            name={rootStack.authStack}
-            component={AuthStack}
-          />
-        ) : null
-      }
-      <Stack.Screen
-        name={rootStack.exampleStack}
-        component={ExampleStack}
-      />
-      <Stack.Screen
-        name={rootStack.modalStack}
-        component={ModalStack}
-      />
+      }}>
+      {isNotLogin ? (
+        <Stack.Screen name={rootStack.authStack} component={AuthStack} />
+      ) : (
+        <Stack.Screen
+          name={rootStack.mainBottomTab}
+          component={MainBottomTab}
+        />
+      )}
+      {!requireLogin ? (
+        <Stack.Screen name={rootStack.authStack} component={AuthStack} />
+      ) : null}
+      <Stack.Screen name={rootStack.exampleStack} component={ExampleStack} />
+      {/* <Stack.Screen name={}/> */}
+      <Stack.Screen name={rootStack.modalStack} component={ModalStack} />
     </Stack.Navigator>
   );
 }

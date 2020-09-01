@@ -13,35 +13,30 @@ import MyJobTab from './routes';
 import AppliedStack from '../Applied/index.stack';
 import ViewedStack from '../Viewed/index.stack';
 import SavedStack from '../Saved/index.stack';
+import { QuickView, Text } from '@components';
 
 const Drawer = createDrawerNavigator();
 
 function drawerTab(props: any) {
-  const { theme: { colors: { bgColor, primary } }, t } = props;
-  const loginSelectorData = useSelector((state) => applyObjectSelector(loginSelector, state));
+  const {
+    theme: {
+      colors: { bgColor, primary },
+    },
+    t,
+  } = props;
+  const loginSelectorData = useSelector((state) =>
+    applyObjectSelector(loginSelector, state),
+  );
   const isNotLogin = !loginSelectorData.data.get('token');
   const role = loginSelectorData.data.get('role');
 
   return (
     <Drawer.Navigator>
-      <Drawer.Screen
-        name={MyJobTab.viewedStack}
-        component={ViewedStack}
-      />
-      <Drawer.Screen
-        name={MyJobTab.savedStack}
-        component={SavedStack}
-      />
-      <Drawer.Screen
-        name={MyJobTab.appliedStack}
-        component={AppliedStack}
-      />
-
+      <Drawer.Screen name={MyJobTab.viewedStack} component={ViewedStack} />
+      <Drawer.Screen name={MyJobTab.savedStack} component={SavedStack} />
+      <Drawer.Screen name={MyJobTab.appliedStack} component={AppliedStack} />
     </Drawer.Navigator>
   );
 }
 
-export default compose(
-  withTheme,
-  withTranslation(),
-)(drawerTab);
+export default compose(withTheme, withTranslation())(drawerTab);

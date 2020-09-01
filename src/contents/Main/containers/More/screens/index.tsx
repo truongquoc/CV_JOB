@@ -1,16 +1,13 @@
 import React from 'react';
-import {
-  View, StyleSheet, SectionList,
-} from 'react-native';
-import {
-  Container, Header, QuickView,
-} from '@components';
+import { View, StyleSheet, SectionList } from 'react-native';
+import { Container, Header, QuickView, AuthButton } from '@components';
 import { ListItem, Divider } from 'react-native-elements';
 import { withTranslation } from 'react-i18next';
 import SwitchChangeTheme from '@contents/Config/Shared/SwitchChangeTheme';
 import PickerChangeLanguage from '@contents/Config/Shared/PickerChangeLanguage';
 import LogoutButton from '@contents/Auth/containers/Index/Login/Shared/LogoutButton';
 import LoginButton from '@contents/Auth/containers/Index/Login/Shared/LoginButton';
+// import NavigationService from '@utils/navigation';
 
 const BLUE = '#007AFF';
 const GREY = '#8E8E93';
@@ -37,7 +34,12 @@ interface Props {
 class Settings extends React.PureComponent<Props> {
   renderItem = ({
     item: {
-      title, backgroundColor, icon, rightTitle, hideChevron, rightElement,
+      title,
+      backgroundColor,
+      icon,
+      rightTitle,
+      hideChevron,
+      rightElement,
     },
   }: any) => (
     <ListItem
@@ -116,6 +118,12 @@ class Settings extends React.PureComponent<Props> {
           {/* <GoToExampleButton /> */}
           <LoginButton />
           <LogoutButton />
+        </QuickView>
+        <QuickView paddingHorizontal={10}>
+          <AuthButton
+            t="auth:login"
+            // onPress={() => NavigationService.navigate(rootStack.authStack)}
+          />
         </QuickView>
       </Container>
     );
