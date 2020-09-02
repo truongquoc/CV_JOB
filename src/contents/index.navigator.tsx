@@ -2,6 +2,7 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import MainBottomTab from '@contents/Main/index.bottomtab';
 import AuthStack from '@contents/Auth/containers/index.stack';
+import ProfileStack from '@contents/Main/containers/Profile/screens/index';
 import { useSelector } from 'react-redux';
 import { applyObjectSelector } from '@utils/selector';
 import { lightTheme, darkTheme } from '@themes';
@@ -16,22 +17,20 @@ const Stack = createStackNavigator();
 
 export default function RootStack() {
   const requireLogin = useSelector((state) => requireLoginSelector(state));
-  const loginSelectorData = useSelector((state) =>
-    applyObjectSelector(loginSelector, state),
-  );
+  const loginSelectorData = useSelector((state) => applyObjectSelector(loginSelector, state));
   const themeSelectorData = useSelector((state) => themeSelector(state));
   const isNotLogin = !!(requireLogin && !loginSelectorData.data.get('token'));
-  const backgroundColor =
-    themeSelectorData === ThemeEnum.LIGHT
-      ? lightTheme.colors.bgColor
-      : darkTheme.colors.bgColor;
+  const backgroundColor = themeSelectorData === ThemeEnum.LIGHT
+    ? lightTheme.colors.bgColor
+    : darkTheme.colors.bgColor;
   return (
     <Stack.Navigator
       headerMode="none"
       screenOptions={{
         headerShown: false,
         cardStyle: { backgroundColor },
-      }}>
+      }}
+    >
       {isNotLogin ? (
         <Stack.Screen name={rootStack.authStack} component={AuthStack} />
       ) : (
@@ -46,6 +45,7 @@ export default function RootStack() {
       <Stack.Screen name={rootStack.exampleStack} component={ExampleStack} />
       {/* <Stack.Screen name={}/> */}
       <Stack.Screen name={rootStack.modalStack} component={ModalStack} />
+      <Stack.Screen name={rootStack.profileStack} component={ProfileStack} />
     </Stack.Navigator>
   );
 }

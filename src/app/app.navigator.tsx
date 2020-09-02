@@ -17,7 +17,9 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import { QuickView, Text, Button } from '@components';
+import { QuickView, Button } from '@components';
+import rootStack from '@contents/routes';
+
 const Drawer = createDrawerNavigator();
 interface Props {
   theme: any;
@@ -49,22 +51,27 @@ class AppNavigator extends Component<Props, State> {
       const newTheme = lightTheme.key === themeRedux ? lightTheme : darkTheme;
       updateTheme(newTheme);
     }
-    const barStyle =
-      themeRedux === ThemeEnum.DARK ? 'dark-content' : 'light-content';
+    const barStyle = themeRedux === ThemeEnum.DARK ? 'dark-content' : 'light-content';
     StatusBar.setBarStyle(barStyle, true);
 
     return (
       <NavigationContainer ref={NavigationService.navigationRef}>
         <Drawer.Navigator
-          drawerContent={(props) => {
-            return (
-              <DrawerContentScrollView {...props}>
-                <QuickView>
-                  <Button title="Open Profile" />
-                </QuickView>
-              </DrawerContentScrollView>
-            );
-          }}>
+          drawerContent={(props) => (
+            <DrawerContentScrollView {...props}>
+              <QuickView>
+                <Button
+                  title="Open Profile"
+                  onPress={() => {
+                    NavigationService.navigate(rootStack.profileStack, {
+                      screen: 'ProfileScreen',
+                    });
+                  }}
+                />
+              </QuickView>
+            </DrawerContentScrollView>
+          )}
+        >
           <Stack.Screen
             name="rootStack"
             component={RootStack}

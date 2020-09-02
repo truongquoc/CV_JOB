@@ -8,12 +8,12 @@ import { useSelector } from 'react-redux';
 import { applyObjectSelector } from '@utils/selector';
 import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { QuickView, Text } from '@components';
 import MyJobTab from './routes';
 
 import AppliedStack from '../Applied/index.stack';
 import ViewedStack from '../Viewed/index.stack';
 import SavedStack from '../Saved/index.stack';
-import { QuickView, Text } from '@components';
 
 const Drawer = createDrawerNavigator();
 
@@ -24,9 +24,7 @@ function drawerTab(props: any) {
     },
     t,
   } = props;
-  const loginSelectorData = useSelector((state) =>
-    applyObjectSelector(loginSelector, state),
-  );
+  const loginSelectorData = useSelector((state) => applyObjectSelector(loginSelector, state));
   const isNotLogin = !loginSelectorData.data.get('token');
   const role = loginSelectorData.data.get('role');
 

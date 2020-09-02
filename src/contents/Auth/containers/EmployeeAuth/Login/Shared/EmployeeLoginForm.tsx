@@ -5,7 +5,9 @@ import { applyObjectSelector } from '@utils/selector';
 import { TObjectRedux } from '@utils/redux';
 import { Color } from '@themes/Theme';
 import { withTheme, Icon } from 'react-native-elements';
-import { QuickView, TextError, AuthButton, Text } from '@components';
+import {
+  QuickView, TextError, AuthButton, Text,
+} from '@components';
 import AuthInput from '@contents/Auth/containers/Index/Shared/AuthInput';
 import {
   TouchableWithoutFeedback,
@@ -88,7 +90,8 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
           <TouchableWithoutFeedback
             onPress={() => {
               this.setState({ check: !check });
-            }}>
+            }}
+          >
             <QuickView row alignItems="center">
               {check ? (
                 <Icon
@@ -130,7 +133,8 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
               NavigationService.navigate(rootStack.authStack, {
                 screen: authStack.jobSeekerRegisterScreen,
               });
-            }}>
+            }}
+          >
             <Text t="auth:register" color="#28D8A1" marginLeft={5} />
           </TouchableOpacity>
         </QuickView>

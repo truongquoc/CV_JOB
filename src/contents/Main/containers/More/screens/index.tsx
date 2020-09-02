@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, SectionList } from 'react-native';
-import { Container, Header, QuickView, AuthButton } from '@components';
+import {
+  Container, Header, QuickView, AuthButton,
+} from '@components';
 import { ListItem, Divider } from 'react-native-elements';
 import { withTranslation } from 'react-i18next';
 import SwitchChangeTheme from '@contents/Config/Shared/SwitchChangeTheme';
