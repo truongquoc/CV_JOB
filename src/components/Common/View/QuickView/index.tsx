@@ -13,10 +13,16 @@ import {
   Keyboard,
   GestureResponderEvent,
 } from 'react-native';
-import { roundedBorderRadius, shadowViewLight } from '@themes/ThemeComponent/Common/CommonProps';
+import {
+  roundedBorderRadius,
+  shadowViewLight,
+} from '@themes/ThemeComponent/Common/CommonProps';
 import _ from 'lodash';
 
-export interface QuickViewProps extends ViewProps, TouchableOpacityProps, ScrollViewProps {
+export interface QuickViewProps
+  extends ViewProps,
+  TouchableOpacityProps,
+  ScrollViewProps {
   width?: number | string;
   height?: number | string;
   margin?: number;
@@ -87,7 +93,7 @@ export interface QuickViewProps extends ViewProps, TouchableOpacityProps, Scroll
 }
 
 class QuickView extends PureComponent<QuickViewProps> {
-  static defaultProps ={
+  static defaultProps = {
     column: true,
     touchableComponent: 'TouchableOpacity',
   };
@@ -237,11 +243,11 @@ class QuickView extends PureComponent<QuickViewProps> {
         justifyContent: 'center',
       },
       ((horizontalCenter && !(row || rowReverse))
-      || (verticalCenter && (row || rowReverse))) && {
+        || (verticalCenter && (row || rowReverse))) && {
         alignItems: 'center',
       },
       ((horizontalCenter && (row || rowReverse))
-      || (verticalCenter && !(row || rowReverse))) && {
+        || (verticalCenter && !(row || rowReverse))) && {
         justifyContent: 'center',
       },
       row && { flexDirection: 'row' },
@@ -286,26 +292,15 @@ class QuickView extends PureComponent<QuickViewProps> {
         backgroundImageStyle,
       ];
       return (
-        <ImageBackground
-          style={backgroundStyle}
-          {...backgroundImage}
-        >
-          <Component
-            {...otherProps}
-            onPress={onPress}
-            style={containerStyle}
-          >
+        <ImageBackground style={backgroundStyle} {...backgroundImage}>
+          <Component {...otherProps} onPress={onPress} style={containerStyle}>
             {children}
           </Component>
         </ImageBackground>
       );
     }
     return (
-      <Component
-        {...otherProps}
-        style={containerStyle}
-        onPress={onPress}
-      >
+      <Component {...otherProps} style={containerStyle} onPress={onPress}>
         {children}
       </Component>
     );
