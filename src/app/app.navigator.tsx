@@ -56,8 +56,7 @@ class AppNavigator extends Component<Props, State> {
       const newTheme = lightTheme.key === themeRedux ? lightTheme : darkTheme;
       updateTheme(newTheme);
     }
-    const barStyle =
-      themeRedux === ThemeEnum.DARK ? 'dark-content' : 'light-content';
+    const barStyle = themeRedux === ThemeEnum.DARK ? 'dark-content' : 'light-content';
     StatusBar.setBarStyle(barStyle, true);
 
     return (
@@ -68,7 +67,8 @@ class AppNavigator extends Component<Props, State> {
               start={{ x: 0.0, y: 0.25 }}
               end={{ x: 0.5, y: 1.0 }}
               colors={['#329AE4', '#5416E6']}
-              style={styles.linearGradient}>
+              style={styles.linearGradient}
+            >
               <Avatar
                 rounded
                 size="large"
@@ -92,7 +92,8 @@ class AppNavigator extends Component<Props, State> {
                   marginTop: 150,
                   borderTopRightRadius: 10,
                   borderTopLeftRadius: 10,
-                }}>
+                }}
+              >
                 <QuickView>
                   <QuickView
                     style={{
@@ -100,7 +101,8 @@ class AppNavigator extends Component<Props, State> {
                       borderBottomColor: '#cfcccc',
                     }}
                     paddingTop={20}
-                    paddingBottom={50}>
+                    paddingBottom={50}
+                  >
                     <Text center>NGUYEN LAM</Text>
                     <Text center>Edit</Text>
                   </QuickView>
@@ -110,7 +112,8 @@ class AppNavigator extends Component<Props, State> {
                       borderBottomColor: '#cfcccc',
                     }}
                     paddingTop={20}
-                    paddingBottom={50}>
+                    paddingBottom={50}
+                  >
                     <Text>WHO VIEW MY PROFILE</Text>
                   </QuickView>
                 </QuickView>
@@ -138,7 +141,8 @@ class AppNavigator extends Component<Props, State> {
                 <Text>abs</Text>
               </QuickView> */}
             </LinearGradient>
-          )}>
+          )}
+        >
           <Stack.Screen
             name="rootStack"
             component={RootStack}

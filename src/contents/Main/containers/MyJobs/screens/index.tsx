@@ -4,17 +4,15 @@ import { connect } from 'react-redux';
 import {
   QuickView, Text, Container, Header, Body,
 } from '@components';
+import MyJobTopTab from '../containers/index.toptab';
 
-class SavedListScreen extends PureComponent {
+class MyJobScreen extends PureComponent {
   render() {
     return (
       <Container>
-        <Header title="SavedListScreen" />
-        <Body>
-          <QuickView>
-            <Text center>Example Screen</Text>
-          </QuickView>
-        </Body>
+        <Header title="My Job Screen" />
+        <MyJobTopTab />
+        <Body />
       </Container>
     );
   }
@@ -28,4 +26,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavedListScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MyJobScreen);

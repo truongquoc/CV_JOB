@@ -85,7 +85,7 @@ function MainBottomTab(props: any) {
         name={mainBottomTab.briefcaseStack}
         component={MyJobsStack}
         options={{
-          tabBarLabel: t('bottom_tab:My Job'),
+          tabBarLabel: t('bottom_tab:myjob'),
           tabBarIcon: ({ focused, color, size }) => (focused ? (
             <Icon
               name="briefcase"
@@ -102,7 +102,7 @@ function MainBottomTab(props: any) {
         name={mainBottomTab.exploreStack}
         component={ExploreStack}
         options={{
-          tabBarLabel: t('bottom_tab:Explore'),
+          tabBarLabel: t('bottom_tab:explore'),
           tabBarIcon: ({ focused, color, size }) => (focused ? (
             <Icon
               name="newspaper"

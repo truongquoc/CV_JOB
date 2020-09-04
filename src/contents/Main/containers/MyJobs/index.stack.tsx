@@ -1,40 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react/prop-types */
 import * as React from 'react';
-import { Icon, withTheme } from 'react-native-elements';
-import { withTranslation } from 'react-i18next';
-import { compose } from 'recompose';
-import { useSelector } from 'react-redux';
-import { applyObjectSelector } from '@utils/selector';
-import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { QuickView, Text } from '@components';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import MyJobScreen from './screens';
 import MyJobTab from './routes';
 
-import AppliedStack from '../Applied/index.stack';
-import ViewedStack from '../Viewed/index.stack';
-import SavedStack from '../Saved/index.stack';
+const Stack = createStackNavigator();
 
-const Drawer = createDrawerNavigator();
-
-function drawerTab(props: any) {
-  const {
-    theme: {
-      colors: { bgColor, primary },
-    },
-    t,
-  } = props;
-  const loginSelectorData = useSelector((state) => applyObjectSelector(loginSelector, state));
-  const isNotLogin = !loginSelectorData.data.get('token');
-  const role = loginSelectorData.data.get('role');
-
+export default function MyJobStack() {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen name={MyJobTab.viewedStack} component={ViewedStack} />
-      <Drawer.Screen name={MyJobTab.savedStack} component={SavedStack} />
-      <Drawer.Screen name={MyJobTab.appliedStack} component={AppliedStack} />
-    </Drawer.Navigator>
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen
+        name={MyJobTab.myJob}
+        component={MyJobScreen}
+      />
+    </Stack.Navigator>
   );
 }
-
-export default compose(withTheme, withTranslation())(drawerTab);
