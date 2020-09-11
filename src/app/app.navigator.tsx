@@ -57,8 +57,7 @@ class AppNavigator extends Component<Props, State> {
       const newTheme = lightTheme.key === themeRedux ? lightTheme : darkTheme;
       updateTheme(newTheme);
     }
-    const barStyle =
-      themeRedux === ThemeEnum.DARK ? 'dark-content' : 'light-content';
+    const barStyle = themeRedux === ThemeEnum.DARK ? 'dark-content' : 'light-content';
     StatusBar.setBarStyle(barStyle, true);
 
     return (
@@ -69,7 +68,8 @@ class AppNavigator extends Component<Props, State> {
               start={{ x: 0.0, y: 0.25 }}
               end={{ x: 0.5, y: 1.0 }}
               colors={['#329AE4', '#5416E6']}
-              style={styles.linearGradient}>
+              style={styles.linearGradient}
+            >
               <DrawerContentScrollView>
                 <QuickView
                   {...props}
@@ -78,7 +78,8 @@ class AppNavigator extends Component<Props, State> {
                     marginTop: 150,
                     borderTopRightRadius: 10,
                     borderTopLeftRadius: 10,
-                  }}>
+                  }}
+                >
                   <Avatar
                     rounded
                     size="large"
@@ -102,7 +103,8 @@ class AppNavigator extends Component<Props, State> {
                         borderBottomColor: '#cfcccc',
                       }}
                       paddingTop={20}
-                      paddingBottom={50}>
+                      paddingBottom={50}
+                    >
                       <Text center color="#241f1f">
                         NGUYEN LAM
                       </Text>
@@ -111,7 +113,8 @@ class AppNavigator extends Component<Props, State> {
                           NavigationService.navigate(rootStack.profileStack, {
                             screen: 'ProfileScreen',
                           });
-                        }}>
+                        }}
+                      >
                         <Text center marginTop={5} color="#4771b5">
                           Edit Profile
                         </Text>
@@ -124,7 +127,8 @@ class AppNavigator extends Component<Props, State> {
                         borderBottomColor: '#cfcccc',
                       }}
                       paddingTop={20}
-                      paddingBottom={50}>
+                      paddingBottom={50}
+                    >
                       <TouchableWithoutFeedback>
                         <Text color="#241f1f">WHO VIEW MY PROFILE</Text>
                       </TouchableWithoutFeedback>
@@ -152,7 +156,8 @@ class AppNavigator extends Component<Props, State> {
                         borderBottomColor: '#cfcccc',
                       }}
                       paddingTop={20}
-                      paddingBottom={50}>
+                      paddingBottom={50}
+                    >
                       <TouchableWithoutFeedback>
                         <Text color="#241f1f">TERMS AND CONDITIONS</Text>
                       </TouchableWithoutFeedback>
@@ -180,7 +185,8 @@ class AppNavigator extends Component<Props, State> {
                         borderBottomColor: '#cfcccc',
                       }}
                       paddingTop={20}
-                      paddingBottom={50}>
+                      paddingBottom={50}
+                    >
                       <TouchableWithoutFeedback>
                         <Text color="#241f1f">LANGUAGE</Text>
                       </TouchableWithoutFeedback>
@@ -194,7 +200,8 @@ class AppNavigator extends Component<Props, State> {
                 </QuickView>
               </DrawerContentScrollView>
             </LinearGradient>
-          )}>
+          )}
+        >
           <Stack.Screen
             name="rootStack"
             component={RootStack}

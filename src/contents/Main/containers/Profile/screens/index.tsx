@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { Container, Header, Body, QuickView, Text, Image } from '@components';
+import {
+  Container, Header, Body, QuickView, Text, Image,
+} from '@components';
 import { Icon } from 'react-native-elements';
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -60,14 +62,14 @@ export class ProfileScreen extends PureComponent {
           leftColor="#404F68"
           backgroundColor="none"
           height={100}
-          rightComponent={
+          rightComponent={(
             <Icon
               name="more-vertical"
               type="feather"
               color="#404F68"
               size={16}
             />
-          }
+          )}
         />
         <ScrollView>
           <Body>
@@ -82,7 +84,8 @@ export class ProfileScreen extends PureComponent {
                 color="#141B26"
                 fontSize={32}
                 fontWeight="bold"
-                marginLeft={10}>
+                marginLeft={10}
+              >
                 Anna Johnson
               </Text>
             </QuickView>
@@ -164,11 +167,13 @@ export class ProfileScreen extends PureComponent {
                   paddingRight: 10,
                   paddingBottom: 30,
                   paddingTop: 20,
-                }}>
+                }}
+              >
                 <QuickView
                   backgroundColor="rgba(122, 206, 250, 0.15)"
                   style={{ paddingTop: 10, paddingBottom: 10 }}
-                  borderRadius={10}>
+                  borderRadius={10}
+                >
                   <Icon
                     name="sharealt"
                     type="antdesign"
@@ -180,14 +185,16 @@ export class ProfileScreen extends PureComponent {
                     fontWeight="bold"
                     style={{ letterSpacing: 0.51 }}
                     center
-                    fontSize={26}>
+                    fontSize={26}
+                  >
                     38
                   </Text>
                   <Text
                     style={{ opacity: 0.4, lineHeight: 22 }}
                     color="#404F68"
                     center
-                    fontSize={14}>
+                    fontSize={14}
+                  >
                     POSTS
                   </Text>
                 </QuickView>
@@ -201,11 +208,13 @@ export class ProfileScreen extends PureComponent {
                   paddingRight: 10,
                   paddingBottom: 30,
                   paddingTop: 20,
-                }}>
+                }}
+              >
                 <QuickView
                   backgroundColor="#FDF1F3"
                   style={{ paddingTop: 10, paddingBottom: 10 }}
-                  borderRadius={10}>
+                  borderRadius={10}
+                >
                   <Icon
                     name="user"
                     type="antdesign"
@@ -217,14 +226,16 @@ export class ProfileScreen extends PureComponent {
                     fontWeight="bold"
                     style={{ letterSpacing: 0.51 }}
                     center
-                    fontSize={26}>
+                    fontSize={26}
+                  >
                     38
                   </Text>
                   <Text
                     style={{ opacity: 0.4, lineHeight: 22 }}
                     color="#404F68"
                     center
-                    fontSize={14}>
+                    fontSize={14}
+                  >
                     FOLLOWING
                   </Text>
                 </QuickView>
@@ -238,11 +249,13 @@ export class ProfileScreen extends PureComponent {
                   paddingRight: 10,
                   paddingBottom: 30,
                   paddingTop: 20,
-                }}>
+                }}
+              >
                 <QuickView
                   backgroundColor="#FEF6EC"
                   style={{ paddingTop: 10, paddingBottom: 10 }}
-                  borderRadius={10}>
+                  borderRadius={10}
+                >
                   <Icon
                     name="antdesign"
                     type="antdesign"
@@ -254,14 +267,16 @@ export class ProfileScreen extends PureComponent {
                     fontWeight="bold"
                     style={{ letterSpacing: 0.51 }}
                     center
-                    fontSize={26}>
+                    fontSize={26}
+                  >
                     38
                   </Text>
                   <Text
                     style={{ opacity: 0.4, lineHeight: 22 }}
                     color="#404F68"
                     center
-                    fontSize={14}>
+                    fontSize={14}
+                  >
                     FOLLOWER
                   </Text>
                 </QuickView>
@@ -279,12 +294,14 @@ export class ProfileScreen extends PureComponent {
                 backgroundColor="#9e9991"
                 paddingTop={10}
                 paddingBottom={10}
-                borderRadius={5}>
+                borderRadius={5}
+              >
                 <Icon name="home" type="antdesign" size={36} color="#fff" />
               </QuickView>
               <QuickView flex={7} marginLeft={10}>
                 <Text color="#2E3137" fontSize={14} fontWeight="bold">
-                  Truong Dai hoc Bach khoa Da Nang{' '}
+                  Truong Dai hoc Bach khoa Da Nang
+                  {' '}
                 </Text>
                 <Text color="#5A5F69">2017-2022</Text>
               </QuickView>
@@ -307,7 +324,8 @@ export class ProfileScreen extends PureComponent {
                 backgroundColor="#9e9991"
                 paddingTop={10}
                 paddingBottom={10}
-                borderRadius={5}>
+                borderRadius={5}
+              >
                 <Icon name="contacts" type="antdesign" size={36} color="#fff" />
               </QuickView>
               <QuickView flex={7} marginLeft={10}>
@@ -336,14 +354,16 @@ export class ProfileScreen extends PureComponent {
                   backgroundColor="#9e9991"
                   paddingTop={10}
                   paddingBottom={10}
-                  borderRadius={5}>
+                  borderRadius={5}
+                >
                   <Icon name="briefcase" type="entypo" size={36} color="#fff" />
                 </QuickView>
                 <QuickView
                   flex={7}
                   marginLeft={10}
                   style={{ borderLeftWidth: 2, borderColor: '#bfbdb6' }}
-                  paddingLeft={5}>
+                  paddingLeft={5}
+                >
                   <Text color="#2E3137" fontSize={14} fontWeight="bold">
                     Founder at Apple INC
                   </Text>
@@ -353,7 +373,8 @@ export class ProfileScreen extends PureComponent {
                       type="antdesign"
                       size={16}
                       color="#acf7ab"
-                    />{' '}
+                    />
+                    {' '}
                     <Text color="#377cab">9/2020 - 9/2020</Text>
                   </Text>
                 </QuickView>
