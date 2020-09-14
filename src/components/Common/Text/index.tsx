@@ -17,7 +17,8 @@ type TFontWeight = typeof Fonts.fontWeight;
 type TFontSize = typeof Fonts.fontSize;
 type TType = typeof lightTheme.Text;
 
-export interface TextProps extends Omit<ETextProps, 'fontFamily' | 'fontWeight' | 'fontSize'> {
+export interface TextProps
+  extends Omit<ETextProps, 'fontFamily' | 'fontWeight' | 'fontSize'> {
   fontFamily?: keyof TFontFamily;
   fontWeight?: keyof TFontWeight;
   fontSize?: keyof TFontSize | number;
@@ -120,10 +121,12 @@ class Text extends PureComponent<TextProps> {
       bold && {
         fontWeight: Fonts.fontWeight.bold,
       },
-      (fontSize && typeof fontSize === 'number') && {
+      fontSize
+        && typeof fontSize === 'number' && {
         fontSize,
       },
-      (fontSize && typeof fontSize === 'string') && {
+      fontSize
+        && typeof fontSize === 'string' && {
         fontSize: Fonts.fontSize[fontSize],
       },
       center && {
@@ -152,9 +155,20 @@ class Text extends PureComponent<TextProps> {
     ]);
     if (icon) {
       return (
-        <QuickView testID="EIconText" row={!iconRight} rowReverse={iconRight} justifyContent={iconRight ? 'flex-end' : 'flex-start'}>
+        <QuickView
+          testID="EIconText"
+          row={!iconRight}
+          rowReverse={iconRight}
+          justifyContent={iconRight ? 'flex-end' : 'flex-start'}
+        >
           <QuickView style={iconStyle}>
-            <EIcon {...icon} name={icon.name} type={icon.type || 'material-community'} size={icon.size || 15} color={icon.color || textColor} />
+            <EIcon
+              {...icon}
+              name={icon.name}
+              type={icon.type || 'material-community'}
+              size={icon.size || 15}
+              color={icon.color || textColor}
+            />
           </QuickView>
           <QuickView>
             <EText {...otherProps} style={textStyle}>
@@ -168,9 +182,11 @@ class Text extends PureComponent<TextProps> {
     if (t) {
       return (
         <Translation>
-          {
-          (trans) => <EText {...otherProps} style={textStyle}>{trans(t)}</EText>
-          }
+          {(trans) => (
+            <EText {...otherProps} style={textStyle}>
+              {trans(t)}
+            </EText>
+          )}
         </Translation>
       );
     }
@@ -182,4 +198,6 @@ class Text extends PureComponent<TextProps> {
   }
 }
 
-export default withTheme(Text as React.ComponentType<TextProps & ThemeProps<any>>);
+export default withTheme(
+  Text as React.ComponentType<TextProps & ThemeProps<any>>,
+);
