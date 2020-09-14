@@ -42,7 +42,7 @@ exports[`Button Component should render without issues 1`] = `
     Object {
       "color": "#ffffff",
       "fontSize": 16,
-      "fontWeight": "500",
+      "fontWeight": "600",
       "marginLeft": -10,
       "marginRight": 0,
       "paddingHorizontal": 5,

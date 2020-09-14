@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { Component, PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { QuickView, Text, Container, Header, Body } from '@components';
+import {
+  QuickView, Text, Container, Header, Body,
+} from '@components';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 import {
   Icon,
