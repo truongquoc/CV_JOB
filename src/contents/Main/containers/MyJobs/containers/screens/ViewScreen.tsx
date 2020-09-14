@@ -2,19 +2,20 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
-  QuickView, Text, Container, Header, Body,
+  QuickView, Text, Container, Header, Body, Image
 } from '@components';
 
 class ViewScreen extends PureComponent {
   render() {
     return (
-      <Container>
-        {/* <Header title="ViewScreen" /> */}
-        <Body>
-          <QuickView>
-            <Text center>ViewScreen</Text>
-          </QuickView>
-        </Body>
+     <Container>
+        <Image
+             source  = {{
+              uri:'http://picsum.photos/1000/1000',
+              cache:'web',
+            }}
+            containerStyle={{marginTop:20}}
+             />
       </Container>
     );
   }

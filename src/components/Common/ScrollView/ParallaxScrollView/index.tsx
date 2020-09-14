@@ -97,7 +97,6 @@ class ParallaxScrollView extends PureComponent<ParallaxScrollViewProps> {
       },
       containerStyle: {
         padding: 8,
-        backgroundColor: 'rgba(255, 255, 255, 0.7)',
         borderRadius: 20,
       },
     };

@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
-  QuickView, Text, Container, Header, Body,
+  QuickView, Text, Container, Header, Body, ParallaxScrollView, Image,
 } from '@components';
 import MyJobTopTab from '../containers/index.toptab';
 
@@ -10,9 +10,11 @@ class MyJobScreen extends PureComponent {
   render() {
     return (
       <Container>
-        <Header title="My Job Screen" />
-        <MyJobTopTab />
-        <Body />
+        <ParallaxScrollView>
+        <Body>
+            <MyJobTopTab />
+        </Body>
+        </ParallaxScrollView>
       </Container>
     );
   }

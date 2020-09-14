@@ -1,6 +1,6 @@
 const myJobTopTab = {
-  viewedScreen: 'ViewedScreen',
-  savedScreen: 'SavedScreen',
-  appliedScreen: 'AppliedScreen',
+  viewedScreen: 'View',
+  savedScreen: 'Save',
+  appliedScreen: 'Apply',
 };
 export default myJobTopTab;

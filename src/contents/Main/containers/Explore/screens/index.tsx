@@ -2,19 +2,24 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
-  QuickView, Text, Container, Header, Body,
+  QuickView, Text, Container, Header, Body, ParallaxScrollView, Image
 } from '@components';
 
 class ExploreScreen extends PureComponent {
   render() {
     return (
       <Container>
-        <Header title="Explore" />
+        <ParallaxScrollView>
         <Body>
-          <QuickView>
-            <Text center>Explore Screen</Text>
-          </QuickView>
+        <Image
+             source  = {{
+              uri:'http://picsum.photos/1000/1000',
+              cache:'web',
+            }}
+            containerStyle={{marginTop:20}}
+             />
         </Body>
+        </ParallaxScrollView>
       </Container>
     );
   }

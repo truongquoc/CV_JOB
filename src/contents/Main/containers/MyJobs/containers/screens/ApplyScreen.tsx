@@ -2,19 +2,20 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
-  QuickView, Text, Container, Header, Body,
+  QuickView, Text, Container, Header, Body, ParallaxScrollView, Image,
 } from '@components';
 
 class ApplyScreen extends PureComponent {
   render() {
     return (
       <Container>
-        {/* <Header title="ApplyScreen" /> */}
-        <Body>
-          <QuickView>
-            <Text center>ApplyScreen</Text>
-          </QuickView>
-        </Body>
+        <Image
+             source  = {{
+              uri:'http://picsum.photos/1000/1000',
+              cache:'web',
+            }}
+            containerStyle={{marginTop:20}}
+             />
       </Container>
     );
   }
