@@ -26,6 +26,7 @@ exports[`QuickView Component should render without issues 1`] = `
       "marginTop": undefined,
       "marginVertical": undefined,
       "padding": undefined,
+      "paddingBottom": undefined,
       "paddingHorizontal": undefined,
       "paddingLeft": undefined,
       "paddingRight": undefined,

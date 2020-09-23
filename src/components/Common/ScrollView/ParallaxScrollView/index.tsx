@@ -4,8 +4,8 @@ import { Dimensions } from 'react-native';
 import { withTheme, ThemeProps } from 'react-native-elements';
 import { roundedBorderRadius } from '@themes/ThemeComponent/Common/CommonProps';
 import { Source } from 'react-native-fast-image';
-import { lightPrimaryColor } from '@themes/ThemeComponent/Common/Color';
 import NavigationService from '@utils/navigation';
+import SaveIcon from '@contents/Main/containers/Explore/containers/Shared/SaveIcon';
 import QuickView from '../../View/QuickView';
 import Header from '../../Header';
 import Image from '../../Image';
@@ -90,12 +90,13 @@ class ParallaxScrollView extends PureComponent<ParallaxScrollViewProps> {
       icon: 'arrowleft',
       type: 'antdesign',
       size: 25,
-      color: lightPrimaryColor,
+      color: '#FFF',
       onPress: () => NavigationService.goBack(),
       style: {
         width: 25, height: 25,
       },
       containerStyle: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
         padding: 8,
         borderRadius: 20,
       },
@@ -103,6 +104,7 @@ class ParallaxScrollView extends PureComponent<ParallaxScrollViewProps> {
     return (
       <Header
         leftComponent={leftComponent}
+        rightComponent={<SaveIcon />}
         transparent
         position="absolute"
         top={-1}

@@ -19,6 +19,8 @@ import {
 } from '@react-navigation/drawer';
 import { QuickView, Text, Avatar } from '@components';
 import LinearGradient from 'react-native-linear-gradient';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import rootStack from '@contents/routes';
 
 const Drawer = createDrawerNavigator();
 interface Props {
@@ -37,7 +39,6 @@ const Stack = createStackNavigator();
 const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
-    borderRadius: 10,
   },
 });
 class AppNavigator extends Component<Props, State> {
@@ -69,77 +70,135 @@ class AppNavigator extends Component<Props, State> {
               colors={['#329AE4', '#5416E6']}
               style={styles.linearGradient}
             >
-              <Avatar
-                rounded
-                size="large"
-                source={{
-                  uri:
-                    'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-                }}
-                containerStyle={{
-                  backgroundColor: 'red',
-                  position: 'absolute',
-                  left: '40%',
-                  top: 30,
-                  zIndex: 999,
-                }}
-                title="A1"
-              />
-              <DrawerContentScrollView
-                {...props}
-                style={{
-                  backgroundColor: '#fcfcfc',
-                  marginTop: 150,
-                  borderTopRightRadius: 10,
-                  borderTopLeftRadius: 10,
-                }}
-              >
-                <QuickView>
-                  <QuickView
-                    style={{
-                      borderBottomWidth: 1,
-                      borderBottomColor: '#cfcccc',
+              <DrawerContentScrollView>
+                <QuickView
+                  {...props}
+                  style={{
+                    backgroundColor: '#fcfcfc',
+                    marginTop: 150,
+                    borderTopRightRadius: 10,
+                    borderTopLeftRadius: 10,
+                  }}
+                >
+                  <Avatar
+                    rounded
+                    size="large"
+                    source={{
+                      uri:
+                        'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
                     }}
-                    paddingTop={20}
-                    paddingBottom={50}
-                  >
-                    <Text center>NGUYEN LAM</Text>
-                    <Text center>Edit</Text>
-                  </QuickView>
-                  <QuickView
-                    style={{
-                      borderBottomWidth: 1,
-                      borderBottomColor: '#cfcccc',
+                    containerStyle={{
+                      backgroundColor: 'red',
+                      position: 'absolute',
+                      left: '40%',
+                      top: -60,
+                      zIndex: 999,
                     }}
-                    paddingTop={20}
-                    paddingBottom={50}
-                  >
-                    <Text>WHO VIEW MY PROFILE</Text>
+                    title="A1"
+                  />
+                  <QuickView>
+                    <QuickView
+                      style={{
+                        borderBottomWidth: 1,
+                        borderBottomColor: '#cfcccc',
+                      }}
+                      paddingTop={20}
+                      paddingBottom={50}
+                    >
+                      <Text center color="#241f1f">
+                        NGUYEN LAM
+                      </Text>
+                      <TouchableWithoutFeedback
+                        onPress={() => {
+                          NavigationService.navigate(rootStack.profileStack, {
+                            screen: 'ProfileScreen',
+                          });
+                        }}
+                      >
+                        <Text center marginTop={5} color="#4771b5">
+                          Edit Profile
+                        </Text>
+                      </TouchableWithoutFeedback>
+                    </QuickView>
+                    <QuickView
+                      paddingHorizontal={20}
+                      style={{
+                        borderBottomWidth: 1,
+                        borderBottomColor: '#cfcccc',
+                      }}
+                      paddingTop={20}
+                      paddingBottom={50}
+                    >
+                      <TouchableWithoutFeedback>
+                        <Text color="#241f1f">WHO VIEW MY PROFILE</Text>
+                      </TouchableWithoutFeedback>
+                      <TouchableWithoutFeedback>
+                        <Text color="#241f1f" marginTop={20}>
+                          JOB ALERTS
+                        </Text>
+                      </TouchableWithoutFeedback>
+                      <TouchableWithoutFeedback>
+                        <Text color="#241f1f" marginTop={20}>
+                          NOTIFICATIONS
+                        </Text>
+                      </TouchableWithoutFeedback>
+                      <TouchableWithoutFeedback>
+                        <Text color="#241f1f" marginTop={20}>
+                          SHARE YOUR PROFILE
+                        </Text>
+                      </TouchableWithoutFeedback>
+                    </QuickView>
+
+                    <QuickView
+                      paddingHorizontal={20}
+                      style={{
+                        borderBottomWidth: 1,
+                        borderBottomColor: '#cfcccc',
+                      }}
+                      paddingTop={20}
+                      paddingBottom={50}
+                    >
+                      <TouchableWithoutFeedback>
+                        <Text color="#241f1f">TERMS AND CONDITIONS</Text>
+                      </TouchableWithoutFeedback>
+                      <TouchableWithoutFeedback>
+                        <Text color="#241f1f" marginTop={20}>
+                          PRIVACY POLICY
+                        </Text>
+                      </TouchableWithoutFeedback>
+                      <TouchableWithoutFeedback>
+                        <Text color="#241f1f" marginTop={20}>
+                          CONTACT US
+                        </Text>
+                      </TouchableWithoutFeedback>
+                      <TouchableWithoutFeedback>
+                        <Text color="#241f1f" marginTop={20}>
+                          FEEDBACK
+                        </Text>
+                      </TouchableWithoutFeedback>
+                    </QuickView>
+
+                    <QuickView
+                      paddingHorizontal={20}
+                      style={{
+                        borderBottomWidth: 1,
+                        borderBottomColor: '#cfcccc',
+                      }}
+                      paddingTop={20}
+                      paddingBottom={50}
+                    >
+                      <TouchableWithoutFeedback>
+                        <Text color="#241f1f">LANGUAGE</Text>
+                      </TouchableWithoutFeedback>
+                      <TouchableWithoutFeedback>
+                        <Text color="#241f1f" marginTop={20} fontSize={16}>
+                          LOGOUT
+                        </Text>
+                      </TouchableWithoutFeedback>
+                    </QuickView>
                   </QuickView>
                 </QuickView>
-                {/* <QuickView
-                  backgroundColor="red"
-                  marginTop={150}
-                  borderTopLeftRadius={10}
-                  borderTopRightRadius={10}>
-                  <QuickView>
-                    <Text>Nguyen Lam</Text>
-                  </QuickView>
-                  <QuickView>
-                    <Button
-                      title="Open Profile"
-                      onPress={() => {
-                        NavigationService.navigate(rootStack.profileStack, {
-                          screen: 'ProfileScreen',
-                        });
-                      }}
-                    />
-                  </QuickView>
-                </QuickView> */}
               </DrawerContentScrollView>
-              {/* <QuickView backgroundColor="red" flex={1} marginTop={100}>
-                <Text>abs</Text>
-              </QuickView> */}
             </LinearGradient>
           )}
         >

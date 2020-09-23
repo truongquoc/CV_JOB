@@ -1,10 +1,9 @@
 /**
  * mailStack
  */
-const exploreStack = {
-  index: 'ExploreScreen',
+const detailStack = {
   applicantscreens: 'ApplicantScreens',
   employerscreens: 'EmployerScreens',
 };
 
-export default exploreStack;
+export default detailStack;

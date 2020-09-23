@@ -218,6 +218,7 @@ class QuickView extends PureComponent<QuickViewProps> {
         paddingLeft,
         paddingRight,
         paddingHorizontal,
+        paddingBottom,
         paddingVertical,
         borderRadius,
         borderTopLeftRadius,
