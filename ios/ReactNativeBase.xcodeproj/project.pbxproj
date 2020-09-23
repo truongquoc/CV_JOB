@@ -22,6 +22,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* ReactNativeBaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ReactNativeBaseTests.m */; };
+		7023C56F251AF3B900B8B86F /* GothamRounded-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7023C56E251AF3B900B8B86F /* GothamRounded-Bold.ttf */; };
 		F09B968C748AD2F84F94E569 /* libPods-ReactNativeBase-ReactNativeBaseTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5513AB49ECDB2129FA32B426 /* libPods-ReactNativeBase-ReactNativeBaseTests.a */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +81,7 @@
 		2D02E4901E0B4A5D006451C7 /* ReactNativeBase-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReactNativeBase-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DC03FC7A2FF6210DA2586FA /* Pods-ReactNativeBase-ReactNativeBaseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeBase-ReactNativeBaseTests.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeBase-ReactNativeBaseTests/Pods-ReactNativeBase-ReactNativeBaseTests.release.xcconfig"; sourceTree = "<group>"; };
 		5513AB49ECDB2129FA32B426 /* libPods-ReactNativeBase-ReactNativeBaseTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeBase-ReactNativeBaseTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7023C56E251AF3B900B8B86F /* GothamRounded-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Bold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ReactNativeBase/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8AF609A8412E7637300EC0C3 /* Pods-ReactNativeBase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeBase.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeBase/Pods-ReactNativeBase.debug.xcconfig"; sourceTree = "<group>"; };
 		A5B4CD10495A7B53A35FFEEB /* Pods-ReactNativeBase-ReactNativeBaseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeBase-ReactNativeBaseTests.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeBase-ReactNativeBaseTests/Pods-ReactNativeBase-ReactNativeBaseTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				07603FDE24EFB1DF00595B18 /* MaterialCommunityIcons.ttf */,
 				07603FDF24EFB1DF00595B18 /* AntDesign.ttf */,
 				07603FE024EFB1DF00595B18 /* Foundation.ttf */,
+				7023C56E251AF3B900B8B86F /* GothamRounded-Bold.ttf */,
 				07603FE124EFB1DF00595B18 /* Ionicons.ttf */,
 				07603FE224EFB1DF00595B18 /* FontAwesome5_Solid.ttf */,
 				07603FE324EFB1DF00595B18 /* FontAwesome5_Regular.ttf */,
@@ -379,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07603FFF24EFB2A200595B18 /* Roboto-Bold.ttf in Resources */,
+				7023C56F251AF3B900B8B86F /* GothamRounded-Bold.ttf in Resources */,
 				0760400024EFB2A200595B18 /* Roboto-Italic.ttf in Resources */,
 				0760400124EFB2A200595B18 /* Roboto-Light.ttf in Resources */,
 				0760400224EFB2A200595B18 /* Roboto-Medium.ttf in Resources */,

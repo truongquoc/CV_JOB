@@ -2,19 +2,20 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
-  QuickView, Text, Container, Header, Body,
+  QuickView, Text, Container, Header, Body, Image,
 } from '@components';
 
-class ViewedScreen extends PureComponent {
+class ViewScreen extends PureComponent {
   render() {
     return (
       <Container>
-        <Header title="Viewed" />
-        <Body>
-          <QuickView>
-            <Text center>View Screen</Text>
-          </QuickView>
-        </Body>
+        <Image
+          source={{
+            uri: 'http://picsum.photos/1000/1000',
+            cache: 'web',
+          }}
+          containerStyle={{ marginTop: 20 }}
+        />
       </Container>
     );
   }
@@ -28,4 +29,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewedScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ViewScreen);

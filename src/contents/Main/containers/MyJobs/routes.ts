@@ -5,7 +5,7 @@ const MyJobTab = {
   viewedStack: 'ViewedStack',
   savedStack: 'SavedStack',
   appliedStack: 'AppliedStack',
-  drawerTab: 'DrawerTab',
+  myJob: 'MyJobScreen',
 };
 
 export default MyJobTab;

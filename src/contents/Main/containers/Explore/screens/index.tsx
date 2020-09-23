@@ -2,7 +2,7 @@
 import React, { Component, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
-  QuickView, Text, Container, Header, Body,
+  QuickView, Text, Container, Header, Body, ParallaxScrollView,
 } from '@components';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 import {
@@ -20,6 +20,10 @@ import {
   ImageBackground,
 } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import NavigationService from '@utils/navigation';
+import ApplicantScreens from '../containers/screens/ApplicantDetail';
+import detailStack from '../containers/routes';
+import exploreStack from '../routes';
 
 interface Props {}
 interface State {}
@@ -249,7 +253,11 @@ class ExploreScreen extends React.Component<any, any> {
                 hasParallaxImages
               />
               <Body>
-                <QuickView>
+                <QuickView
+                  onPress={() => NavigationService.navigate(
+                    exploreStack.applicantscreens,
+                  )}
+                >
                   {list.map((l, i) => (
                     <QuickView key={i.toString()} style={styles.listItem}>
                       <QuickView>

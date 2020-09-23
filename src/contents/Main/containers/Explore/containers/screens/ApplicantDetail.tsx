@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { PureComponent } from 'react';
@@ -6,12 +7,18 @@ import {
   QuickView, Text, Container, Header, Body, ParallaxScrollView, Image,
 } from '@components';
 import { Icon, Divider } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native';
+import SaveIcon from '../Shared/SaveIcon';
 
 class ApplicantScreens extends PureComponent {
   render() {
     return (
       <Container>
-        <ParallaxScrollView>
+        <ParallaxScrollView
+          renderStickyHeader={() => (
+            <Header />
+          )}
+        >
           <Body>
             <Image
               source={{
@@ -119,7 +126,7 @@ class ApplicantScreens extends PureComponent {
               line-height={5}
             >
               <Text color="#2d2b2b" fontSize={18}>
-                Personnel shall assist with Management activities, to include: Tracking assets through asset management application; provisioning assets; provide logistical support for the movement of assets; prep IT equipment prior to user deployment; and assist with the disposal coordination and excising of equipment.
+                Personnel shall assist with Management activities, to include: Tracking assets through PITC's asset management application; provisioning assets; provide logistical support for the movement of assets; prep IT equipment prior to user deployment; and assist with the disposal coordination and excising of equipment.
               </Text>
               <Text color="#2d2b2b" fontSize={18} marginTop={10}>
                 Personnel shall assist with DeskSide activities, to include: installation of IT equipment; assisting with the movement of assets throughout the campus, providing desk-side end user hardware support, and provide end user training, to include formal or informal sessions if needed.

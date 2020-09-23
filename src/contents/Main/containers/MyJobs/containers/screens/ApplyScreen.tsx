@@ -4,17 +4,18 @@ import { connect } from 'react-redux';
 import {
   QuickView, Text, Container, Header, Body, ParallaxScrollView, Image,
 } from '@components';
-import MyJobTopTab from '../containers/index.toptab';
 
-class MyJobScreen extends PureComponent {
+class ApplyScreen extends PureComponent {
   render() {
     return (
       <Container>
-        <ParallaxScrollView>
-          <Body>
-            <MyJobTopTab />
-          </Body>
-        </ParallaxScrollView>
+        <Image
+          source={{
+            uri: 'http://picsum.photos/1000/1000',
+            cache: 'web',
+          }}
+          containerStyle={{ marginTop: 20 }}
+        />
       </Container>
     );
   }
@@ -28,4 +29,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyJobScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ApplyScreen);

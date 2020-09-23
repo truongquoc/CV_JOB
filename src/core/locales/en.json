@@ -13,7 +13,9 @@
     "home": "Home",
     "saved": "Saved",
     "mail": "Mail",
-    "more": "More"
+    "more": "More", 
+    "myjob": "My Jobs",
+    "explore": "Explore"
   },
   "header": {
     "setting": "Setting",
