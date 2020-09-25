@@ -8,7 +8,7 @@ export interface ButtonGroupProps extends Omit<ButtonProps, 'title'|'t'|'onPress
   titleList?: Array<string>;
   tList?: Array<string>;
   onItemPress?: (index: number) => any;
-  flatListProps?: FlatListProps
+  flatListProps?: FlatListProps 
   defaultActiveIndex?: number;
 }
 
