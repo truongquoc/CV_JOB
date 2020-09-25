@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, SectionList } from 'react-native';
 import {
-  Container, Header, QuickView, AuthButton,
+  Container, Header, QuickView, AuthButton, GoToExampleButton,
 } from '@components';
 import { ListItem, Divider } from 'react-native-elements';
 import { withTranslation } from 'react-i18next';
@@ -117,7 +117,7 @@ class Settings extends React.PureComponent<Props> {
           />
         </QuickView>
         <QuickView paddingHorizontal={10}>
-          {/* <GoToExampleButton /> */}
+          <GoToExampleButton />
           <LoginButton />
           <LogoutButton />
         </QuickView>
