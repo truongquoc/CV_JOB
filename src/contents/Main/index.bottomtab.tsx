@@ -18,7 +18,7 @@ import mainBottomTab from './routes';
 import HomeStack from './containers/Home/index.stack';
 import MoreStack from './containers/More/index.stack';
 import MyJobsStack from './containers/MyJobs/index.stack';
-import ExploreStack from './containers/Explore/index.stack';
+import ExploreScreen from './containers/Explore/screens';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -118,7 +118,7 @@ function MainBottomTab(props: any) {
       />
       <BottomTabs.Screen
         name={mainBottomTab.exploreStack}
-        component={ExploreStack}
+        component={ExploreScreen}
         options={{
           tabBarLabel: t('bottom_tab:explore'),
           tabBarIcon: ({ focused, color, size }) => (focused ? (

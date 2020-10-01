@@ -5,7 +5,7 @@ export const fontFamily = {
   RobotoRegular: 'Roboto-Regular',
   RobotoMedium: 'Roboto-Medium',
   RobotoThin: 'Roboto-Thin',
-  GothamRoundedBold: 'GothamRoundedBold',
+  GothamRoundedBold: 'GothamRounded-Bold',
 };
 
 export const fontWeight = {

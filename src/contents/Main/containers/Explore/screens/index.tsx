@@ -2,38 +2,32 @@
 import React, { Component, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
-  QuickView,
-  Text,
-  Container,
-  Header,
-  Body,
-  ParallaxScrollView,
+  QuickView, Text, Container, Header, Body, ButtonGroup, Button,
 } from '@components';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 import {
   Icon,
-  Image,
-  ListItem,
   Avatar,
   SearchBar,
 } from 'react-native-elements';
 import {
-  View,
   StyleSheet,
   Dimensions,
-  Platform,
   ImageBackground,
 } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
+import NavigationService from '@utils/navigation';
+import rootStack from '@contents/routes';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import exploreStack from '../routes';
 
-interface Props {}
-interface State {}
 const colors = {
   black: '#1a1917',
   gray: '#888888',
   background1: '#B721FF',
   background2: '#21D4FD',
 };
+const topTab = createMaterialTopTabNavigator();
 const { width: screenWidth } = Dimensions.get('window');
 const styles = StyleSheet.create({
   item: {
@@ -150,6 +144,10 @@ const ENTRIES1 = [
 ];
 
 class ExploreScreen extends React.Component<any, any> {
+  buttonGroup: any;
+
+  onItemPress: ((index: number) => any) | undefined;
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -200,6 +198,15 @@ class ExploreScreen extends React.Component<any, any> {
 
   render() {
     const { slider1ActiveSlide, search } = this.state;
+    const titleList = [
+      'All',
+      'Moblie',
+      'Full stack',
+      'Back-end',
+      'Font-end',
+      'Engineer',
+      'See more',
+    ];
     return (
       <Container>
         <ImageBackground
@@ -225,7 +232,7 @@ class ExploreScreen extends React.Component<any, any> {
               <QuickView>
                 <SearchBar
                   lightTheme
-                  placeholder="Type Here..."
+                  placeholder="Type Here ..."
                   round
                   searchIcon={
                     <Icon type="antdesign" name="search1" color="#5760EB" />
@@ -236,6 +243,47 @@ class ExploreScreen extends React.Component<any, any> {
                   containerStyle={styles.containerSearch}
                   // onChangeText={this.updateSearch}
                   value={search}
+                />
+              </QuickView>
+              <QuickView
+                row
+                marginTop={15}
+                marginLeft={20}
+              >
+                <QuickView
+                  flex={6}
+                >
+                  <Text
+                    color="#707070"
+                    fontFamily="GothamRoundedBold"
+                  >
+                    Top Companies
+                  </Text>
+                </QuickView>
+                <QuickView flex={1}>
+                  <Icon
+                    type="material"
+                    name="tune"
+                    color="#707070"
+                  />
+                </QuickView>
+              </QuickView>
+              <QuickView>
+                <ButtonGroup
+                  marginHorizontal={15}
+                  ref={(ref: any) => { this.buttonGroup = ref; }}
+                  titleList={titleList}
+                  onItemPress={this.onItemPress}
+                  defaultActiveIndex={2}
+                  propsChange={false}
+                  outline={false}
+                  activeBackgroundColor="#9EB6FF"
+                  backgroundColor="#FFFF"
+                  titleColor="#707070"
+                  activeTitleColor="#FFF"
+                  // buttonStyle={{
+                  //   backgroundColor: '',
+                  // }}
                 />
               </QuickView>
               <QuickView row marginTop={10}>
@@ -256,7 +304,15 @@ class ExploreScreen extends React.Component<any, any> {
               <Body>
                 <QuickView>
                   {list.map((l, i) => (
-                    <QuickView key={i.toString()} style={styles.listItem}>
+                    <QuickView
+                      key={i.toString()}
+                      style={styles.listItem}
+                      onPress={() => NavigationService.navigate(
+                        rootStack.exploreStack, {
+                          screen: exploreStack.applicantscreens,
+                        },
+                      )}
+                    >
                       <QuickView>
                         <QuickView row justifyContent="space-between">
                           <QuickView row alignItems="center">
@@ -267,11 +323,15 @@ class ExploreScreen extends React.Component<any, any> {
                               fontSize={20}
                               marginLeft={10}
                               style={{ opacity: 0.8 }}
+
                             >
                               {l.name}
                             </Text>
                           </QuickView>
-                          <Icon type="material" name="favorite-border" />
+                          <Icon
+                            type="material"
+                            name="bookmark-border"
+                          />
                         </QuickView>
                         <QuickView marginTop={15}>
                           <Text
