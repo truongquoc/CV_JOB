@@ -55,7 +55,7 @@ const styles: any = {
   },
 };
 
-class  Image extends PureComponent<ImageProps, State> {
+class Image extends PureComponent<ImageProps, State> {
   static defaultProps = {
     width: Metrics.screenWidth - 2 * bodyPaddingHorizontal,
     resizeMode: 'cover',

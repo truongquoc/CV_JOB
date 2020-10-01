@@ -10,12 +10,12 @@ class ApplyScreen extends PureComponent {
     return (
       <Container>
         <Image
-             source  = {{
-              uri:'http://picsum.photos/1000/1000',
-              cache:'web',
-            }}
-            containerStyle={{marginTop:20}}
-             />
+          source={{
+            uri: 'http://picsum.photos/1000/1000',
+            cache: 'web',
+          }}
+          containerStyle={{ marginTop: 20 }}
+        />
       </Container>
     );
   }

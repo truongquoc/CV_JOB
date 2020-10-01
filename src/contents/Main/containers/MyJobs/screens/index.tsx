@@ -11,9 +11,9 @@ class MyJobScreen extends PureComponent {
     return (
       <Container>
         <ParallaxScrollView>
-        <Body>
+          <Body>
             <MyJobTopTab />
-        </Body>
+          </Body>
         </ParallaxScrollView>
       </Container>
     );
