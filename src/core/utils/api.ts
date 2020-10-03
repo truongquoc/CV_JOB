@@ -24,7 +24,9 @@ function extractMetadata(url: string, response: any) {
     pageCount: 0,
   };
   let defaultLimit = parseInt(query.limit, 10);
-  if (Number.isNaN(defaultLimit)) { defaultLimit = 10; }
+  if (Number.isNaN(defaultLimit)) {
+    defaultLimit = 10;
+  }
   metadata.pageCount = _.ceil(_.divide(metadata.total, defaultLimit));
   if (query.offset && parseInt(query.offset, 10) !== 0) {
     let page = _.ceil(_.divide(parseInt(query.offset, 10) + 1, defaultLimit));
@@ -152,6 +154,7 @@ function requestWrapper(method: string) {
       headers: { ...params, ...defaults.headers },
     };
     console.log('url: ', url);
+    console.log('param', paramsObj);
 
     return xfetch(url, paramsObj);
   };

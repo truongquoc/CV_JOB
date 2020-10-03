@@ -3,7 +3,10 @@
 import * as React from 'react';
 import { Icon, withTheme } from 'react-native-elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { bottomNavigationBarHeight, shadowViewLight } from '@themes/ThemeComponent/Common/CommonProps';
+import {
+  bottomNavigationBarHeight,
+  shadowViewLight,
+} from '@themes/ThemeComponent/Common/CommonProps';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'recompose';
 import { lightTheme } from '@themes';
@@ -20,7 +23,12 @@ import ExploreScreen from './containers/Explore/screens';
 const BottomTabs = createBottomTabNavigator();
 
 function MainBottomTab(props: any) {
-  const { theme: { colors: { bgColor, primary } }, t } = props;
+  const {
+    theme: {
+      colors: { bgColor, primary },
+    },
+    t,
+  } = props;
   const loginSelectorData = useSelector((state) => applyObjectSelector(loginSelector, state));
   const isNotLogin = !loginSelectorData.data.get('token');
   const role = loginSelectorData.data.get('role');
@@ -77,7 +85,12 @@ function MainBottomTab(props: any) {
               size={26}
             />
           ) : (
-            <Icon name="home-outline" type="material-community" color={color} size={22} />
+            <Icon
+              name="home-outline"
+              type="material-community"
+              color={color}
+              size={22}
+            />
           )),
         }}
       />
@@ -94,7 +107,12 @@ function MainBottomTab(props: any) {
               size={26}
             />
           ) : (
-            <Icon name="briefcase-outline" type="material-community" color={color} size={22} />
+            <Icon
+              name="briefcase-outline"
+              type="material-community"
+              color={color}
+              size={22}
+            />
           )),
         }}
       />
@@ -111,7 +129,12 @@ function MainBottomTab(props: any) {
               size={26}
             />
           ) : (
-            <Icon name="newspaper" type="material-community" color={color} size={22} />
+            <Icon
+              name="newspaper"
+              type="material-community"
+              color={color}
+              size={22}
+            />
           )),
         }}
       />
@@ -131,7 +154,4 @@ function MainBottomTab(props: any) {
   );
 }
 
-export default compose(
-  withTheme,
-  withTranslation(),
-)(MainBottomTab);
+export default compose(withTheme, withTranslation())(MainBottomTab);

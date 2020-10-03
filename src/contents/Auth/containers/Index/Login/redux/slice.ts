@@ -2,9 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createObjectReducer } from '@utils/redux';
 import { REHYDRATE } from 'redux-persist';
 import { fromJS } from 'immutable';
-import {
-  INITIAL_STATE, T, NAME,
-} from './constant';
+import { INITIAL_STATE, T, NAME } from './constant';
 
 const slice = createSlice({
   name: NAME,
