@@ -12,4 +12,11 @@ const jobSlice = createSlice({
     ...createObjectReducer<TDetail>(`${NAME}GetDetail`, DETAIL),
   },
 });
-export default jobSlice;
+export const {
+  jobGetListFail,
+  jobGetListSuccess,
+  jobGetList,
+  jobGetGetDetail,
+} = jobSlice.actions;
+
+export default jobSlice.reducer;

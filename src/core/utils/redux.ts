@@ -155,10 +155,11 @@ export function createArrayReducer<T>(name: string, parentKey?: string): T {
       .setIn([parentKey, 'loading'], true)
       .setIn([parentKey, 'error'], null);
     result[`${name}Success`] = (state: any, action: any) => {
-      const metadata = fromJS(action.payload.metadata);
-      const currentPage = action.payload.metadata.page;
-      const dataGet = action.payload.results;
-      const data = (currentPage === 1 || !currentPage)
+      const metadata = fromJS(action.payload.data);
+      const currentPage = action.payload.data.page;
+      const dataGet = action.payload.data.data;
+
+      const data = currentPage === 1 || !currentPage
         ? fromJS(dataGet)
         : state
           .getIn([parentKey, 'data'])
@@ -183,6 +184,7 @@ export function createArrayReducer<T>(name: string, parentKey?: string): T {
     result[name] = (state: any, action: any) => state.set('loading', true).set('error', null);
     result[`${name}Success`] = (state: any, action: any) => {
       const metadata = fromJS(action.payload.metadata);
+
       const currentPage = action.payload.metadata.page;
       const dataGet = action.payload.results;
       const data = currentPage === 1
@@ -209,6 +211,7 @@ export function createArrayReducer<T>(name: string, parentKey?: string): T {
       return state.set('loading', false).set('error', error);
     };
   }
+
   return result;
 }
 
@@ -216,6 +219,7 @@ export const immutableTransform = require('redux-persist-transform-immutable');
 
 export function stringifyQuery(query: TQuery) {
   let defaultLimit = parseInt(Config.PER_PAGE, 10);
+
   if (Number.isNaN(defaultLimit)) {
     defaultLimit = 10;
   }
@@ -227,6 +231,9 @@ export function stringifyQuery(query: TQuery) {
   if (_.has(handledQuery, 'filter')) {
     handledQuery.filter = JSON.stringify(handledQuery.filter);
   }
-  const stringifiedQuery = qs.stringify(handledQuery, { indices: false, strictNullHandling: true });
+  const stringifiedQuery = qs.stringify(handledQuery, {
+    indices: false,
+    strictNullHandling: true,
+  });
   return stringifiedQuery;
 }

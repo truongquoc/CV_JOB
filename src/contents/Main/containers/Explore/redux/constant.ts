@@ -18,13 +18,13 @@ export const INITIAL_STATE = fromJS({
  */
 
 export type TList = {
-  jobsGetList: (state: any, action: any) => any;
-  jobsGetListSuccess: (state: any, action: any) => any;
+  jobGetList: (state: any, action: any) => any;
+  jobGetListSuccess: (state: any, action: any) => any;
   jobGetListFail: (state: any, action: any) => any;
 };
 
 export type TDetail = {
-  productGetDetail: (state: any, action: any) => any;
-  productGetDetailSuccess: (state: any, action: any) => any;
-  productGetDetailFail: (state: any, action: any) => any;
+  jobGetGetDetail: (state: any, action: any) => any;
+  jobGetDetailSuccess: (state: any, action: any) => any;
+  jobGetDetailFail: (state: any, action: any) => any;
 };
