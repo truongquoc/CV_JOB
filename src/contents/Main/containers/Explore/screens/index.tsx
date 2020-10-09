@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     paddingTop: 15,
     paddingBottom: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -224,9 +224,11 @@ class ExploreScreen extends React.Component<Props, any> {
     return (
       <QuickView
         style={styles.listItem}
-        onPress={() => NavigationService.navigate(rootStack.exploreStack, {
-          screen: exploreStack.applicantscreens,
-        })}
+        onPress={() =>
+          NavigationService.navigate(rootStack.exploreStack, {
+            screen: exploreStack.applicantscreens,
+          })
+        }
       >
         <QuickView>
           <QuickView row justifyContent="space-between">
@@ -377,15 +379,13 @@ class ExploreScreen extends React.Component<Props, any> {
                 renderItem={this.renderItem}
                 hasParallaxImages
               />
-              <Body>
-                <QuickView>
-                  <FlatList
-                    data={list.data}
-                    style={styles.listItem}
-                    renderItem={this.renderListJob}
-                  />
-                </QuickView>
-              </Body>
+              <QuickView>
+                <FlatList
+                  data={list.data}
+                  style={styles.listItem}
+                  renderItem={this.renderListJob}
+                />
+              </QuickView>
             </QuickView>
           </ScrollView>
         </ImageBackground>
