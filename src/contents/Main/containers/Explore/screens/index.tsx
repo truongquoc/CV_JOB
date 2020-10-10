@@ -224,11 +224,9 @@ class ExploreScreen extends React.Component<Props, any> {
     return (
       <QuickView
         style={styles.listItem}
-        onPress={() =>
-          NavigationService.navigate(rootStack.exploreStack, {
-            screen: exploreStack.applicantscreens,
-          })
-        }
+        onPress={() => NavigationService.navigate(rootStack.exploreStack, {
+          screen: exploreStack.applicantscreens,
+        })}
       >
         <QuickView>
           <QuickView row justifyContent="space-between">

@@ -14,11 +14,14 @@ import {
   Button,
 } from '@components';
 import { Icon, Divider, Image } from 'react-native-elements';
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import {
   ScrollView,
+  TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+
+const { width: screenWidth } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   headerStyle: {
@@ -62,6 +65,13 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
   },
   tagStyle: {},
+  listJob: {
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 20,
+    marginHorizontal: 5,
+    marginTop: 0,
+    width: screenWidth - 60,
+  },
 });
 interface Article {
   title: string;
@@ -80,7 +90,7 @@ interface JobType {
 }
 const jobData = [
   {
-    address: '17 Le Duan St',
+    address: '422 Hoang Minh Khai, Hai Ba Trung',
     name: 'Nhan vien kinh doanh phat trien thi truong',
     profileURl:
       'https://nhanlucnganhluat.vn/uploads/images/6AF28656/logo/2019-02/logo.png',
@@ -124,7 +134,7 @@ class ApplicantScreens extends PureComponent {
   );
 
   renderListJobs = ({ item }: { item: JobType }) => (
-    <QuickView style={{ paddingHorizontal: 20 }}>
+    <QuickView style={styles.listJob}>
       <QuickView>
         <Image
           source={{
@@ -134,17 +144,52 @@ class ApplicantScreens extends PureComponent {
           style={{ height: 100, width: '100%' }}
         />
       </QuickView>
-      <QuickView marginTop={10}>
-        <Text fontSize={20} color="#669cc4" fontWeight="bold" numberOfLines={1}>
+      <QuickView marginTop={10} paddingBottom={10}>
+        <Text fontSize={20} color="#1f4780" fontWeight="bold" numberOfLines={1}>
           {item.name}
         </Text>
-        <Text color="#82817f">5 luot xem</Text>
-        <Text color="#f02222" fontWeight="bold">
-          {item.salary}
-        </Text>
-        <Text color="#3d3a3a" fontWeight="bold">
-          {item.address}
-        </Text>
+        <QuickView row marginTop={10}>
+          <QuickView row alignItems="center">
+            <Icon name="eye" type="antdesign" size={16} color="#696862" />
+            <Text color="#82817f" marginLeft={5} fontSize={12}>
+              5 luot xem
+            </Text>
+          </QuickView>
+          <QuickView row alignItems="center" marginLeft={10}>
+            <Icon
+              name="checkcircleo"
+              type="antdesign"
+              size={15}
+              color="#696862"
+            />
+            <QuickView>
+              <Text color="#82817f" marginLeft={5} fontSize={12}>
+                2 ứng tuyển
+              </Text>
+            </QuickView>
+          </QuickView>
+        </QuickView>
+        <QuickView marginTop={8}>
+          <Text color="#f5502f" fontWeight="bold">
+            {item.salary}
+          </Text>
+        </QuickView>
+        <QuickView marginTop={5}>
+          <Text color="#3d3a3a" fontWeight="bold" numberOfLines={1}>
+            {item.address}
+          </Text>
+        </QuickView>
+        <QuickView row alignItems="center" marginTop={10}>
+          <Icon
+            name="md-location-outline"
+            type="ionicon"
+            size={16}
+            color="#696862"
+          />
+          <Text color="#82817f" marginLeft={5} fontSize={12}>
+            Cách bạn hơn 100km
+          </Text>
+        </QuickView>
       </QuickView>
     </QuickView>
   );
@@ -233,13 +278,40 @@ class ApplicantScreens extends PureComponent {
         />
 
         <ScrollView>
-          <QuickView marginTop={20}>
-            <FlatList
-              data={jobData}
-              renderItem={this.renderListJobs}
-              horizontal
-              initialNumToRender={1}
-            />
+          <QuickView
+            marginTop={20}
+            backgroundColor="#1f4780"
+            paddingTop={10}
+            paddingHorizontal={5}
+            paddingBottom={20}
+          >
+            <QuickView
+              marginTop={10}
+              row
+              justifyContent="space-between"
+              paddingHorizontal={5}
+            >
+              <Text fontWeight="bold" color="#fff" fontSize={15}>
+                Việc làm đề xuất cho bạn
+              </Text>
+              <TouchableOpacity>
+                <Text color="#fff" fontSize={12} underline>
+                  Xem thêm
+                </Text>
+              </TouchableOpacity>
+            </QuickView>
+            <QuickView
+              marginTop={30}
+              alignItems="center"
+              justifyContent="space-around"
+            >
+              <FlatList
+                data={jobData}
+                renderItem={this.renderListJobs}
+                horizontal
+                initialNumToRender={1}
+              />
+            </QuickView>
           </QuickView>
           <QuickView marginTop={20}>
             <FlatList data={data} renderItem={this.renderListArticle} />

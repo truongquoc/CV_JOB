@@ -4,25 +4,37 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
-  QuickView, Text, Container, Header, Body, ParallaxScrollView, Image, Button,
+  QuickView,
+  Text,
+  Container,
+  Header,
+  Body,
+  ParallaxScrollView,
+  Image,
+  Button,
 } from '@components';
 import { Icon, Divider } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
 import SaveIcon from '../Shared/SaveIcon';
+import TopTabs from './TopTabs';
 
 class ApplicantScreens extends PureComponent {
   render() {
     return (
       <Container>
         <ParallaxScrollView
-          renderStickyHeader={() => (
-            <Header />
-          )}
+          parallaxHeaderHeight={200}
+          backgroundImageSource={{
+            uri:
+              'https://m.foolcdn.com/media/dubs/images/young_professionals.f065c757.fill-800x373.jpegquality-50.jpg',
+          }}
+          renderStickyHeader={() => <Header backgroundColor="transparent" />}
         >
           <Body>
             <Image
               source={{
-                uri: 'https://pbs.twimg.com/profile_images/1118574145724399616/oIyuo8uz.png',
+                uri:
+                  'https://pbs.twimg.com/profile_images/1118574145724399616/oIyuo8uz.png',
               }}
               width={100}
               height={100}
@@ -40,21 +52,19 @@ class ApplicantScreens extends PureComponent {
             >
               Atlassian
             </Text>
-            <QuickView row flex={6} alignItems="center" marginTop={15}>
-              <Icon
-                type="entypo"
-                name="location-pin"
+
+            {/* <QuickView row flex={6} alignItems="center" marginTop={15}>
+              <Icon type="entypo" name="location-pin" color="#707070" />
+              <Text
                 color="#707070"
-              />
-              <Text color="#707070" fontSize={15} fontFamily="GothamRoundedBold">
+                fontSize={15}
+                fontFamily="GothamRoundedBold"
+              >
                 417 Wallet Street New York USA
               </Text>
-            </QuickView>
-            <QuickView
-              row
-              justifyContent="space-between"
-              margin={20}
-            >
+            </QuickView> */}
+
+            <QuickView row justifyContent="space-between" margin={20}>
               <QuickView row flex={12} alignItems="center">
                 <Text color="#a09a9a" fontSize={15}>
                   4 days ago
@@ -66,8 +76,8 @@ class ApplicantScreens extends PureComponent {
                 </Text>
               </QuickView>
             </QuickView>
-
-            <QuickView
+            <TopTabs />
+            {/* <QuickView
               center
               row
               justifyContent="space-between"
@@ -89,7 +99,6 @@ class ApplicantScreens extends PureComponent {
                   Salary
                 </Text>
               </QuickView>
-
             </QuickView>
 
             <QuickView
@@ -114,48 +123,10 @@ class ApplicantScreens extends PureComponent {
                   $5,000
                 </Text>
               </QuickView>
-            </QuickView>
-            {/* <Text center marginTop ={10} fontWeight ={'bold'}>
-            -----------------------------------------
-          </Text> */}
-            <Divider style={{ backgroundColor: 'blue', margin: 30 }} />
-            <Text fontSize={20} fontWeight="medium" color="#2d2b2b" marginHorizontal={15} fontFamily="GothamRoundedBold">
-              Job Description
-            </Text>
-            <QuickView
-              marginTop={10}
-              margin={20}
-              line-height={5}
-            >
-              <Text color="#2d2b2b" fontSize={18}>
-                Personnel shall assist with Management activities, to include: Tracking assets through PITC's asset management application; provisioning assets; provide logistical support for the movement of assets; prep IT equipment prior to user deployment; and assist with the disposal coordination and excising of equipment.
-              </Text>
-              <Text color="#2d2b2b" fontSize={18} marginTop={10}>
-                Personnel shall assist with DeskSide activities, to include: installation of IT equipment; assisting with the movement of assets throughout the campus, providing desk-side end user hardware support, and provide end user training, to include formal or informal sessions if needed.
-              </Text>
-              <Text color="#2d2b2b" fontSize={18} marginTop={10}>
-                Place of Performance:
-              </Text>
-              <Text color="#2d2b2b" fontSize={18}>
-                The Executive Office of the President (EOP) complex
-              </Text>
-              <Text color="#2d2b2b" fontSize={18} marginTop={10}>
-                Hours of Operation:
-              </Text>
-              <Text color="#2d2b2b" fontSize={18}>
-                Provide 24/7 coverage, through shift work.
-              </Text>
-              <Text color="#2d2b2b" fontSize={18} margin={10}>
-                Personnel will be required to routine lift or transport equipment weighing up to 50lbs.
-                {/* {`Personnel will be required to routine lift or transport equipment weighing up to 50lbs.
-Personnel will be required to routine lift or transport equipment weighing up to 50lbs.
-            `} */}
-              </Text>
-
-            </QuickView>
+            </QuickView> */}
           </Body>
         </ParallaxScrollView>
-        <Button
+        {/* <Button
           center
           title="Apply for this job"
           fontSize={20}
@@ -180,20 +151,15 @@ Personnel will be required to routine lift or transport equipment weighing up to
             paddingLeft: 5,
             paddingBottom: 4,
             paddingRight: 5,
-
           }}
-        />
+        /> */}
       </Container>
     );
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: any) => ({});
 
-});
-
-const mapDispatchToProps = (dispatch: any) => ({
-
-});
+const mapDispatchToProps = (dispatch: any) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicantScreens);
