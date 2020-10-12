@@ -5,9 +5,7 @@ import { applyObjectSelector } from '@utils/selector';
 import { TObjectRedux } from '@utils/redux';
 import { Color } from '@themes/Theme';
 import { withTheme, Icon } from 'react-native-elements';
-import {
-  QuickView, TextError, AuthButton, Text,
-} from '@components';
+import { QuickView, TextError, AuthButton, Text } from '@components';
 import AuthInput from '@contents/Auth/containers/Index/Shared/AuthInput';
 import {
   TouchableWithoutFeedback,
@@ -50,7 +48,7 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
           ref={(ref: any) => {
             this.email = ref;
           }}
-          value="ngotruongquoc0102@gmail.com"
+          value="admin@gmail.com"
           leftIcon={{ name: 'email-outline', color: '#ffffff' }}
           placeholder="Email"
           validationField="email"
@@ -65,7 +63,7 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
           value="admin"
           leftIcon={{ name: 'lock-outline', color: '#ffffff' }}
           textContentType="oneTimeCode"
-          placeholder="Password"
+          placeholder="admin"
           color="#ffffff"
           rightIconColor="#28D8A1"
           validationField="password"
