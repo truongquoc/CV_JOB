@@ -14,7 +14,7 @@ import {
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 import { Icon, Avatar, SearchBar } from 'react-native-elements';
 import { StyleSheet, Dimensions, ImageBackground } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import NavigationService from '@utils/navigation';
 import rootStack from '@contents/routes';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -224,9 +224,11 @@ class ExploreScreen extends React.Component<Props, any> {
     return (
       <QuickView
         style={styles.listItem}
-        onPress={() => NavigationService.navigate(rootStack.exploreStack, {
-          screen: exploreStack.applicantscreens,
-        })}
+        onPress={() =>
+          NavigationService.navigate(rootStack.exploreStack, {
+            screen: exploreStack.applicantscreens,
+          })
+        }
       >
         <QuickView>
           <QuickView row justifyContent="space-between">
@@ -332,15 +334,22 @@ class ExploreScreen extends React.Component<Props, any> {
                   value={search}
                 />
               </QuickView>
-              <QuickView row marginTop={15} marginLeft={20}>
+              <QuickView row marginTop={15} paddingHorizontal={20}>
                 <QuickView flex={6}>
                   <Text color="#707070" fontFamily="GothamRoundedBold">
                     Top Companies
                   </Text>
                 </QuickView>
-                <QuickView flex={1}>
+                <TouchableOpacity
+                  style={{ flex: 1 }}
+                  onPress={() =>
+                    NavigationService.navigate(rootStack.exploreStack, {
+                      screen: 'FilterScreen',
+                    })
+                  }
+                >
                   <Icon type="material" name="tune" color="#707070" />
-                </QuickView>
+                </TouchableOpacity>
               </QuickView>
               <QuickView>
                 <ButtonGroup
