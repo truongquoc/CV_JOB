@@ -5,6 +5,7 @@ import {
   CheckBoxProps as ECheckBoxProps,
 } from 'react-native-elements';
 import _ from 'lodash';
+import { FlatList } from '@components';
 
 interface State {
   valuePrice?: number;
@@ -170,7 +171,7 @@ class ListCheckBox extends PureComponent<Props, State> {
     }
     return (
       <View style={wrapStyles} testID="ListCheckBox">
-        {dataRender.map((item: any) => (
+        {/* {dataRender.map((item: any) => (
           <CheckBox
             containerStyle={buttonContainer}
             key={item.id}
@@ -179,7 +180,24 @@ class ListCheckBox extends PureComponent<Props, State> {
             onPress={this.toggleCheckbox(item.id)}
             {...checkBoxProps}
           />
-        ))}
+        ))} */}
+        <FlatList
+          data={dataRender}
+          renderItem={({ item }) => (
+            <CheckBox
+              containerStyle={buttonContainer}
+              key={item.id}
+              title={item.name}
+              checked={item.isChecked}
+              onPress={this.toggleCheckbox(item.id)}
+              {...checkBoxProps}
+            />
+          )}
+          contentContainerStyle={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+          }}
+        />
       </View>
     );
   }

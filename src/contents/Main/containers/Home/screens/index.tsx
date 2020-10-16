@@ -281,7 +281,6 @@ class ApplicantScreens extends PureComponent<Props> {
       ...otherProps
     } = this.props;
     const token = data.get('token');
-    console.log('token', token);
     return (
       <Container>
         <Header

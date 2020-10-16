@@ -15,10 +15,17 @@ import {
 } from '@components';
 import { Icon, Divider } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import SaveIcon from '../Shared/SaveIcon';
 import TopTabs from './TopTabs';
 
 class ApplicantScreens extends PureComponent {
+  // handleScroll(event: Object) {
+  //   console.log('here');
+
+  //   console.log(event.nativeEvent.contentOffset.y);
+  // }
+
   render() {
     return (
       <Container>
@@ -80,6 +87,7 @@ class ApplicantScreens extends PureComponent {
                 </Text>
               </QuickView>
             </QuickView>
+
             <QuickView row>
               <QuickView flex={2}>
                 <TouchableOpacity
@@ -93,7 +101,11 @@ class ApplicantScreens extends PureComponent {
                   <Icon name="favorite" type="fontisto" color="#acb8bf" />
                 </TouchableOpacity>
               </QuickView>
-              <QuickView flex={10} paddingLeft={10}>
+              <QuickView
+                flex={10}
+                paddingLeft={10}
+                // onScrollToTop={this.handleScroll}
+              >
                 <TouchableOpacity
                   style={{
                     backgroundColor: '#6e5ce6',

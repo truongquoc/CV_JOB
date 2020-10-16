@@ -224,11 +224,9 @@ class ExploreScreen extends React.Component<Props, any> {
     return (
       <QuickView
         style={styles.listItem}
-        onPress={() =>
-          NavigationService.navigate(rootStack.exploreStack, {
-            screen: exploreStack.applicantscreens,
-          })
-        }
+        onPress={() => NavigationService.navigate(rootStack.exploreStack, {
+          screen: exploreStack.applicantscreens,
+        })}
       >
         <QuickView>
           <QuickView row justifyContent="space-between">
@@ -342,11 +340,9 @@ class ExploreScreen extends React.Component<Props, any> {
                 </QuickView>
                 <TouchableOpacity
                   style={{ flex: 1 }}
-                  onPress={() =>
-                    NavigationService.navigate(rootStack.exploreStack, {
-                      screen: 'FilterScreen',
-                    })
-                  }
+                  onPress={() => NavigationService.navigate(rootStack.exploreStack, {
+                    screen: 'FilterScreen',
+                  })}
                 >
                   <Icon type="material" name="tune" color="#707070" />
                 </TouchableOpacity>

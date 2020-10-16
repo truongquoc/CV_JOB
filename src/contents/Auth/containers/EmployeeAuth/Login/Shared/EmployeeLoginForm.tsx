@@ -5,7 +5,9 @@ import { applyObjectSelector } from '@utils/selector';
 import { TObjectRedux } from '@utils/redux';
 import { Color } from '@themes/Theme';
 import { withTheme, Icon } from 'react-native-elements';
-import { QuickView, TextError, AuthButton, Text } from '@components';
+import {
+  QuickView, TextError, AuthButton, Text,
+} from '@components';
 import AuthInput from '@contents/Auth/containers/Index/Shared/AuthInput';
 import {
   TouchableWithoutFeedback,
