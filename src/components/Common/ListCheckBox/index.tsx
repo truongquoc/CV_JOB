@@ -171,7 +171,7 @@ class ListCheckBox extends PureComponent<Props, State> {
     }
     return (
       <View style={wrapStyles} testID="ListCheckBox">
-        {/* {dataRender.map((item: any) => (
+        {dataRender.map((item: any) => (
           <CheckBox
             containerStyle={buttonContainer}
             key={item.id}
@@ -180,7 +180,7 @@ class ListCheckBox extends PureComponent<Props, State> {
             onPress={this.toggleCheckbox(item.id)}
             {...checkBoxProps}
           />
-        ))} */}
+        ))}
         <FlatList
           data={dataRender}
           renderItem={({ item }) => (

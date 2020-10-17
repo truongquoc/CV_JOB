@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  EnumComponent, getStyle, getComponent,
-} from '@utils/testHelper';
+import { EnumComponent, getStyle, getComponent } from '@utils/testHelper';
 import ListCheckBox from '..';
 
 const data = [
@@ -19,7 +17,12 @@ describe('ListCheckBox Component', () => {
     /**
      * background
      */
-    const lcbStyle = getStyle(target, { backgroundColor: 'red' }, type, 'style');
+    const lcbStyle = getStyle(
+      target,
+      { backgroundColor: 'red' },
+      type,
+      'style',
+    );
     expect(lcbStyle.backgroundColor).toBe('red');
 
     const props1 = getComponent(target, { row: true }, type).props();
@@ -30,7 +33,11 @@ describe('ListCheckBox Component', () => {
       backgroundColor: 'transparent',
     });
 
-    const props2 = getComponent(target, { checkBoxProps: { iconRight: true } }, type).props();
+    const props2 = getComponent(
+      target,
+      { checkBoxProps: { iconRight: true } },
+      type,
+    ).props();
     expect(props2.children).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -41,7 +48,11 @@ describe('ListCheckBox Component', () => {
       ]),
     );
 
-    const props3 = getComponent(target, { backgroundColor: '#E3E3E3' }, type).props();
+    const props3 = getComponent(
+      target,
+      { backgroundColor: '#E3E3E3' },
+      type,
+    ).props();
 
     expect(props3.style.backgroundColor).toBe('#E3E3E3');
 
