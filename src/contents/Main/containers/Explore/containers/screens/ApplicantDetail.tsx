@@ -15,10 +15,17 @@ import {
 } from '@components';
 import { Icon, Divider } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import SaveIcon from '../Shared/SaveIcon';
 import TopTabs from './TopTabs';
 
 class ApplicantScreens extends PureComponent {
+  // handleScroll(event: Object) {
+  //   console.log('here');
+
+  //   console.log(event.nativeEvent.contentOffset.y);
+  // }
+
   render() {
     return (
       <Container>
@@ -53,16 +60,20 @@ class ApplicantScreens extends PureComponent {
               Atlassian
             </Text>
 
-            {/* <QuickView row flex={6} alignItems="center" marginTop={15}>
-              <Icon type="entypo" name="location-pin" color="#707070" />
+            <QuickView
+              justifyContent="center"
+              alignItems="center"
+              marginTop={20}
+            >
               <Text
-                color="#707070"
-                fontSize={15}
+                fontSize={20}
+                color="#188ded"
+                fontWeight="bold"
                 fontFamily="GothamRoundedBold"
               >
-                417 Wallet Street New York USA
+                $300-$700
               </Text>
-            </QuickView> */}
+            </QuickView>
 
             <QuickView row justifyContent="space-between" margin={20}>
               <QuickView row flex={12} alignItems="center">
@@ -76,83 +87,43 @@ class ApplicantScreens extends PureComponent {
                 </Text>
               </QuickView>
             </QuickView>
-            <TopTabs />
-            {/* <QuickView
-              center
-              row
-              justifyContent="space-between"
-              marginTop={20}
-              marginLeft={20}
-            >
-              <QuickView row flex={8} alignItems="center">
-                <Text color="#2d2b2b" fontSize={15}>
-                  Experience
-                </Text>
+
+            <QuickView row>
+              <QuickView flex={2}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#dee1e3',
+                    paddingHorizontal: 20,
+                    paddingVertical: 15,
+                    borderRadius: 5,
+                  }}
+                >
+                  <Icon name="favorite" type="fontisto" color="#acb8bf" />
+                </TouchableOpacity>
               </QuickView>
-              <QuickView row flex={8} alignItems="center">
-                <Text color="#2d2b2b" fontSize={15}>
-                  Employment
-                </Text>
-              </QuickView>
-              <QuickView row flex={6} alignItems="center">
-                <Text color="#2d2b2b" fontSize={15}>
-                  Salary
-                </Text>
+              <QuickView
+                flex={10}
+                paddingLeft={10}
+                // onScrollToTop={this.handleScroll}
+              >
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#6e5ce6',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    paddingVertical: 15,
+                    borderRadius: 5,
+                  }}
+                >
+                  <Text color="#ffffff" fontWeight="medium" fontSize={18}>
+                    Apply Now
+                  </Text>
+                </TouchableOpacity>
               </QuickView>
             </QuickView>
-
-            <QuickView
-              center
-              row
-              justifyContent="space-between"
-              marginTop={10}
-              marginLeft={20}
-            >
-              <QuickView row flex={8} alignItems="center">
-                <Text color="#2d2b2b" fontSize={15} fontWeight="medium">
-                  2-5 years
-                </Text>
-              </QuickView>
-              <QuickView row flex={8} alignItems="center">
-                <Text color="#2d2b2b" fontSize={15} fontWeight="medium">
-                  Full time
-                </Text>
-              </QuickView>
-              <QuickView row flex={6} alignItems="center">
-                <Text color="#2d2b2b" fontSize={15} fontWeight="medium">
-                  $5,000
-                </Text>
-              </QuickView>
-            </QuickView> */}
+            <TopTabs />
           </Body>
         </ParallaxScrollView>
-        {/* <Button
-          center
-          title="Apply for this job"
-          fontSize={20}
-          titleColor="#5760EB"
-          width={400}
-          height={60}
-          marginBottom={15}
-          borderRadius={60}
-          borderWidth={1}
-          borderColor="#5760EB"
-          backgroundColor="white"
-          titleStyle={{ fontFamily: 'GothamRounded-Bold' }}
-          containerStyle={{
-            shadowColor: '#9EB6FF',
-            shadowOffset: {
-              width: 0,
-              height: 7,
-            },
-            shadowOpacity: 0.41,
-            shadowRadius: 9.11,
-            elevation: 14,
-            paddingLeft: 5,
-            paddingBottom: 4,
-            paddingRight: 5,
-          }}
-        /> */}
       </Container>
     );
   }

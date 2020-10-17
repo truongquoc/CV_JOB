@@ -50,7 +50,7 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
           ref={(ref: any) => {
             this.email = ref;
           }}
-          value="ngotruongquoc0102@gmail.com"
+          value="admin@gmail.com"
           leftIcon={{ name: 'email-outline', color: '#ffffff' }}
           placeholder="Email"
           validationField="email"
@@ -65,7 +65,7 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
           value="admin"
           leftIcon={{ name: 'lock-outline', color: '#ffffff' }}
           textContentType="oneTimeCode"
-          placeholder="Password"
+          placeholder="admin"
           color="#ffffff"
           rightIconColor="#28D8A1"
           validationField="password"

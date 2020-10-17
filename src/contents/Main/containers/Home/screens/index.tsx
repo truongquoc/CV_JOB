@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import {
   QuickView,
   Text,
@@ -20,6 +20,9 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+import { applyObjectSelector } from '@utils/selector';
+import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
+import { TObjectRedux } from '@utils/redux';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -88,6 +91,11 @@ interface JobType {
   salary: string;
   deadline: string;
 }
+
+interface Props {
+  requireLogin?: boolean;
+  loginSelectorData: TObjectRedux;
+}
 const jobData = [
   {
     address: '422 Hoang Minh Khai, Hai Ba Trung',
@@ -106,7 +114,7 @@ const jobData = [
     deadline: '11/12/2020',
   },
 ];
-const data = [
+const articleData = [
   {
     title: '7 bed and breakfasts in Mountain View you wil love',
     content: 'Bi quyet tang doanh so bang email Marketing',
@@ -126,7 +134,7 @@ const data = [
       'https://storage.googleapis.com/shopdunk-images/vieclamshopdunk/2019/10/f8448b3a-viec-lam-them-tai-nha-0.jpg',
   },
 ];
-class ApplicantScreens extends PureComponent {
+class ApplicantScreens extends PureComponent<Props> {
   renderCenterComponent = () => (
     <QuickView alignItems="center" marginTop={10}>
       <Avatar rounded size="small" title="MD" backgroundColor="#363433" />
@@ -267,6 +275,12 @@ class ApplicantScreens extends PureComponent {
   );
 
   render() {
+    const {
+      requireLogin,
+      loginSelectorData: { data },
+      ...otherProps
+    } = this.props;
+    const token = data.get('token');
     return (
       <Container>
         <Header
@@ -314,7 +328,7 @@ class ApplicantScreens extends PureComponent {
             </QuickView>
           </QuickView>
           <QuickView marginTop={20}>
-            <FlatList data={data} renderItem={this.renderListArticle} />
+            <FlatList data={articleData} renderItem={this.renderListArticle} />
           </QuickView>
         </ScrollView>
       </Container>
@@ -322,7 +336,9 @@ class ApplicantScreens extends PureComponent {
   }
 }
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => ({
+  loginSelectorData: applyObjectSelector(loginSelector, state),
+});
 
 const mapDispatchToProps = (dispatch: any) => ({});
 

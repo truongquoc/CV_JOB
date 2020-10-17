@@ -14,17 +14,13 @@ interface JobDetail {
   description: string;
   location: string;
   logo: string;
-}
-interface JobType {
-  address: string;
-  name: string;
-  profileURl: string;
   salary: string;
-  deadline: string;
 }
+
 const detailItem: JobDetail = {
   name: 'Full Stack Ruby on Rails Developer',
   company: 'Rockstar Game Inc',
+  salary: '$500 - $700',
   logo:
     'https://theengineeringissue.com/wp-content/uploads/2018/11/rockstar.jpg',
   description:
@@ -69,21 +65,21 @@ export class InformationScreen extends PureComponent {
       <Container>
         <QuickView>
           <QuickView marginTop={10}>
-            <QuickView
-              backgroundColor="#188ded"
-              alignSelf="flex-start"
-              borderRadius={5}
-            >
-              <Text
-                color="#fff"
-                fontSize={12}
-                fontWeight="bold"
-                style={{ paddingHorizontal: 5 }}
-              >
-                Full Time
-              </Text>
-            </QuickView>
             <QuickView marginTop={30}>
+              <QuickView row>
+                <QuickView backgroundColor="#B5BABD" borderRadius={5}>
+                  <Text
+                    color="#fff"
+                    fontSize={12}
+                    fontWeight="bold"
+                    style={{
+                      paddingHorizontal: 10,
+                    }}
+                  >
+                    Full Time
+                  </Text>
+                </QuickView>
+              </QuickView>
               <QuickView alignItems="center" paddingRight={30}>
                 <Text
                   fontSize={28}
@@ -112,7 +108,7 @@ export class InformationScreen extends PureComponent {
             />
             <QuickView row alignItems="center" marginTop={10}>
               <QuickView>
-                <Avatar source={{ uri: item.logo }} rounded />
+                <Avatar source={{ uri: detailItem.logo }} rounded />
               </QuickView>
               <QuickView marginLeft={10}>
                 <Text
@@ -123,7 +119,7 @@ export class InformationScreen extends PureComponent {
                   COMPANY
                 </Text>
                 <Text color="#B5BABD" fontSize={16}>
-                  {item.company}
+                  {detailItem.company}
                 </Text>
               </QuickView>
               <QuickView marginLeft={10}>
@@ -135,14 +131,14 @@ export class InformationScreen extends PureComponent {
                   LOCATION
                 </Text>
                 <Text color="#B5BABD" fontSize={16} numberOfLines={2}>
-                  {item.location}
+                  {detailItem.location}
                 </Text>
               </QuickView>
             </QuickView>
 
             <QuickView>
               <FlatList
-                data={item.tag}
+                data={detailItem.tag}
                 renderItem={this.renderListTags}
                 contentContainerStyle={{
                   flexDirection: 'row',
@@ -150,7 +146,7 @@ export class InformationScreen extends PureComponent {
                 }}
               />
             </QuickView>
-            <HTML html={item.description} />
+            <HTML html={detailItem.description} />
           </QuickView>
         </QuickView>
       </Container>
