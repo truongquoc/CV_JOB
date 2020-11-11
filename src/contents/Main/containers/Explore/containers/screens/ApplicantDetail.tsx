@@ -13,20 +13,82 @@ import {
   Image,
   Button,
 } from '@components';
-import { Icon, Divider } from 'react-native-elements';
+import { Icon, Divider, withTheme } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { getIdFromParams } from '@utils/appHelper';
+import { applyObjectSelector, parseObjectSelector } from '@utils/selector';
+import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
+import { requireLoginSelector } from '@contents/Config/redux/selector';
 import SaveIcon from '../Shared/SaveIcon';
 import TopTabs from './TopTabs';
+import { jobGetDetail } from '../../redux/slice';
+import { jobDetailSelector } from '../../redux/selector';
 
-class ApplicantScreens extends PureComponent {
-  // handleScroll(event: Object) {
-  //   console.log('here');
+interface Props {
+  getDetail: (id: number) => any;
+  detail: any;
+  requireLogin?: boolean;
+  loginSelectorData?: any;
+}
+class ApplicantScreens extends PureComponent<Props> {
+  DateDiff = {
+    inHours(d1: number, d2: number) {
+      return Math.floor((d2 - d1) / (3600 * 1000));
+    },
+    inMinutes(d1: number, d2: number) {
+      return Math.floor((d2 - d1) / (60 * 1000));
+    },
+    inDays(d1: number, d2: number) {
+      return Math.floor((d2 - d1) / (24 * 3600 * 1000));
+    },
+    inMonth(d1: number, d2: number) {
+      return Math.floor((d2 - d1) / (30 * 24 * 3600 * 1000));
+    },
+  };
 
-  //   console.log(event.nativeEvent.contentOffset.y);
-  // }
+  componentDidMount() {
+    const { getDetail } = this.props;
+    getDetail(getIdFromParams(this.props));
+  }
 
   render() {
+    const { requireLogin, loginSelectorData } = this.props;
+    const token = loginSelectorData.data.get('token');
+    let datediff;
+    const {
+      detail: { data },
+    } = this.props;
+    if (
+      this.DateDiff.inMinutes(
+        new Date(data.data.createdat).getTime(),
+        new Date().getTime(),
+      ) < 60
+    ) {
+      datediff = this.DateDiff.inMinutes(
+        new Date(data.data.createdat).getTime(),
+        new Date().getTime(),
+      );
+    } else if (
+      this.DateDiff.inHours(
+        new Date(data.data.createdat).getTime(),
+        new Date().getTime(),
+      ) < 24
+    ) {
+      this.DateDiff.inHours(
+        new Date(data.data.createdat).getTime(),
+        new Date().getTime(),
+      );
+    } else {
+      console.log(
+        'her',
+        this.DateDiff.inDays(
+          new Date(data.data.createdat).getTime(),
+          new Date().getTime(),
+        ),
+      );
+    }
+
     return (
       <Container>
         <ParallaxScrollView
@@ -57,7 +119,7 @@ class ApplicantScreens extends PureComponent {
               center
               style={{ opacity: 0.8 }}
             >
-              Atlassian
+              {data.data?.user?.profile.name}
             </Text>
 
             <QuickView
@@ -71,14 +133,14 @@ class ApplicantScreens extends PureComponent {
                 fontWeight="bold"
                 fontFamily="GothamRoundedBold"
               >
-                $300-$700
+                {`$${data.data.lowestWage}`}-{`$${data.data.highestWage}`}
               </Text>
             </QuickView>
 
             <QuickView row justifyContent="space-between" margin={20}>
               <QuickView row flex={12} alignItems="center">
                 <Text color="#a09a9a" fontSize={15}>
-                  4 days ago
+                  {datediff}
                 </Text>
               </QuickView>
               <QuickView row flex={6} alignItems="center">
@@ -101,11 +163,7 @@ class ApplicantScreens extends PureComponent {
                   <Icon name="favorite" type="fontisto" color="#acb8bf" />
                 </TouchableOpacity>
               </QuickView>
-              <QuickView
-                flex={10}
-                paddingLeft={10}
-                // onScrollToTop={this.handleScroll}
-              >
+              <QuickView flex={10} paddingLeft={10}>
                 <TouchableOpacity
                   style={{
                     backgroundColor: '#6e5ce6',
@@ -121,7 +179,9 @@ class ApplicantScreens extends PureComponent {
                 </TouchableOpacity>
               </QuickView>
             </QuickView>
+            {/* {data ? <TopTabs /> : <></>} */}
             <TopTabs />
+            {/* <InformationScreen /> */}
           </Body>
         </ParallaxScrollView>
       </Container>
@@ -129,8 +189,17 @@ class ApplicantScreens extends PureComponent {
   }
 }
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => ({
+  detail: parseObjectSelector(applyObjectSelector(jobDetailSelector, state)),
+  requireLogin: requireLoginSelector(state),
+  loginSelectorData: applyObjectSelector(loginSelector, state),
+});
 
-const mapDispatchToProps = (dispatch: any) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+  getDetail: (id: number) => dispatch(jobGetDetail({ id })),
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ApplicantScreens);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withTheme(ApplicantScreens as any));

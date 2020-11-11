@@ -4,13 +4,14 @@ import { compose } from 'recompose';
 import { withTranslation } from 'react-i18next';
 import { withTheme } from 'react-native-elements';
 import detailJobTopTab from '../routes';
-import { InformationScreen } from './InformationScreen';
-import { CompanyScreen } from './CompanyScreen';
-import { RelatedJobScreen } from './RelatedJobScreen';
+import InformationScreen from './InformationScreen';
+import CompanyScreen from './CompanyScreen';
+import RelatedJobScreen from './RelatedJobScreen';
+import { applyObjectSelector, parseObjectSelector } from '@utils/selector';
 
 const TopTab = createMaterialTopTabNavigator();
 
-function MyJobTopTab() {
+export default function MyJobTopTab() {
   return (
     <TopTab.Navigator
       tabBarOptions={{ labelStyle: { fontSize: 12, width: 100 } }}
@@ -34,4 +35,4 @@ function MyJobTopTab() {
   );
 }
 
-export default compose(withTheme, withTranslation())(MyJobTopTab);
+// export default compose(withTheme, withTranslation())(MyJobTopTab);

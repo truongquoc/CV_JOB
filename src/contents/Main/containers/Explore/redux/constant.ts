@@ -1,4 +1,7 @@
-import { createArrayInitialState } from '@utils/redux';
+import {
+  createArrayInitialState,
+  createObjectInitialState,
+} from '@utils/redux';
 import { fromJS } from 'immutable';
 
 export const LIST = 'LIST';
@@ -11,6 +14,7 @@ export const DETAIL = 'detail';
 
 export const INITIAL_STATE = fromJS({
   ...createArrayInitialState(LIST),
+  ...createObjectInitialState(DETAIL),
 });
 
 /**
@@ -24,7 +28,7 @@ export type TList = {
 };
 
 export type TDetail = {
-  jobGetGetDetail: (state: any, action: any) => any;
+  jobGetDetail: (state: any, action: any) => any;
   jobGetDetailSuccess: (state: any, action: any) => any;
   jobGetDetailFail: (state: any, action: any) => any;
 };

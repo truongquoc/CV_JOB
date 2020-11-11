@@ -12,7 +12,7 @@ import {
   FlatList,
 } from '@components';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
-import { Icon, Avatar, SearchBar } from 'react-native-elements';
+import { Icon, Avatar, SearchBar, withTheme } from 'react-native-elements';
 import { StyleSheet, Dimensions, ImageBackground } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import NavigationService from '@utils/navigation';
@@ -23,6 +23,8 @@ import { applyArraySelector, parseArraySelector } from '@utils/selector';
 import exploreStack from '../routes';
 import { jobGetList } from '../redux/slice';
 import { jobListSelector } from '../redux/selector';
+import { setIdIntoParams } from '@utils/appHelper';
+import { compose } from 'recompose';
 
 const colors = {
   black: '#1a1917',
@@ -224,9 +226,12 @@ class ExploreScreen extends React.Component<Props, any> {
     return (
       <QuickView
         style={styles.listItem}
-        onPress={() => NavigationService.navigate(rootStack.exploreStack, {
-          screen: exploreStack.applicantscreens,
-        })}
+        onPress={() => {
+          NavigationService.navigate(rootStack.exploreStack, {
+            screen: exploreStack.applicantscreens,
+            params: setIdIntoParams(item),
+          });
+        }}
       >
         <QuickView>
           <QuickView row justifyContent="space-between">
@@ -283,6 +288,7 @@ class ExploreScreen extends React.Component<Props, any> {
   render() {
     const { slider1ActiveSlide, search } = this.state;
     const { list } = this.props;
+    console.log('list', list);
 
     const testList = [];
     const titleList = [
@@ -340,9 +346,11 @@ class ExploreScreen extends React.Component<Props, any> {
                 </QuickView>
                 <TouchableOpacity
                   style={{ flex: 1 }}
-                  onPress={() => NavigationService.navigate(rootStack.exploreStack, {
-                    screen: 'FilterScreen',
-                  })}
+                  onPress={() =>
+                    NavigationService.navigate(rootStack.exploreStack, {
+                      screen: 'FilterScreen',
+                    })
+                  }
                 >
                   <Icon type="material" name="tune" color="#707070" />
                 </TouchableOpacity>
@@ -405,4 +413,8 @@ const mapDispatchToProps = (dispatch: any) => ({
   getList: (query?: TQuery) => dispatch(jobGetList({ query })),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExploreScreen);
+const withReduce = connect(mapStateToProps, mapDispatchToProps, null, {
+  forwardRef: true,
+});
+
+export default compose(withTheme, withReduce)(ExploreScreen as any);

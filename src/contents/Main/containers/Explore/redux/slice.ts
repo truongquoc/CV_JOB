@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createArrayReducer, createObjectReducer } from '@utils/redux';
-import {
-  INITIAL_STATE, NAME, TList, LIST, TDetail, DETAIL,
-} from './constant';
+import { INITIAL_STATE, NAME, TList, LIST, TDetail, DETAIL } from './constant';
 
 const jobSlice = createSlice({
   name: NAME,
@@ -16,7 +14,9 @@ export const {
   jobGetListFail,
   jobGetListSuccess,
   jobGetList,
-  jobGetGetDetail,
+  jobGetDetail,
+  jobGetDetailFail,
+  jobGetDetailSuccess,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

@@ -1,11 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import {
-  Container, QuickView, Text, FlatList,
-} from '@components';
-import { Avatar, Divider } from 'react-native-elements';
+import { Container, QuickView, Text, FlatList } from '@components';
+import { Avatar, Divider, withTheme } from 'react-native-elements';
 import HTML from 'react-native-render-html';
+import { getIdFromParams } from '@utils/appHelper';
+import { applyObjectSelector, parseObjectSelector } from '@utils/selector';
+import { requireLoginSelector } from '@contents/Config/redux/selector';
+import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
+import { jobDetailSelector } from '../../redux/selector';
+import { jobGetDetail } from '../../redux/slice';
+import { ActivityIndicator } from 'react-native';
 
 interface JobDetail {
   name: string;
@@ -15,6 +20,13 @@ interface JobDetail {
   location: string;
   logo: string;
   salary: string;
+}
+
+interface Props {
+  getDetail?: (id: number) => any;
+  detail?: any;
+  requireLogin?: boolean;
+  loginSelectorData?: any;
 }
 
 const detailItem: JobDetail = {
@@ -37,7 +49,12 @@ const detailItem: JobDetail = {
   ],
 };
 
-export class InformationScreen extends PureComponent {
+class InformationScreen extends PureComponent<Props> {
+  // componentDidMount() {
+  //   const { getDetail } = this.props;
+  //   getDetail(3);
+  // }
+
   renderListTags = ({ item }: { item: any }) => (
     <QuickView
       backgroundColor="#E3F8F9"
@@ -60,6 +77,9 @@ export class InformationScreen extends PureComponent {
 
   render() {
     // const contentWidth = useWindowDimensions().width;
+    const {
+      detail: { data },
+    } = this.props;
 
     return (
       <Container>
@@ -87,7 +107,7 @@ export class InformationScreen extends PureComponent {
                   fontWeight="bold"
                   fontFamily="GothamRoundedBold"
                 >
-                  {detailItem.name}
+                  {data.data.name}
                 </Text>
               </QuickView>
               <QuickView row>
@@ -99,7 +119,7 @@ export class InformationScreen extends PureComponent {
                   Posted on
                 </Text>
                 <Text color="#B5BABD" marginLeft={5}>
-                  Octorbor 24, 2016
+                  {data.data.createdat}
                 </Text>
               </QuickView>
             </QuickView>
@@ -119,7 +139,7 @@ export class InformationScreen extends PureComponent {
                   COMPANY
                 </Text>
                 <Text color="#B5BABD" fontSize={16}>
-                  {detailItem.company}
+                  {data.data.user.profile?.name}
                 </Text>
               </QuickView>
               <QuickView marginLeft={10}>
@@ -146,7 +166,7 @@ export class InformationScreen extends PureComponent {
                 }}
               />
             </QuickView>
-            <HTML html={detailItem.description} />
+            <HTML html={data.data.description} />
           </QuickView>
         </QuickView>
       </Container>
@@ -154,8 +174,17 @@ export class InformationScreen extends PureComponent {
   }
 }
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => {
+  return {
+    detail: parseObjectSelector(applyObjectSelector(jobDetailSelector, state)),
+    requireLogin: requireLoginSelector(state),
+    loginSelectorData: applyObjectSelector(loginSelector, state),
+  };
+};
 
 const mapDispatchToProps = (dispatch: any) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(InformationScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(InformationScreen as any);
