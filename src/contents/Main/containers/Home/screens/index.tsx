@@ -23,6 +23,8 @@ import {
 import { applyObjectSelector } from '@utils/selector';
 import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
 import { TObjectRedux } from '@utils/redux';
+import { Global } from '@utils/appHelper';
+import { url } from 'inspector';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -95,6 +97,7 @@ interface JobType {
 interface Props {
   requireLogin?: boolean;
   loginSelectorData: TObjectRedux;
+  navigation?: any;
 }
 const jobData = [
   {
@@ -274,63 +277,117 @@ class ApplicantScreens extends PureComponent<Props> {
     </QuickView>
   );
 
+  leftComponent = () => {
+    const { navigation } = this.props;
+    return (
+      <Icon
+        type="entypo"
+        name="menu"
+        color="#635f5e"
+        onPress={() => {
+          navigation.openDrawer();
+        }}
+      />
+    );
+  };
+
   render() {
     const {
       requireLogin,
       loginSelectorData: { data },
       ...otherProps
     } = this.props;
-    const token = data.get('token');
+    const { token } = Global;
+
     return (
       <Container>
         <Header
           containerStyle={styles.headerStyle}
-          // backgroundColor="red"
-          leftComponent={<Icon type="entypo" name="menu" color="#635f5e" />}
+          leftComponent={this.leftComponent()}
           centerComponent={this.renderCenterComponent()}
           rightComponent={this.renderRightComponent()}
         />
-
-        <ScrollView>
-          <QuickView
-            marginTop={20}
-            backgroundColor="#1f4780"
-            paddingTop={10}
-            paddingHorizontal={5}
-            paddingBottom={20}
-          >
+        {token ? (
+          <ScrollView>
             <QuickView
-              marginTop={10}
-              row
-              justifyContent="space-between"
+              marginTop={20}
+              backgroundColor="#1f4780"
+              paddingTop={10}
               paddingHorizontal={5}
+              paddingBottom={20}
             >
-              <Text fontWeight="bold" color="#fff" fontSize={15}>
-                Việc làm đề xuất cho bạn
-              </Text>
-              <TouchableOpacity>
-                <Text color="#fff" fontSize={12} underline>
-                  Xem thêm
+              <QuickView
+                marginTop={10}
+                row
+                justifyContent="space-between"
+                paddingHorizontal={5}
+              >
+                <Text fontWeight="bold" color="#fff" fontSize={15}>
+                  Việc làm đề xuất cho bạn
                 </Text>
-              </TouchableOpacity>
+                <TouchableOpacity>
+                  <Text color="#fff" fontSize={12} underline>
+                    Xem thêm
+                  </Text>
+                </TouchableOpacity>
+              </QuickView>
+              <QuickView
+                marginTop={30}
+                alignItems="center"
+                justifyContent="space-around"
+              >
+                <FlatList
+                  data={jobData}
+                  renderItem={this.renderListJobs}
+                  horizontal
+                  initialNumToRender={1}
+                />
+              </QuickView>
             </QuickView>
-            <QuickView
-              marginTop={30}
-              alignItems="center"
-              justifyContent="space-around"
-            >
+            <QuickView marginTop={20}>
               <FlatList
-                data={jobData}
-                renderItem={this.renderListJobs}
-                horizontal
-                initialNumToRender={1}
+                data={articleData}
+                renderItem={this.renderListArticle}
               />
             </QuickView>
+          </ScrollView>
+        ) : (
+          <QuickView paddingHorizontal={20}>
+            <QuickView
+              style={{
+                backgroundColor: '#ffffff',
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 5,
+                },
+                borderRadius: 10,
+                shadowOpacity: 0.36,
+                shadowRadius: 6.68,
+                elevation: 11,
+              }}
+            >
+              <Image
+                source={{
+                  uri:
+                    'https://www.orangescrum.com/blog/wp-content/uploads/2019/10/6-Reasons-you-should-Adopt-Agile-Project-Management-NOW.jpg',
+                }}
+                style={{ height: 100 }}
+                width={200}
+                resizeMode="cover"
+              />
+              <QuickView paddingHorizontal={10} paddingVertical={20}>
+                <Text color="#000">Become an Applicant</Text>
+                <Text color="#52504e">
+                  When you fill in the registration form, you have mandotary
+                  field an optional fields. Mandatory fields will have red
+                  asterisc
+                </Text>
+                <Button title="Sign Up" />
+              </QuickView>
+            </QuickView>
           </QuickView>
-          <QuickView marginTop={20}>
-            <FlatList data={articleData} renderItem={this.renderListArticle} />
-          </QuickView>
-        </ScrollView>
+        )}
       </Container>
     );
   }

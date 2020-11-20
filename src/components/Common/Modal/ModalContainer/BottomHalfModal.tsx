@@ -10,13 +10,13 @@ interface State {
   scrollOffset: any;
 }
 interface Props {
-  viewComponent?: any,
-  isVisibleProps?: boolean,
-  content?: String,
-  title?: String,
-  backgroundColor?: string,
-  textColor?: string,
-  height?: number,
+  viewComponent?: any;
+  isVisibleProps?: boolean;
+  content?: String;
+  title?: String;
+  backgroundColor?: string;
+  textColor?: string;
+  height?: number;
   onClickClose: any;
   scroll?: boolean;
 }
@@ -63,7 +63,7 @@ class BottomHalfModal extends PureComponent<Props, State> {
     });
   };
 
-  handleScrollTo = (p:any) => {
+  handleScrollTo = (p: any) => {
     if (this.scrollViewRef.current) {
       this.scrollViewRef.current.scrollTo(p);
     }
@@ -71,8 +71,15 @@ class BottomHalfModal extends PureComponent<Props, State> {
 
   render() {
     const {
-      viewComponent, isVisibleProps, title, content,
-      backgroundColor, textColor, onClickClose, height, scroll,
+      viewComponent,
+      isVisibleProps,
+      title,
+      content,
+      backgroundColor,
+      textColor,
+      onClickClose,
+      height,
+      scroll,
     } = this.props;
     const { scrollOffset } = this.state;
     const bgColor: any = StyleSheet.flatten([
@@ -113,41 +120,42 @@ class BottomHalfModal extends PureComponent<Props, State> {
                   title="Close"
                 />
               </View>
-            ) : viewComponent}
+            ) : (
+              viewComponent
+            )}
           </Modal>
-        )
-          : (
-            <Modal
-              testID="modal"
-              isVisible={isVisibleProps}
-              onSwipeComplete={onClickClose}
-              swipeDirection={['down']}
-              scrollTo={this.handleScrollTo}
-              scrollOffset={scrollOffset}
-              scrollOffsetMax={50} // content height - ScrollView height
-              propagateSwipe
-              style={styles.modal}
-            >
-              <View style={styles.scrollableModal}>
-                <View style={{
+        ) : (
+          <Modal
+            testID="modal"
+            isVisible={isVisibleProps}
+            onSwipeComplete={onClickClose}
+            swipeDirection={['down']}
+            scrollTo={this.handleScrollTo}
+            scrollOffset={scrollOffset}
+            scrollOffsetMax={50} // content height - ScrollView height
+            propagateSwipe
+            style={styles.modal}
+          >
+            <View style={styles.scrollableModal}>
+              <View
+                style={{
                   width: 50,
                   height: 3,
                   alignSelf: 'center',
-                  backgroundColor: '#012066',
+                  backgroundColor: '#fff',
                   marginTop: 5,
-
                 }}
-                />
-                <ScrollView
-                  ref={this.scrollViewRef}
-                  onScroll={this.handleOnScroll}
-                  scrollEventThrottle={16}
-                >
-                  {viewComponent}
-                </ScrollView>
-              </View>
-            </Modal>
-          )}
+              />
+              <ScrollView
+                ref={this.scrollViewRef}
+                onScroll={this.handleOnScroll}
+                scrollEventThrottle={16}
+              >
+                {viewComponent}
+              </ScrollView>
+            </View>
+          </Modal>
+        )}
       </View>
     );
   }

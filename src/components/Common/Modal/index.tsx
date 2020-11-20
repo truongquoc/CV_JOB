@@ -14,30 +14,30 @@ import QuickView from '../View/QuickView';
 // @ts-ignore
 
 export type ModalType =
-| 'backdrop'
-| 'bottomhalf'
-| 'customback'
-| 'default'
-| 'fancy'
-| 'slide'
-| 'swipeable'
-| string;
+  | 'backdrop'
+  | 'bottomhalf'
+  | 'customback'
+  | 'default'
+  | 'fancy'
+  | 'slide'
+  | 'swipeable'
+  | string;
 
 interface Props {
-  title?: string,
-  content?: string,
-  type: ModalType,
-  viewComponent?: any,
-  isVisibleProps?: boolean,
-  backgroundColor?: string,
-  textColor?: string,
-  theme?: any,
-  onClick: any,
+  title?: string;
+  content?: string;
+  type: ModalType;
+  viewComponent?: any;
+  isVisibleProps?: boolean;
+  backgroundColor?: string;
+  textColor?: string;
+  theme?: any;
+  onClick: any;
   height?: any;
   scroll?: boolean;
 }
 interface State {
-  visible: boolean,
+  visible: boolean;
 }
 
 class AppModal extends PureComponent<Props, State> {
@@ -48,8 +48,16 @@ class AppModal extends PureComponent<Props, State> {
 
   checkType = () => {
     const {
-      viewComponent, isVisibleProps, type, backgroundColor,
-      textColor, title, content, theme, height, scroll,
+      viewComponent,
+      isVisibleProps,
+      type,
+      backgroundColor,
+      textColor,
+      title,
+      content,
+      theme,
+      height,
+      scroll,
     } = this.props;
     if (type === 'bottomhalf') {
       return (
@@ -73,7 +81,7 @@ class AppModal extends PureComponent<Props, State> {
           isVisibleProps={isVisibleProps}
           title={title}
           content={content}
-          backgroundColor={theme.AppModal.backgroundColor || backgroundColor}
+          backgroundColor={backgroundColor || theme.AppModal.backgroundColor}
           textColor={theme.AppModal.textColor || textColor}
           onClickClose={this.onClickClose}
         />
@@ -143,14 +151,13 @@ class AppModal extends PureComponent<Props, State> {
           onClickClose={this.onClickClose}
         />
       </QuickView>
-
     );
   };
 
   render() {
-    return (
-      this.checkType()
-    );
+    return this.checkType();
   }
 }
-export default withTheme(AppModal as unknown as React.ComponentType<Props & ThemeProps<any>>);
+export default withTheme(
+  (AppModal as unknown) as React.ComponentType<Props & ThemeProps<any>>,
+);

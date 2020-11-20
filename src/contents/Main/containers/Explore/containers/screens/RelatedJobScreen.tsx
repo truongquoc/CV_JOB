@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Container, QuickView, Text } from '@components';
 
-export class RelatedJobScreen extends PureComponent {
+class RelatedJobScreen extends PureComponent {
   render() {
     return (
       <Container>

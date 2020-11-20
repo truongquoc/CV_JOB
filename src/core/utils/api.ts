@@ -143,7 +143,7 @@ function requestWrapper(method: string) {
     };
 
     if (Global.token && !isFullUrl) {
-      defaults.headers.Authorization = `${Global.token}`;
+      defaults.headers.Authorization = `Bearer ${Global.token}`;
     }
     if (data) {
       defaults.body = data;

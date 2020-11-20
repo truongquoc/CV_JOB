@@ -7,16 +7,16 @@ import {
 } from 'react-native';
 
 interface State {
-  isVisible: boolean
+  isVisible: boolean;
 }
 interface Props {
-  title?: String,
-  content?: String,
-  viewComponent?: any,
-  isVisibleProps?: boolean,
-  backgroundColor?: string,
-  textColor?: string,
-  onClickClose: any,
+  title?: String;
+  content?: String;
+  viewComponent?: any;
+  isVisibleProps?: boolean;
+  backgroundColor?: string;
+  textColor?: string;
+  onClickClose: any;
 }
 const styles = StyleSheet.create({
   content: {
@@ -39,8 +39,15 @@ const styles = StyleSheet.create({
 class BackdropCloseModal extends PureComponent<Props, State> {
   render() {
     const {
-      viewComponent, isVisibleProps, title, content, backgroundColor, textColor, onClickClose,
+      viewComponent,
+      isVisibleProps,
+      title,
+      content,
+      backgroundColor,
+      textColor,
+      onClickClose,
     } = this.props;
+
     const bgColor: any = StyleSheet.flatten([
       styles.content,
       {
@@ -56,12 +63,12 @@ class BackdropCloseModal extends PureComponent<Props, State> {
     ]);
     return (
       <View>
-        <Modal
-          isVisible={isVisibleProps}
-        >
+        <Modal isVisible={isVisibleProps}>
           {!viewComponent ? (
             <View style={bgColor}>
-              <Text style={[textColors, styles.title]}>{title || 'Thông báo'}</Text>
+              <Text style={[textColors, styles.title]}>
+                {title || 'Thông báo'}
+              </Text>
               <Text style={textColors}>{content || ''}</Text>
               <Button
                 testID="close-button"
@@ -69,7 +76,9 @@ class BackdropCloseModal extends PureComponent<Props, State> {
                 title="Close"
               />
             </View>
-          ) : viewComponent}
+          ) : (
+            viewComponent
+          )}
         </Modal>
       </View>
     );

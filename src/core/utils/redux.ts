@@ -225,7 +225,9 @@ export function stringifyQuery(query: TQuery) {
   }
   const limit = query?.limit ? query.limit : defaultLimit;
   const offset = query?.page && query.page >= 1 ? (query.page - 1) * limit : 0;
-  const handledQuery: any = _.omit(query, ['page']);
+  // const handledQuery: any = _.omit(query, ['page']);
+
+  const handledQuery: any = query;
   handledQuery.offset = offset;
   handledQuery.limit = limit;
   if (_.has(handledQuery, 'filter')) {

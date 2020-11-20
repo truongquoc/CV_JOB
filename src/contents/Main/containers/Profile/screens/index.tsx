@@ -1,22 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import {
-  Container, Header, Body, QuickView, Text, Image,
-} from '@components';
+import { Container, Header, Body, QuickView, Text, Image } from '@components';
 import { Icon } from 'react-native-elements';
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-// const list = [
-//   {
-//     title: 'Appointments',
-//     icon: 'av-timer',
-//   },
-//   {
-//     title: 'Trips',
-//     icon: 'flight-takeoff',
-//   },
-// ];
 const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
@@ -44,7 +32,6 @@ const styles = StyleSheet.create({
   informationCard: {
     width: '100%',
     backgroundColor: 'white',
-    borderRadius: 15,
     padding: 10,
     elevation: 10,
     shadowColor: '#000',
@@ -54,23 +41,28 @@ const styles = StyleSheet.create({
   },
 });
 export class ProfileScreen extends PureComponent {
+  renderRightComponent = () => (
+    <Icon name="more-vertical" type="feather" color="#fff" size={16} />
+  );
+
+  renderCenterComponent = () => (
+    <Text color="#fff" fontSize={20} fontWeight="bold">
+      Profile
+    </Text>
+  );
+
   render() {
     return (
       <Container>
         <Header
           backIcon
-          leftColor="#404F68"
-          backgroundColor="none"
+          leftColor="#fff"
+          backgroundColor="#329AE4"
           height={100}
-          rightComponent={(
-            <Icon
-              name="more-vertical"
-              type="feather"
-              color="#404F68"
-              size={16}
-            />
-          )}
+          centerComponent={this.renderCenterComponent()}
+          rightComponent={this.renderRightComponent()}
         />
+
         <ScrollView>
           <Body>
             <QuickView row alignItems="center">
@@ -89,10 +81,10 @@ export class ProfileScreen extends PureComponent {
                 Anna Johnson
               </Text>
             </QuickView>
-            <QuickView row>
+            <QuickView row flex={1}>
               <QuickView flex={3}>
                 <Image
-                  width={null}
+                  width={150}
                   height={200}
                   resizeMode="cover"
                   source={{
@@ -290,18 +282,17 @@ export class ProfileScreen extends PureComponent {
             </QuickView>
             <QuickView row alignItems="center">
               <QuickView
-                flex={2}
+                flex={1}
                 backgroundColor="#9e9991"
                 paddingTop={10}
                 paddingBottom={10}
                 borderRadius={5}
               >
-                <Icon name="home" type="antdesign" size={36} color="#fff" />
+                <Icon name="home" type="antdesign" size={18} color="#fff" />
               </QuickView>
               <QuickView flex={7} marginLeft={10}>
-                <Text color="#2E3137" fontSize={14} fontWeight="bold">
+                <Text color="#000" fontSize={18} fontWeight="bold">
                   Truong Dai hoc Bach khoa Da Nang
-                  {' '}
                 </Text>
                 <Text color="#5A5F69">2017-2022</Text>
               </QuickView>
@@ -320,13 +311,13 @@ export class ProfileScreen extends PureComponent {
             </QuickView>
             <QuickView row alignItems="center">
               <QuickView
-                flex={2}
+                flex={1}
                 backgroundColor="#9e9991"
                 paddingTop={10}
                 paddingBottom={10}
                 borderRadius={5}
               >
-                <Icon name="contacts" type="antdesign" size={36} color="#fff" />
+                <Icon name="contacts" type="antdesign" size={18} color="#fff" />
               </QuickView>
               <QuickView flex={7} marginLeft={10}>
                 <Text color="#2E3137" fontSize={14} fontWeight="bold">
@@ -350,13 +341,13 @@ export class ProfileScreen extends PureComponent {
               </QuickView>
               <QuickView row alignItems="center">
                 <QuickView
-                  flex={2}
+                  flex={1}
                   backgroundColor="#9e9991"
                   paddingTop={10}
                   paddingBottom={10}
                   borderRadius={5}
                 >
-                  <Icon name="briefcase" type="entypo" size={36} color="#fff" />
+                  <Icon name="briefcase" type="entypo" size={18} color="#fff" />
                 </QuickView>
                 <QuickView
                   flex={7}
@@ -373,8 +364,7 @@ export class ProfileScreen extends PureComponent {
                       type="antdesign"
                       size={16}
                       color="#acf7ab"
-                    />
-                    {' '}
+                    />{' '}
                     <Text color="#377cab">9/2020 - 9/2020</Text>
                   </Text>
                 </QuickView>
