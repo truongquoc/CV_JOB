@@ -1,12 +1,12 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
 import { immutableTransform } from '@utils/redux';
 import { Platform } from 'react-native';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
-import { composeWithDevTools } from 'redux-devtools-extension';
 
 const persistConfig = {
   key: 'root',
@@ -14,8 +14,6 @@ const persistConfig = {
   storage: AsyncStorage,
   whitelist: ['config', 'auth', 'product', 'event'],
 };
-
-const composeEnhancers = compose;
 
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware];
@@ -27,8 +25,6 @@ if (__DEV__ && Platform.OS === 'ios') {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export default () => {
-  // const enhancer = composeEnhancers(applyMiddleware(...middlewares));
-
   const store = createStore(
     persistedReducer,
     composeWithDevTools(applyMiddleware(...middlewares)),

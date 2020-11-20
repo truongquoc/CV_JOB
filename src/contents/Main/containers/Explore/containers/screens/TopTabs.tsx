@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { compose } from 'recompose';
-import { withTranslation } from 'react-i18next';
-import { withTheme } from 'react-native-elements';
+
 import detailJobTopTab from '../routes';
 import InformationScreen from './InformationScreen';
 import CompanyScreen from './CompanyScreen';
 import RelatedJobScreen from './RelatedJobScreen';
-import { applyObjectSelector, parseObjectSelector } from '@utils/selector';
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -34,5 +31,3 @@ export default function MyJobTopTab() {
     </TopTab.Navigator>
   );
 }
-
-// export default compose(withTheme, withTranslation())(MyJobTopTab);

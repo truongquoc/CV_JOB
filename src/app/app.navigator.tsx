@@ -17,10 +17,12 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import { QuickView, Text, Avatar } from '@components';
+import { QuickView } from '@components';
 import LinearGradient from 'react-native-linear-gradient';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import rootStack from '@contents/routes';
+import { logout } from '@contents/Auth/containers/Index/Login/redux/slice';
+import { Global } from '@utils/appHelper';
+import { SidebarRegister } from './shared/SidebarRegister';
+import SidabarLoginScreen from './shared/SidebarLogin';
 
 const Drawer = createDrawerNavigator();
 interface Props {
@@ -29,10 +31,13 @@ interface Props {
   updateTheme: (theme: any) => any;
   requireLogin: boolean;
   reduxResetRequireLogin: () => any;
+  reduxLogout: () => any;
+  loginSelector?: any;
 }
 
 interface State {
-  barStyle: any;
+  barStyle?: any;
+  isVisibleBackdrop: boolean;
 }
 
 const Stack = createStackNavigator();
@@ -46,10 +51,21 @@ class AppNavigator extends Component<Props, State> {
     super(props);
     const { requireLogin, reduxResetRequireLogin } = this.props;
     if (requireLogin !== INITIAL_STATE.requireLogin) reduxResetRequireLogin();
+    this.state = {
+      isVisibleBackdrop: false,
+    };
   }
+
+  toggleModal = () => {
+    const { isVisibleBackdrop } = this.state;
+    this.setState({
+      isVisibleBackdrop: !isVisibleBackdrop,
+    });
+  };
 
   render() {
     const { themeRedux, theme, updateTheme } = this.props;
+    const { token } = Global;
     /**
      * Handle Switch Theme
      */
@@ -57,7 +73,8 @@ class AppNavigator extends Component<Props, State> {
       const newTheme = lightTheme.key === themeRedux ? lightTheme : darkTheme;
       updateTheme(newTheme);
     }
-    const barStyle = themeRedux === ThemeEnum.DARK ? 'dark-content' : 'light-content';
+    const barStyle =
+      themeRedux === ThemeEnum.DARK ? 'dark-content' : 'light-content';
     StatusBar.setBarStyle(barStyle, true);
 
     return (
@@ -80,123 +97,7 @@ class AppNavigator extends Component<Props, State> {
                     borderTopLeftRadius: 10,
                   }}
                 >
-                  <Avatar
-                    rounded
-                    size="large"
-                    source={{
-                      uri:
-                        'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-                    }}
-                    containerStyle={{
-                      backgroundColor: 'red',
-                      position: 'absolute',
-                      left: '40%',
-                      top: -60,
-                      zIndex: 999,
-                    }}
-                    title="A1"
-                  />
-                  <QuickView>
-                    <QuickView
-                      style={{
-                        borderBottomWidth: 1,
-                        borderBottomColor: '#cfcccc',
-                      }}
-                      paddingTop={20}
-                      paddingBottom={50}
-                    >
-                      <Text center color="#241f1f">
-                        NGUYEN LAM
-                      </Text>
-                      <TouchableWithoutFeedback
-                        onPress={() => {
-                          NavigationService.navigate(rootStack.profileStack, {
-                            screen: 'ProfileScreen',
-                          });
-                        }}
-                      >
-                        <Text center marginTop={5} color="#4771b5">
-                          Edit Profile
-                        </Text>
-                      </TouchableWithoutFeedback>
-                    </QuickView>
-                    <QuickView
-                      paddingHorizontal={20}
-                      style={{
-                        borderBottomWidth: 1,
-                        borderBottomColor: '#cfcccc',
-                      }}
-                      paddingTop={20}
-                      paddingBottom={50}
-                    >
-                      <TouchableWithoutFeedback>
-                        <Text color="#241f1f">WHO VIEW MY PROFILE</Text>
-                      </TouchableWithoutFeedback>
-                      <TouchableWithoutFeedback>
-                        <Text color="#241f1f" marginTop={20}>
-                          JOB ALERTS
-                        </Text>
-                      </TouchableWithoutFeedback>
-                      <TouchableWithoutFeedback>
-                        <Text color="#241f1f" marginTop={20}>
-                          NOTIFICATIONS
-                        </Text>
-                      </TouchableWithoutFeedback>
-                      <TouchableWithoutFeedback>
-                        <Text color="#241f1f" marginTop={20}>
-                          SHARE YOUR PROFILE
-                        </Text>
-                      </TouchableWithoutFeedback>
-                    </QuickView>
-
-                    <QuickView
-                      paddingHorizontal={20}
-                      style={{
-                        borderBottomWidth: 1,
-                        borderBottomColor: '#cfcccc',
-                      }}
-                      paddingTop={20}
-                      paddingBottom={50}
-                    >
-                      <TouchableWithoutFeedback>
-                        <Text color="#241f1f">TERMS AND CONDITIONS</Text>
-                      </TouchableWithoutFeedback>
-                      <TouchableWithoutFeedback>
-                        <Text color="#241f1f" marginTop={20}>
-                          PRIVACY POLICY
-                        </Text>
-                      </TouchableWithoutFeedback>
-                      <TouchableWithoutFeedback>
-                        <Text color="#241f1f" marginTop={20}>
-                          CONTACT US
-                        </Text>
-                      </TouchableWithoutFeedback>
-                      <TouchableWithoutFeedback>
-                        <Text color="#241f1f" marginTop={20}>
-                          FEEDBACK
-                        </Text>
-                      </TouchableWithoutFeedback>
-                    </QuickView>
-
-                    <QuickView
-                      paddingHorizontal={20}
-                      style={{
-                        borderBottomWidth: 1,
-                        borderBottomColor: '#cfcccc',
-                      }}
-                      paddingTop={20}
-                      paddingBottom={50}
-                    >
-                      <TouchableWithoutFeedback>
-                        <Text color="#241f1f">LANGUAGE</Text>
-                      </TouchableWithoutFeedback>
-                      <TouchableWithoutFeedback>
-                        <Text color="#241f1f" marginTop={20} fontSize={16}>
-                          LOGOUT
-                        </Text>
-                      </TouchableWithoutFeedback>
-                    </QuickView>
-                  </QuickView>
+                  {token ? <SidabarLoginScreen /> : <SidebarRegister />}
                 </QuickView>
               </DrawerContentScrollView>
             </LinearGradient>
@@ -222,6 +123,7 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   reduxResetRequireLogin: () => dispatch(resetRequireLogin()),
+  reduxLogout: () => dispatch(logout()),
 });
 export default connect(
   mapStateToProps,

@@ -26,7 +26,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-declare const global: {HermesInternal: null | {}};
+declare const global: { HermesInternal: null | {} };
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -89,8 +89,8 @@ const App = () => (
               {' '}
               <Text style={styles.highlight}>App.tsx</Text>
               {' '}
-              to change
-              this screen and then come back to see your edits.
+              to change this
+              screen and then come back to see your edits.
             </Text>
           </View>
           <View style={styles.sectionContainer}>

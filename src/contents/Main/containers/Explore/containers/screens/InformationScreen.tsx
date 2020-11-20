@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { Container, QuickView, Text, FlatList } from '@components';
+import {
+  Container, QuickView, Text, FlatList,
+} from '@components';
 import { Avatar, Divider, withTheme } from 'react-native-elements';
 import HTML from 'react-native-render-html';
 import { getIdFromParams } from '@utils/appHelper';
 import { applyObjectSelector, parseObjectSelector } from '@utils/selector';
 import { requireLoginSelector } from '@contents/Config/redux/selector';
 import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
+import { ActivityIndicator } from 'react-native';
 import { jobDetailSelector } from '../../redux/selector';
 import { jobGetDetail } from '../../redux/slice';
-import { ActivityIndicator } from 'react-native';
 
 interface JobDetail {
   name: string;
@@ -107,7 +109,7 @@ class InformationScreen extends PureComponent<Props> {
                   fontWeight="bold"
                   fontFamily="GothamRoundedBold"
                 >
-                  {data.data.name}
+                  {data.data?.name}
                 </Text>
               </QuickView>
               <QuickView row>
@@ -119,7 +121,7 @@ class InformationScreen extends PureComponent<Props> {
                   Posted on
                 </Text>
                 <Text color="#B5BABD" marginLeft={5}>
-                  {data.data.createdat}
+                  {data.data?.createdat}
                 </Text>
               </QuickView>
             </QuickView>
@@ -139,7 +141,7 @@ class InformationScreen extends PureComponent<Props> {
                   COMPANY
                 </Text>
                 <Text color="#B5BABD" fontSize={16}>
-                  {data.data.user.profile?.name}
+                  {data.data?.user.profile.name}
                 </Text>
               </QuickView>
               <QuickView marginLeft={10}>
@@ -166,7 +168,7 @@ class InformationScreen extends PureComponent<Props> {
                 }}
               />
             </QuickView>
-            <HTML html={data.data.description} />
+            <HTML html={data.data?.description} />
           </QuickView>
         </QuickView>
       </Container>
@@ -174,13 +176,11 @@ class InformationScreen extends PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    detail: parseObjectSelector(applyObjectSelector(jobDetailSelector, state)),
-    requireLogin: requireLoginSelector(state),
-    loginSelectorData: applyObjectSelector(loginSelector, state),
-  };
-};
+const mapStateToProps = (state: any) => ({
+  detail: parseObjectSelector(applyObjectSelector(jobDetailSelector, state)),
+  requireLogin: requireLoginSelector(state),
+  loginSelectorData: applyObjectSelector(loginSelector, state),
+});
 
 const mapDispatchToProps = (dispatch: any) => ({});
 

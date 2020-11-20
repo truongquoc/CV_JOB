@@ -15,6 +15,7 @@ export const DETAIL = 'detail';
 export const INITIAL_STATE = fromJS({
   ...createArrayInitialState(LIST),
   ...createObjectInitialState(DETAIL),
+  // ...createObjectInitialState(),
 });
 
 /**
@@ -31,4 +32,9 @@ export type TDetail = {
   jobGetDetail: (state: any, action: any) => any;
   jobGetDetailSuccess: (state: any, action: any) => any;
   jobGetDetailFail: (state: any, action: any) => any;
+};
+export type T = {
+  jobApplies: (state: any, action: any) => any;
+  jobAppliesFail: (state: any, action: any) => any;
+  jobAppliesSuccess: (state: any, action: any) => any;
 };

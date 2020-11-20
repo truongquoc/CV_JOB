@@ -10,21 +10,30 @@ import {
   ButtonGroup,
   Button,
   FlatList,
+  Image,
 } from '@components';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
-import { Icon, Avatar, SearchBar, withTheme } from 'react-native-elements';
-import { StyleSheet, Dimensions, ImageBackground } from 'react-native';
+import {
+  Icon, Avatar, SearchBar, withTheme,
+} from 'react-native-elements';
+import {
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  ActivityIndicator,
+  StatusBar,
+} from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import NavigationService from '@utils/navigation';
 import rootStack from '@contents/routes';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { TQuery } from '@utils/redux';
 import { applyArraySelector, parseArraySelector } from '@utils/selector';
+import { setIdIntoParams } from '@utils/appHelper';
+import { compose } from 'recompose';
 import exploreStack from '../routes';
 import { jobGetList } from '../redux/slice';
 import { jobListSelector } from '../redux/selector';
-import { setIdIntoParams } from '@utils/appHelper';
-import { compose } from 'recompose';
 
 const colors = {
   black: '#1a1917',
@@ -41,7 +50,7 @@ const { width: screenWidth } = Dimensions.get('window');
 const styles = StyleSheet.create({
   item: {
     width: screenWidth - 60,
-    height: 150,
+    height: 200,
   },
   imageContainer: {
     flex: 1,
@@ -96,35 +105,51 @@ const ENTRIES1 = [
     title: 'Beautiful and dramatic Antelope Canyon',
     subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
     illustration: 'https://i.imgur.com/UYiroysl.jpg',
+    avatar:
+      'https://www.iconfinder.com/data/icons/popular-social-media-flat/48/Popular_Social_Media-22-512.png',
   },
   {
     title: 'Earlier this morning, NYC',
     subtitle: 'Lorem ipsum dolor sit amet',
     illustration: 'https://i.imgur.com/UPrs1EWl.jpg',
+    avatar:
+      'https://www.iconfinder.com/data/icons/popular-social-media-flat/48/Popular_Social_Media-22-512.png',
   },
   {
     title: 'White Pocket Sunset',
     subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
     illustration: 'https://i.imgur.com/MABUbpDl.jpg',
+    avatar:
+      'https://www.iconfinder.com/data/icons/popular-social-media-flat/48/Popular_Social_Media-22-512.png',
   },
   {
     title: 'Acrocorinth, Greece',
     subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
     illustration: 'https://i.imgur.com/KZsmUi2l.jpg',
+    avatar:
+      'https://www.iconfinder.com/data/icons/popular-social-media-flat/48/Popular_Social_Media-22-512.png',
   },
   {
     title: 'The lone tree, majestic landscape of New Zealand',
     subtitle: 'Lorem ipsum dolor sit amet',
     illustration: 'https://i.imgur.com/2nCt3Sbl.jpg',
+    avatar:
+      'https://www.iconfinder.com/data/icons/popular-social-media-flat/48/Popular_Social_Media-22-512.png',
   },
   {
     title: 'Middle Earth, Germany',
     subtitle: 'Lorem ipsum dolor sit amet',
     illustration: 'https://i.imgur.com/lceHsT6l.jpg',
+    avatar:
+      'https://www.iconfinder.com/data/icons/popular-social-media-flat/48/Popular_Social_Media-22-512.png',
   },
 ];
-
-class ExploreScreen extends React.Component<Props, any> {
+interface State {
+  slider1ActiveSlide: number;
+  search: string;
+  page: number;
+}
+class ExploreScreen extends React.Component<Props, State> {
   buttonGroup: any;
 
   onItemPress: ((index: number) => any) | undefined;
@@ -134,35 +159,70 @@ class ExploreScreen extends React.Component<Props, any> {
     this.state = {
       slider1ActiveSlide: 1,
       search: '',
+      page: 1,
     };
   }
 
   componentDidMount() {
     const { getList } = this.props;
+    const { page } = this.state;
     const payload: TQuery = {
       limit: 10,
-      page: 1,
+      page,
     };
     getList(payload);
   }
 
+  loadMoreData = () => {
+    const { getList } = this.props;
+    const { page } = this.state;
+    this.setState({ page: page + 1 });
+
+    const payload: TQuery = {
+      limit: 10,
+      page,
+    };
+    getList(payload);
+  };
+
   renderItem = (
     { item, index }: { item: any; index: any },
     parallaxProps: any,
-  ) => (
-    <QuickView style={styles.item}>
-      <ParallaxImage
-        source={{ uri: item.illustration }}
-        containerStyle={styles.imageContainer}
-        style={styles.image}
-        parallaxFactor={0.4}
-        {...parallaxProps}
-      />
-      {/* <Text style={styles.title} numberOfLines={2}>
-          {item.illustration}
-        </Text> */}
-    </QuickView>
-  );
+  ) => {
+    if (item.loading) {
+      return (
+        <QuickView style={{ flex: 1, alignItems: 'center' }}>
+          <ActivityIndicator size="large" color="#ff6a00" />
+        </QuickView>
+      );
+    }
+    return (
+      <QuickView style={styles.item}>
+        <Image
+          source={{ uri: item.illustration }}
+          borderRadius={5}
+          resizeMode="contain"
+        />
+        <QuickView
+          row
+          position="absolute"
+          bottom={0}
+          center
+          style={{ zIndex: 999 }}
+        >
+          <QuickView flex={1}>
+            <Avatar source={{ uri: item.avatar }} rounded size="large" />
+          </QuickView>
+          <QuickView flex={4}>
+            <Text color="#fff" fontSize={20} fontWeight="bold">
+              UI/UX Designer
+            </Text>
+            <Text color="#fff">Linkedin</Text>
+          </QuickView>
+        </QuickView>
+      </QuickView>
+    );
+  };
 
   renderCenterComponent = () => (
     <QuickView row>
@@ -236,7 +296,7 @@ class ExploreScreen extends React.Component<Props, any> {
         <QuickView>
           <QuickView row justifyContent="space-between">
             <QuickView row alignItems="center">
-              <Avatar source={{ uri: item.user.profile.profileUrl }} />
+              <Avatar source={{ uri: item.user.profile?.profileUrl }} />
               <Text
                 color="#173147"
                 fontWeight="bold"
@@ -244,7 +304,7 @@ class ExploreScreen extends React.Component<Props, any> {
                 marginLeft={10}
                 style={{ opacity: 0.8 }}
               >
-                {item.user.profile.name}
+                {item.user.profile?.name}
               </Text>
             </QuickView>
             <Icon type="material" name="bookmark-border" />
@@ -287,8 +347,9 @@ class ExploreScreen extends React.Component<Props, any> {
 
   render() {
     const { slider1ActiveSlide, search } = this.state;
-    const { list } = this.props;
-    console.log('list', list);
+    const {
+      list: { data },
+    } = this.props;
 
     const testList = [];
     const titleList = [
@@ -302,6 +363,7 @@ class ExploreScreen extends React.Component<Props, any> {
     ];
     return (
       <Container>
+        <StatusBar backgroundColor="transparent" />
         <ImageBackground
           style={styles.imageStyle}
           source={{
@@ -315,90 +377,103 @@ class ExploreScreen extends React.Component<Props, any> {
             centerComponent={this.renderCenterComponent()}
             rightComponent={this.renderRightComponent()}
           />
-          <ScrollView>
-            <QuickView marginBottom={100} />
-            <QuickView
-              style={{ backgroundColor: 'white' }}
-              borderTopLeftRadius={20}
-              borderTopRightRadius={20}
-            >
-              <QuickView>
-                <SearchBar
-                  lightTheme
-                  placeholder="Type Here ..."
-                  round
-                  searchIcon={
-                    <Icon type="antdesign" name="search1" color="#5760EB" />
-                  }
-                  leftIconContainerStyle={{}}
-                  platform="android"
-                  clearIcon
-                  containerStyle={styles.containerSearch}
-                  // onChangeText={this.updateSearch}
-                  value={search}
-                />
-              </QuickView>
-              <QuickView row marginTop={15} paddingHorizontal={20}>
-                <QuickView flex={6}>
-                  <Text color="#707070" fontFamily="GothamRoundedBold">
-                    Top Companies
-                  </Text>
-                </QuickView>
-                <TouchableOpacity
-                  style={{ flex: 1 }}
-                  onPress={() =>
-                    NavigationService.navigate(rootStack.exploreStack, {
-                      screen: 'FilterScreen',
-                    })
-                  }
-                >
-                  <Icon type="material" name="tune" color="#707070" />
-                </TouchableOpacity>
-              </QuickView>
-              <QuickView>
-                <ButtonGroup
-                  marginHorizontal={15}
-                  ref={(ref: any) => {
-                    this.buttonGroup = ref;
-                  }}
-                  titleList={titleList}
-                  onItemPress={this.onItemPress}
-                  defaultActiveIndex={2}
-                  propsChange={false}
-                  outline={false}
-                  activeBackgroundColor="#9EB6FF"
-                  backgroundColor="#FFFF"
-                  titleColor="#707070"
-                  activeTitleColor="#FFF"
-                  // buttonStyle={{
-                  //   backgroundColor: '',
-                  // }}
-                />
-              </QuickView>
-              <QuickView row marginTop={10}>
+          <FlatList
+            data={data}
+            style={styles.listItem}
+            renderItem={this.renderListJob}
+            onEndReached={this.loadMoreData}
+            ListHeaderComponent={() => (
+              <ScrollView>
                 <QuickView>
-                  <QuickView />
-                  {/* <Text>Accounting</Text> */}
+                  <QuickView
+                    style={{ backgroundColor: '#fff' }}
+                    borderTopLeftRadius={20}
+                    borderTopRightRadius={20}
+                  >
+                    <QuickView>
+                      <SearchBar
+                        lightTheme
+                        placeholder="Type Here ..."
+                        round
+                        searchIcon={(
+                          <Icon
+                            type="antdesign"
+                            name="search1"
+                            color="#5760EB"
+                          />
+                        )}
+                        leftIconContainerStyle={{}}
+                        platform="android"
+                        clearIcon
+                        containerStyle={styles.containerSearch}
+                        // onChangeText={this.updateSearch}
+                        value={search}
+                      />
+                    </QuickView>
+                    <QuickView row marginTop={15} paddingHorizontal={20}>
+                      <QuickView flex={6}>
+                        <Text color="#707070" fontFamily="GothamRoundedBold">
+                          Top Companies
+                        </Text>
+                      </QuickView>
+                      <TouchableOpacity
+                        style={{ flex: 1 }}
+                        onPress={() => NavigationService.navigate(rootStack.exploreStack, {
+                          screen: 'FilterScreen',
+                        })}
+                      >
+                        <Icon type="material" name="tune" color="#707070" />
+                      </TouchableOpacity>
+                    </QuickView>
+                    <QuickView>
+                      <ButtonGroup
+                        marginHorizontal={15}
+                        ref={(ref: any) => {
+                          this.buttonGroup = ref;
+                        }}
+                        titleList={titleList}
+                        onItemPress={this.onItemPress}
+                        defaultActiveIndex={2}
+                        propsChange={false}
+                        outline={false}
+                        activeBackgroundColor="#9EB6FF"
+                        backgroundColor="#FFFF"
+                        titleColor="#707070"
+                        activeTitleColor="#FFF"
+                      />
+                    </QuickView>
+                    <QuickView row marginTop={10}>
+                      <QuickView>
+                        <QuickView />
+                      </QuickView>
+                    </QuickView>
+                    <Carousel
+                      vertical={false}
+                      sliderWidth={screenWidth}
+                      loop
+                      slideStyle={{ width: screenWidth - 30 }}
+                      itemWidth={screenWidth - 120}
+                      data={ENTRIES1}
+                      // autoplay
+                      renderItem={this.renderItem}
+                    />
+                  </QuickView>
                 </QuickView>
-              </QuickView>
-              <Carousel
-                vertical={false}
-                sliderWidth={screenWidth}
-                itemWidth={screenWidth - 60}
-                data={ENTRIES1}
-                autoplay
-                renderItem={this.renderItem}
-                hasParallaxImages
-              />
-              <QuickView>
-                <FlatList
-                  data={list.data}
-                  style={styles.listItem}
-                  renderItem={this.renderListJob}
-                />
-              </QuickView>
-            </QuickView>
-          </ScrollView>
+              </ScrollView>
+            )}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={() => {
+              const { list } = this.props;
+              if (list.loading) {
+                return (
+                  <QuickView style={{ flex: 1, alignItems: 'center' }}>
+                    <ActivityIndicator size="large" color="#ff6a00" />
+                  </QuickView>
+                );
+              }
+              return <></>;
+            }}
+          />
         </ImageBackground>
       </Container>
     );
