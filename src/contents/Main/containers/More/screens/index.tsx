@@ -1,7 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, SectionList } from 'react-native';
 import {
-  Container, Header, QuickView, AuthButton, GoToExampleButton,
+  Container,
+  Header,
+  QuickView,
+  AuthButton,
+  GoToExampleButton,
+  Text,
 } from '@components';
 import { ListItem, Divider } from 'react-native-elements';
 import { withTranslation } from 'react-i18next';
@@ -9,6 +14,9 @@ import SwitchChangeTheme from '@contents/Config/Shared/SwitchChangeTheme';
 import PickerChangeLanguage from '@contents/Config/Shared/PickerChangeLanguage';
 import LogoutButton from '@contents/Auth/containers/Index/Login/Shared/LogoutButton';
 import LoginButton from '@contents/Auth/containers/Index/Login/Shared/LoginButton';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import NavigationService from '@utils/navigation';
+import moreStack from '../routes';
 // import NavigationService from '@utils/navigation';
 
 const BLUE = '#007AFF';
@@ -120,6 +128,13 @@ class Settings extends React.PureComponent<Props> {
           <GoToExampleButton />
           <LoginButton />
           <LogoutButton />
+          <TouchableOpacity
+            onPress={() => {
+              NavigationService.navigate(moreStack.mapScreen);
+            }}
+          >
+            <Text>click</Text>
+          </TouchableOpacity>
         </QuickView>
         <QuickView paddingHorizontal={10}>
           <AuthButton

@@ -5,7 +5,7 @@ import {
 import { fromJS } from 'immutable';
 
 export const LIST = 'LIST';
-
+export const LIST_CATE = 'LIST_CATE';
 /**
  * Name
  */
@@ -14,13 +14,20 @@ export const DETAIL = 'detail';
 
 export const INITIAL_STATE = fromJS({
   ...createArrayInitialState(LIST),
+  ...createArrayInitialState(LIST_CATE),
   ...createObjectInitialState(DETAIL),
-  // ...createObjectInitialState(),
+  setFilter: {},
 });
 
 /**
  * TYPE
  */
+
+export type TListCate = {
+  jobGetListCate: (state: any, action: any) => any;
+  jobGetListCateSuccess: (state: any, action: any) => any;
+  jobGetListCateFail: (state: any, action: any) => any;
+};
 
 export type TList = {
   jobGetList: (state: any, action: any) => any;

@@ -6,6 +6,7 @@ const exploreStack = {
   applicantscreens: 'ApplicantScreens',
   employerscreens: 'EmployerScreens',
   FilterScreen: 'FilterScreen',
+  selectCateScreen: 'SelectCateScreen',
 };
 
 export default exploreStack;

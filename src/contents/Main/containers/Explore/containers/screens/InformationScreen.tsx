@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import {
-  Container, QuickView, Text, FlatList,
-} from '@components';
+import { Container, QuickView, Text, FlatList } from '@components';
 import { Avatar, Divider, withTheme } from 'react-native-elements';
 import HTML from 'react-native-render-html';
 import { getIdFromParams } from '@utils/appHelper';
@@ -80,7 +78,7 @@ class InformationScreen extends PureComponent<Props> {
   render() {
     // const contentWidth = useWindowDimensions().width;
     const {
-      detail: { data },
+      detail: { data, loading },
     } = this.props;
 
     return (
@@ -168,7 +166,13 @@ class InformationScreen extends PureComponent<Props> {
                 }}
               />
             </QuickView>
-            <HTML html={data.data?.description} />
+            {loading ? (
+              <QuickView style={{ flex: 1, alignItems: 'center' }}>
+                <ActivityIndicator size="large" color="#ff6a00" />
+              </QuickView>
+            ) : (
+              <HTML html={data.data?.description} />
+            )}
           </QuickView>
         </QuickView>
       </Container>

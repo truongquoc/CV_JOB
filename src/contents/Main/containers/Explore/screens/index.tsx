@@ -13,9 +13,7 @@ import {
   Image,
 } from '@components';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
-import {
-  Icon, Avatar, SearchBar, withTheme,
-} from 'react-native-elements';
+import { Icon, Avatar, SearchBar, withTheme } from 'react-native-elements';
 import {
   StyleSheet,
   Dimensions,
@@ -27,13 +25,15 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import NavigationService from '@utils/navigation';
 import rootStack from '@contents/routes';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { TQuery } from '@utils/redux';
+import { stringifyQuery, TQuery } from '@utils/redux';
 import { applyArraySelector, parseArraySelector } from '@utils/selector';
 import { setIdIntoParams } from '@utils/appHelper';
 import { compose } from 'recompose';
+import FastImage from 'react-native-fast-image';
 import exploreStack from '../routes';
 import { jobGetList } from '../redux/slice';
 import { jobListSelector } from '../redux/selector';
+import { fetchAllJobs } from '../redux/api';
 
 const colors = {
   black: '#1a1917',
@@ -43,7 +43,7 @@ const colors = {
 };
 interface Props {
   list: any;
-  getList: any;
+  getList: (query?: TQuery) => any;
 }
 const topTab = createMaterialTopTabNavigator();
 const { width: screenWidth } = Dimensions.get('window');
@@ -51,6 +51,8 @@ const styles = StyleSheet.create({
   item: {
     width: screenWidth - 60,
     height: 200,
+    marginLeft: 60,
+    marginRight: 60,
   },
   imageContainer: {
     flex: 1,
@@ -83,7 +85,6 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   listItem: {
-    borderRadius: 9,
     backgroundColor: '#ffffff',
     paddingTop: 15,
     paddingBottom: 20,
@@ -96,7 +97,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.36,
     shadowRadius: 6.68,
     elevation: 11,
-    marginTop: 20,
   },
 });
 
@@ -104,14 +104,16 @@ const ENTRIES1 = [
   {
     title: 'Beautiful and dramatic Antelope Canyon',
     subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-    illustration: 'https://i.imgur.com/UYiroysl.jpg',
+    illustration:
+      'https://s17026.pcdn.co/wp-content/uploads/sites/9/2017/06/AdobeStock_97559781.jpeg',
     avatar:
       'https://www.iconfinder.com/data/icons/popular-social-media-flat/48/Popular_Social_Media-22-512.png',
   },
   {
     title: 'Earlier this morning, NYC',
     subtitle: 'Lorem ipsum dolor sit amet',
-    illustration: 'https://i.imgur.com/UPrs1EWl.jpg',
+    illustration:
+      'https://s17026.pcdn.co/wp-content/uploads/sites/9/2017/06/AdobeStock_97559781.jpeg',
     avatar:
       'https://www.iconfinder.com/data/icons/popular-social-media-flat/48/Popular_Social_Media-22-512.png',
   },
@@ -144,15 +146,29 @@ const ENTRIES1 = [
       'https://www.iconfinder.com/data/icons/popular-social-media-flat/48/Popular_Social_Media-22-512.png',
   },
 ];
+const titleList = [
+  'All',
+  'Moblie',
+  'Full stack',
+  'Back-end',
+  'Font-end',
+  'Engineer',
+  'See more',
+];
+
 interface State {
   slider1ActiveSlide: number;
   search: string;
   page: number;
+  listPopularJob: Array<any>;
 }
+interface Props {
+  list: any;
+  filterObject: any;
+}
+
 class ExploreScreen extends React.Component<Props, State> {
   buttonGroup: any;
-
-  onItemPress: ((index: number) => any) | undefined;
 
   constructor(props: any) {
     super(props);
@@ -160,27 +176,49 @@ class ExploreScreen extends React.Component<Props, State> {
       slider1ActiveSlide: 1,
       search: '',
       page: 1,
+      listPopularJob: [],
     };
   }
 
-  componentDidMount() {
-    const { getList } = this.props;
+  async componentDidMount() {
+    const { getList, filterObject } = this.props;
     const { page } = this.state;
     const payload: TQuery = {
+      s: filterObject,
+    };
+    const getListQuery: TQuery = {
+      s: { name: { $gte: 700 } },
       limit: 10,
-      page,
     };
     getList(payload);
+
+    const getPopularJob = await fetchAllJobs(stringifyQuery(getListQuery));
+    this.setState({ listPopularJob: getPopularJob.data.data });
   }
 
-  loadMoreData = () => {
+  onItemPress = (index: number) => {
     const { getList } = this.props;
+    const payload: TQuery = {
+      s: { name: { $contL: 'mobile' } },
+    };
+    if (index === 6) {
+      // NavigationService.navigate(exploreStack.selectCateScreen);
+      NavigationService.navigate(rootStack.exploreStack, {
+        screen: exploreStack.selectCateScreen,
+      });
+    }
+    // getList(payload);
+  };
+
+  loadMoreData = () => {
+    const { getList, filterObject } = this.props;
     const { page } = this.state;
     this.setState({ page: page + 1 });
 
     const payload: TQuery = {
       limit: 10,
       page,
+      s: filterObject,
     };
     getList(payload);
   };
@@ -189,19 +227,23 @@ class ExploreScreen extends React.Component<Props, State> {
     { item, index }: { item: any; index: any },
     parallaxProps: any,
   ) => {
-    if (item.loading) {
-      return (
-        <QuickView style={{ flex: 1, alignItems: 'center' }}>
-          <ActivityIndicator size="large" color="#ff6a00" />
-        </QuickView>
-      );
-    }
     return (
-      <QuickView style={styles.item}>
-        <Image
-          source={{ uri: item.illustration }}
-          borderRadius={5}
-          resizeMode="contain"
+      <TouchableOpacity
+        onPress={() => {
+          NavigationService.navigate(rootStack.exploreStack, {
+            screen: exploreStack.applicantscreens,
+            params: setIdIntoParams(item),
+          });
+        }}
+      >
+        <FastImage
+          style={{ height: 200 }}
+          source={{
+            uri: 'https://i.imgur.com/lceHsT6l.jpg',
+            headers: { Authorization: 'someAuthToken' },
+            priority: FastImage.priority.normal,
+          }}
+          resizeMode={FastImage.resizeMode.cover}
         />
         <QuickView
           row
@@ -211,16 +253,24 @@ class ExploreScreen extends React.Component<Props, State> {
           style={{ zIndex: 999 }}
         >
           <QuickView flex={1}>
-            <Avatar source={{ uri: item.avatar }} rounded size="large" />
+            <FastImage
+              style={{ height: 60, width: 60 }}
+              source={{
+                uri: item.user.profile.profileUrl,
+                headers: { Authorization: 'someAuthToken' },
+                priority: FastImage.priority.normal,
+              }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
           </QuickView>
           <QuickView flex={4}>
             <Text color="#fff" fontSize={20} fontWeight="bold">
-              UI/UX Designer
+              {item.name}
             </Text>
-            <Text color="#fff">Linkedin</Text>
+            <Text color="#fff">{item.user.profile.name}</Text>
           </QuickView>
         </QuickView>
-      </QuickView>
+      </TouchableOpacity>
     );
   };
 
@@ -296,7 +346,13 @@ class ExploreScreen extends React.Component<Props, State> {
         <QuickView>
           <QuickView row justifyContent="space-between">
             <QuickView row alignItems="center">
-              <Avatar source={{ uri: item.user.profile?.profileUrl }} />
+              {/* <Avatar source={{ uri: item.user.profile?.profileUrl }} /> */}
+              <Image
+                source={{ uri: item.user.profile?.profileUrl }}
+                resizeMode="contain"
+                height={50}
+                width={50}
+              />
               <Text
                 color="#173147"
                 fontWeight="bold"
@@ -346,21 +402,11 @@ class ExploreScreen extends React.Component<Props, State> {
   };
 
   render() {
-    const { slider1ActiveSlide, search } = this.state;
+    const { slider1ActiveSlide, search, listPopularJob } = this.state;
     const {
       list: { data },
     } = this.props;
 
-    const testList = [];
-    const titleList = [
-      'All',
-      'Moblie',
-      'Full stack',
-      'Back-end',
-      'Font-end',
-      'Engineer',
-      'See more',
-    ];
     return (
       <Container>
         <StatusBar backgroundColor="transparent" />
@@ -377,89 +423,80 @@ class ExploreScreen extends React.Component<Props, State> {
             centerComponent={this.renderCenterComponent()}
             rightComponent={this.renderRightComponent()}
           />
+
+          <QuickView
+            style={{ backgroundColor: '#fff' }}
+            borderTopLeftRadius={20}
+            borderTopRightRadius={20}
+          >
+            <QuickView>
+              <SearchBar
+                lightTheme
+                placeholder="Type Here ..."
+                round
+                searchIcon={
+                  <Icon type="antdesign" name="search1" color="#5760EB" />
+                }
+                leftIconContainerStyle={{}}
+                platform="android"
+                clearIcon
+                containerStyle={styles.containerSearch}
+                // onChangeText={this.updateSearch}
+                value={search}
+              />
+            </QuickView>
+            <QuickView row marginTop={15} paddingHorizontal={20}>
+              <QuickView flex={6}>
+                <Text color="#707070" fontFamily="GothamRoundedBold">
+                  Top Companies
+                </Text>
+              </QuickView>
+              <TouchableOpacity
+                style={{ flex: 1 }}
+                onPress={() => {
+                  NavigationService.navigate(rootStack.exploreStack, {
+                    screen: 'FilterScreen',
+                  });
+                }}
+              >
+                <Icon type="material" name="tune" color="#707070" />
+              </TouchableOpacity>
+            </QuickView>
+            <QuickView>
+              <ButtonGroup
+                marginHorizontal={15}
+                ref={(ref: any) => {
+                  this.buttonGroup = ref;
+                }}
+                titleList={titleList}
+                onItemPress={this.onItemPress}
+                defaultActiveIndex={2}
+                propsChange={false}
+                outline={false}
+                activeBackgroundColor="#9EB6FF"
+                backgroundColor="#FFFF"
+                titleColor="#707070"
+                activeTitleColor="#FFF"
+              />
+            </QuickView>
+          </QuickView>
           <FlatList
             data={data}
-            style={styles.listItem}
+            // style={styles.listItem}
             renderItem={this.renderListJob}
             onEndReached={this.loadMoreData}
             ListHeaderComponent={() => (
-              <ScrollView>
-                <QuickView>
-                  <QuickView
-                    style={{ backgroundColor: '#fff' }}
-                    borderTopLeftRadius={20}
-                    borderTopRightRadius={20}
-                  >
-                    <QuickView>
-                      <SearchBar
-                        lightTheme
-                        placeholder="Type Here ..."
-                        round
-                        searchIcon={(
-                          <Icon
-                            type="antdesign"
-                            name="search1"
-                            color="#5760EB"
-                          />
-                        )}
-                        leftIconContainerStyle={{}}
-                        platform="android"
-                        clearIcon
-                        containerStyle={styles.containerSearch}
-                        // onChangeText={this.updateSearch}
-                        value={search}
-                      />
-                    </QuickView>
-                    <QuickView row marginTop={15} paddingHorizontal={20}>
-                      <QuickView flex={6}>
-                        <Text color="#707070" fontFamily="GothamRoundedBold">
-                          Top Companies
-                        </Text>
-                      </QuickView>
-                      <TouchableOpacity
-                        style={{ flex: 1 }}
-                        onPress={() => NavigationService.navigate(rootStack.exploreStack, {
-                          screen: 'FilterScreen',
-                        })}
-                      >
-                        <Icon type="material" name="tune" color="#707070" />
-                      </TouchableOpacity>
-                    </QuickView>
-                    <QuickView>
-                      <ButtonGroup
-                        marginHorizontal={15}
-                        ref={(ref: any) => {
-                          this.buttonGroup = ref;
-                        }}
-                        titleList={titleList}
-                        onItemPress={this.onItemPress}
-                        defaultActiveIndex={2}
-                        propsChange={false}
-                        outline={false}
-                        activeBackgroundColor="#9EB6FF"
-                        backgroundColor="#FFFF"
-                        titleColor="#707070"
-                        activeTitleColor="#FFF"
-                      />
-                    </QuickView>
-                    <QuickView row marginTop={10}>
-                      <QuickView>
-                        <QuickView />
-                      </QuickView>
-                    </QuickView>
-                    <Carousel
-                      vertical={false}
-                      sliderWidth={screenWidth}
-                      loop
-                      slideStyle={{ width: screenWidth - 30 }}
-                      itemWidth={screenWidth - 120}
-                      data={ENTRIES1}
-                      // autoplay
-                      renderItem={this.renderItem}
-                    />
-                  </QuickView>
-                </QuickView>
-              </ScrollView>
+              <Carousel
+                containerCustomStyle={{ backgroundColor: '#fff' }}
+                vertical={false}
+                sliderWidth={screenWidth}
+                loop
+                slideStyle={{ width: screenWidth - 30 }}
+                itemWidth={screenWidth - 120}
+                data={listPopularJob}
+                // autoplay
+                renderItem={this.renderItem}
+              />
             )}
             onEndReachedThreshold={0.1}
             ListFooterComponent={() => {
@@ -480,9 +517,12 @@ class ExploreScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  list: parseArraySelector(applyArraySelector(jobListSelector, state)),
-});
+const mapStateToProps = (state: any) => {
+  return {
+    list: parseArraySelector(applyArraySelector(jobListSelector, state)),
+    filterObject: state.job.toJS().setFilter,
+  };
+};
 
 const mapDispatchToProps = (dispatch: any) => ({
   getList: (query?: TQuery) => dispatch(jobGetList({ query })),

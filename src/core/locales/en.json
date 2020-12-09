@@ -13,7 +13,7 @@
     "home": "Home",
     "saved": "Saved",
     "mail": "Mail",
-    "more": "More", 
+    "more": "More",
     "myjob": "My Jobs",
     "explore": "Explore"
   },
@@ -50,6 +50,10 @@
     "checked": "remember me ",
     "create": "Do not have an account?",
     "terms": "I agree with terms and licenses"
+  },
+  "profile": {
+    "experience": "Work Experience",
+    "skill": "SKills"
   },
   "home": {},
   "validator": {

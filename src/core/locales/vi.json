@@ -14,9 +14,8 @@
     "saved": "Lưu",
     "mail": "Hộp thư",
     "more": "Khác",
-    "myjob":"Việc làm",
+    "myjob": "Việc làm",
     "explore": "Tin tức"
-
   },
   "header": {
     "setting": "Cài đặt",
@@ -51,6 +50,10 @@
     "checked": "lưu đăng nhập ",
     "create": "Chưa có tài khoản? đăng kí tại đây",
     "terms": "Tôi đồng ý với điều khoản và điều kiện"
+  },
+  "profile": {
+    "experience": "kinh nghiệm làm việc",
+    "skill": "kỹ năng chuyên môn của bạn"
   },
   "home": {},
   "validator": {

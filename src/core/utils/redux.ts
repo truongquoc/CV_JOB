@@ -29,7 +29,7 @@ export type TObjectRedux = {
 
 export function createObjectInitialState(parentKey?: string) {
   const result: TObjectRedux = {
-    loading: false,
+    loading: true,
     data: {},
     error: null,
   };
@@ -72,7 +72,7 @@ export type TQuery = {
   fields?: Array<string>;
   page?: number;
   limit?: number;
-  filter?: Filter;
+  s?: any;
 };
 
 export function createObjectReducer<T>(
@@ -151,23 +151,26 @@ export function createObjectReducer<T>(
 export function createArrayReducer<T>(name: string, parentKey?: string): T {
   const result: any = {};
   if (parentKey) {
-    result[name] = (state: any, action: any) => state
-      .setIn([parentKey, 'loading'], true)
-      .setIn([parentKey, 'error'], null);
+    result[name] = (state: any, action: any) =>
+      state
+        .setIn([parentKey, 'loading'], true)
+        .setIn([parentKey, 'error'], null);
     result[`${name}Success`] = (state: any, action: any) => {
       const metadata = fromJS(action.payload.data);
       const currentPage = action.payload.data.page;
       const dataGet = action.payload.data.data;
 
-      const data = currentPage === 1 || !currentPage
-        ? fromJS(dataGet)
-        : state
-          .getIn([parentKey, 'data'])
-          .concat(
-            fromJS(dataGet).filter(
-              (item: any) => state.getIn([parentKey, 'data']).indexOf(item) < 0,
-            ),
-          );
+      const data =
+        currentPage === 1 || !currentPage
+          ? fromJS(dataGet)
+          : state
+              .getIn([parentKey, 'data'])
+              .concat(
+                fromJS(dataGet).filter(
+                  (item: any) =>
+                    state.getIn([parentKey, 'data']).indexOf(item) < 0,
+                ),
+              );
       return state
         .setIn([parentKey, 'loading'], false)
         .setIn([parentKey, 'data'], data)
@@ -181,21 +184,23 @@ export function createArrayReducer<T>(name: string, parentKey?: string): T {
         .setIn([parentKey, 'error'], error);
     };
   } else {
-    result[name] = (state: any, action: any) => state.set('loading', true).set('error', null);
+    result[name] = (state: any, action: any) =>
+      state.set('loading', true).set('error', null);
     result[`${name}Success`] = (state: any, action: any) => {
       const metadata = fromJS(action.payload.metadata);
 
       const currentPage = action.payload.metadata.page;
       const dataGet = action.payload.results;
-      const data = currentPage === 1
-        ? fromJS(dataGet)
-        : state
-          .get('data')
-          .concat(
-            fromJS(dataGet).filter(
-              (item: any) => state.get('data').indexOf(item) < 0,
-            ),
-          );
+      const data =
+        currentPage === 1
+          ? fromJS(dataGet)
+          : state
+              .get('data')
+              .concat(
+                fromJS(dataGet).filter(
+                  (item: any) => state.get('data').indexOf(item) < 0,
+                ),
+              );
       return state
         .set('loading', false)
         .set('data', data)
@@ -230,8 +235,11 @@ export function stringifyQuery(query: TQuery) {
   const handledQuery: any = query;
   handledQuery.offset = offset;
   handledQuery.limit = limit;
-  if (_.has(handledQuery, 'filter')) {
-    handledQuery.filter = JSON.stringify(handledQuery.filter);
+  // if (_.has(handledQuery, 'filter')) {
+  //   handledQuery.filter = JSON.stringify(handledQuery.filter);
+  // }
+  if (_.has(handledQuery, 's')) {
+    handledQuery.s = JSON.stringify(handledQuery.s);
   }
   const stringifiedQuery = qs.stringify(handledQuery, {
     indices: false,

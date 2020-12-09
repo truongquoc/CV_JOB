@@ -15,25 +15,29 @@ import {
 } from '@components';
 import { Icon, Slider } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-import {
-  ScrollView,
-  TouchableHighlight,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import * as _ from 'lodash';
 import { Dimensions } from 'react-native';
 import NavigationService from '@utils/navigation';
+import { stringifyQuery, TQuery } from '@utils/redux';
+import { fetchAllJobs } from '../../redux/api';
+import { jobGetList, setFilter } from '../../redux/slice';
+import exploreStack from '../../routes';
 
 const jobType = [
-  { id: 1, name: 'Full time' },
-  { id: 2, name: 'Fresher' },
-  { id: 3, name: 'Work at home' },
-  { id: 4, name: 'Freelancer' },
-  { id: 5, name: 'Part time' },
-  { id: 6, name: 'Contact' },
+  { id: 0, name: 'Full Time', type: 'FULLTIME' },
+  { id: 1, name: 'Fresher' },
+  { id: 2, name: 'Work at home' },
+  { id: 3, name: 'Freelancer' },
+  { id: 4, name: 'Part time', type: 'PARTTIME' },
+  { id: 5, name: 'Contact' },
 ];
 interface Props {
   theme?: any;
+  setFilterRedux?: any;
+  getList: any;
+  filterObject: any;
 }
 interface State {
   jobStatus: Array<any>;
@@ -92,15 +96,38 @@ class FilterScreen extends PureComponent<Props, State> {
     };
   }
 
+  applyFilter = async () => {
+    const { jobStatus } = this.state;
+    const { setFilterRedux, getList, filterObject } = this.props;
+    const querySelected: Array<any> = [];
+    const index = _.findIndex(jobStatus, (status) => {
+      return status === true;
+    });
+    const s = { type: jobType[index].type };
+    setFilterRedux({ s });
+
+    getList({ s });
+    NavigationService.goBack();
+  };
+
   renderJobsType = ({ item }: { item: any }) => {
     const { jobStatus } = this.state;
     if (!jobStatus[item.id]) {
       return (
         <TouchableOpacity
           onPress={() => {
-            this.setState((state) => {
-              state.jobStatus[item.id] = !state.jobStatus[item.id];
+            jobStatus.forEach((_data, index) => {
+              if (item.id === index) {
+                this.setState((state) => {
+                  state.jobStatus[item.id] = !state.jobStatus[item.id];
+                });
+              } else {
+                this.setState((state) => {
+                  state.jobStatus[index] = false;
+                });
+              }
             });
+
             // this.state.jobStatus[item.id] = !this.state.jobStatus[item.id];
             this.forceUpdate();
           }}
@@ -112,19 +139,19 @@ class FilterScreen extends PureComponent<Props, State> {
           }}
         >
           <LinearGradient
-            colors={['#fff', '#fff']}
+            colors={['#ffffff', '#ffffff']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={{
               paddingHorizontal: 20,
-              borderRadius: 3,
+              borderRadius: 7,
               paddingVertical: 8,
               borderWidth: 1,
-              borderColor: '#d7d9db',
+              borderColor: '#eaecef',
             }}
           >
             <Text
-              color="#929496"
+              color="#7b7b7b"
               fontWeight="bold"
               fontSize={14}
               fontFamily="GothamRoundedBold"
@@ -147,11 +174,11 @@ class FilterScreen extends PureComponent<Props, State> {
           marginHorizontal: 5,
           marginVertical: 5,
           marginTop: 5,
-          borderRadius: 10,
+          borderRadius: 7,
         }}
       >
         <LinearGradient
-          colors={['#4124e3', '#8252e3']}
+          colors={['#554ef5', '#9230f3']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={{
@@ -253,10 +280,6 @@ class FilterScreen extends PureComponent<Props, State> {
     );
   };
 
-  // onItemPress = (index: number) => {
-  //   console.log('index', index);
-  // };
-
   renderCenterComponent = () => (
     <QuickView>
       <Text fontWeight="bold" color="#000" fontSize={18}>
@@ -276,35 +299,36 @@ class FilterScreen extends PureComponent<Props, State> {
   );
 
   render() {
-    // const {jobStatus} = this.state;
     const {
       MultiSliderSecondvalue,
       MultiSliderFristvalue,
       multiValue,
     } = this.state;
+
     return (
-      <ScrollView>
-        <Container>
-          <Header
-            height={150}
-            backgroundColor="#dcdee0"
-            leftComponent={this.renderLeftComponent()}
-            centerComponent={this.renderCenterComponent()}
-          />
-          <Body>
-            <QuickView>
-              <Text fontSize={20} fontWeight="bold" color="#545050">
+      <Container>
+        <Header
+          height={100}
+          backgroundColor="#f5f5f9"
+          leftComponent={this.renderLeftComponent()}
+          centerComponent={this.renderCenterComponent()}
+        />
+        <Body>
+          <ScrollView>
+            <QuickView marginTop={30}>
+              <Text fontSize={20} fontWeight="bold" color="#838383">
                 Job Type
               </Text>
-
-              <FlatList
-                data={jobType}
-                renderItem={this.renderJobsType}
-                contentContainerStyle={{
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                }}
-              />
+              <QuickView marginTop={30}>
+                <FlatList
+                  data={jobType}
+                  renderItem={this.renderJobsType}
+                  contentContainerStyle={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                  }}
+                />
+              </QuickView>
             </QuickView>
             <QuickView marginTop={10}>
               <Text fontSize={20} fontWeight="bold" color="#787a80">
@@ -412,16 +436,22 @@ class FilterScreen extends PureComponent<Props, State> {
                 />
               </QuickView>
             </QuickView>
-          </Body>
-        </Container>
-      </ScrollView>
+          </ScrollView>
+          <Button title="Apply" onPress={this.applyFilter} />
+        </Body>
+      </Container>
     );
   }
 }
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => ({
+  filterObject: state.job.toJS().setFilter,
+});
 
-const mapDispatchToProps = (dispatch: any) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+  setFilterRedux: (s: any) => dispatch(setFilter({ s })),
+  getList: (query?: TQuery) => dispatch(jobGetList({ query })),
+});
 export default connect(
   mapStateToProps,
   mapDispatchToProps,

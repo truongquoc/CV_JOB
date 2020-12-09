@@ -5,6 +5,7 @@ import exploreStack from './routes';
 import ApplicantScreens from './containers/screens/ApplicantDetail';
 import EmployerScreens from './containers/screens/EmployerDetail';
 import FilterScreen from './containers/screens/FilterScreen';
+import SelectCateDetail from './containers/screens/SelectCateDetail';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,10 @@ export default function ExploreStack() {
       <Stack.Screen
         name={exploreStack.employerscreens}
         component={EmployerScreens}
+      />
+      <Stack.Screen
+        name={exploreStack.selectCateScreen}
+        component={SelectCateDetail}
       />
     </Stack.Navigator>
   );

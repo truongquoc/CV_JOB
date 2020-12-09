@@ -25,6 +25,10 @@ import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selec
 import { TObjectRedux } from '@utils/redux';
 import { Global } from '@utils/appHelper';
 import { url } from 'inspector';
+import NavigationService from '@utils/navigation';
+import NotificationStack from '@contents/Notification/index.stack';
+import notificationStack from '@contents/Notification/routes';
+import rootStack from '@contents/routes';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -268,9 +272,13 @@ class ApplicantScreens extends PureComponent<Props> {
 
   renderRightComponent = () => (
     <QuickView row alignItems="center">
-      <QuickView>
+      <TouchableOpacity
+        onPress={() => {
+          NavigationService.navigate(rootStack.notificationStack);
+        }}
+      >
         <Icon type="feather" name="bell" size={16} color="#635f5e" />
-      </QuickView>
+      </TouchableOpacity>
       <QuickView marginLeft={10}>
         <Icon type="antdesign" name="search1" color="#635f5e" size={16} />
       </QuickView>

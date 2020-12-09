@@ -1,4 +1,4 @@
-import { Avatar, QuickView, Text } from '@components';
+import { Avatar, Button, QuickView, Text } from '@components';
 import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
 import { logout } from '@contents/Auth/containers/Index/Login/redux/slice';
 import { themeSelector } from '@contents/Config/redux/selector';
@@ -6,11 +6,13 @@ import rootStack from '@contents/routes';
 import NavigationService from '@utils/navigation';
 import { applyObjectSelector, parseObjectSelector } from '@utils/selector';
 import React, { PureComponent } from 'react';
-import { withTheme } from 'react-native-elements';
 import {
+  Dimensions,
   TouchableOpacity,
   TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
+} from 'react-native';
+import { Overlay, withTheme } from 'react-native-elements';
+
 import Modal, {
   ModalButton,
   ModalContent,
@@ -47,8 +49,8 @@ class SidebarLoginScreen extends PureComponent<Props, State> {
         <ModalButton
           text="Yes"
           onPress={() => {
-            reduxLogout();
-            this.setState({ isVisibleBackdrop: false });
+            // reduxLogout();
+            // this.setState({ isVisibleBackdrop: false });
           }}
         />
       </ModalFooter>
@@ -56,9 +58,12 @@ class SidebarLoginScreen extends PureComponent<Props, State> {
   };
 
   render() {
-    const { loginSelectorData } = this.props;
-
+    const { loginSelectorData, reduxLogout } = this.props;
+    const toggleOverlay = () => {
+      this.setState({ isVisibleBackdrop: !isVisibleBackdrop });
+    };
     const { isVisibleBackdrop } = this.state;
+    const screenWidth = Math.round(Dimensions.get('window').width);
     return (
       <QuickView>
         <QuickView alignItems="center" marginTop={-48}>
@@ -67,15 +72,9 @@ class SidebarLoginScreen extends PureComponent<Props, State> {
             size="large"
             source={{
               uri:
-                loginSelectorData.data.profile?.profileUrl
-                || 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                loginSelectorData.data.profile?.profileUrl ||
+                'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
             }}
-            // containerStyle={{
-            //   position: 'absolute',
-            //   left: '40%',
-            //   top: -60,
-            //   zIndex: 999,
-            // }}
             title="A1"
           />
         </QuickView>
@@ -89,7 +88,7 @@ class SidebarLoginScreen extends PureComponent<Props, State> {
             paddingBottom={50}
           >
             <Text center color="#241f1f">
-              {loginSelectorData.data?.profile.name}
+              {loginSelectorData.data?.profile?.name}
             </Text>
             <TouchableWithoutFeedback
               onPress={() => {
@@ -182,20 +181,63 @@ class SidebarLoginScreen extends PureComponent<Props, State> {
                 LOGOUT
               </Text>
             </TouchableOpacity>
-            <Modal
-              style={{ paddingBottom: 50 }}
-              visible={isVisibleBackdrop}
-              width={300}
-              footer={this.modalFooterComponent()}
+            <Overlay
+              isVisible={isVisibleBackdrop}
+              onBackdropPress={toggleOverlay}
+              overlayStyle={{
+                borderRadius: 10,
+                backgroundColor: '#fff',
+                width: screenWidth - 60,
+                padding: 0,
+              }}
             >
-              <ModalContent>
-                <QuickView>
-                  <Text style={{ textAlign: 'center' }}>
-                    Do you want to logout
+              <QuickView height={150}>
+                <QuickView flex={1} center>
+                  <Text color="#e32d14" fontSize={22} fontWeight="bold">
+                    Warning
                   </Text>
                 </QuickView>
-              </ModalContent>
-            </Modal>
+                <QuickView center flex={1}>
+                  <Text color="#8a8786" style={{ opacity: 0.7 }}>
+                    Do you want logout
+                  </Text>
+                </QuickView>
+                <QuickView style={{ borderWidth: 0 }} row>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: '#f58240',
+                      borderRightColor: '#fff',
+                      flex: 1,
+                      padding: 15,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                    onPress={() => {
+                      reduxLogout();
+                    }}
+                  >
+                    <Text center color="#fff" bold>
+                      Yes
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: '#f58240',
+                      flex: 1,
+                      borderLeftWidth: 1,
+                      borderLeftColor: '#fff',
+                      padding: 15,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Text center color="#fff" bold>
+                      No
+                    </Text>
+                  </TouchableOpacity>
+                </QuickView>
+              </QuickView>
+            </Overlay>
           </QuickView>
         </QuickView>
       </QuickView>
@@ -216,4 +258,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTheme(SidebarLoginScreen as any));
+)(SidebarLoginScreen as any);

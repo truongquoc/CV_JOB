@@ -6,5 +6,6 @@ const mainBottomTab = {
   briefcaseStack: 'BriefcaseStack',
   exploreStack: 'ExploreStack',
   moreStack: 'MoreStack',
+  postStack: 'PostStack',
 };
 export default mainBottomTab;

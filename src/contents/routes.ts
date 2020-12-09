@@ -8,6 +8,7 @@ const rootStack = {
   mainBottomTab: 'MainBottomTab',
   profileStack: 'ProfileStack',
   exploreStack: 'MainExploreStack',
+  notificationStack: 'NotificationStack',
 };
 
 export default rootStack;

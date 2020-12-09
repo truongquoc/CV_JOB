@@ -5,9 +5,7 @@ import { applyObjectSelector } from '@utils/selector';
 import { TObjectRedux } from '@utils/redux';
 import { Color } from '@themes/Theme';
 import { withTheme, Icon } from 'react-native-elements';
-import {
-  QuickView, TextError, AuthButton, Text,
-} from '@components';
+import { QuickView, TextError, AuthButton, Text } from '@components';
 import AuthInput from '@contents/Auth/containers/Index/Shared/AuthInput';
 import {
   TouchableWithoutFeedback,
@@ -43,6 +41,7 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
   render() {
     const { loginData, reduxLogin } = this.props;
     const { check } = this.state;
+
     return (
       <>
         <TextError error={loginData.error} color="#FA8072" />
@@ -50,7 +49,7 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
           ref={(ref: any) => {
             this.email = ref;
           }}
-          value="Stacey_Hagenes@hotmail.com"
+          value="Delta_Schaefer@gmail.com"
           leftIcon={{ name: 'email-outline', color: '#ffffff' }}
           placeholder="Email"
           validationField="email"
@@ -123,7 +122,7 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
                 password: this.password.getText(),
               });
             }}
-            loading={loginData.loading}
+            // loading={loading}
           />
         </QuickView>
         <QuickView row center>
@@ -143,9 +142,13 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  loginData: applyObjectSelector(loginSelector, state),
-});
+const mapStateToProps = (state: any) => {
+  console.log('state', state.auth.login.toJS());
+
+  return {
+    loginData: applyObjectSelector(loginSelector, state),
+  };
+};
 
 const mapDispatchToProps = (dispatch: any) => ({
   reduxLogin: (data: ILogInInput) => dispatch(login({ data })),

@@ -19,6 +19,7 @@ import HomeStack from './containers/Home/index.stack';
 import MoreStack from './containers/More/index.stack';
 import MyJobsStack from './containers/MyJobs/index.stack';
 import ExploreScreen from './containers/Explore/screens';
+import PostStack from './containers/Post/index.stack';
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -29,7 +30,9 @@ function MainBottomTab(props: any) {
     },
     t,
   } = props;
-  const loginSelectorData = useSelector((state) => applyObjectSelector(loginSelector, state));
+  const loginSelectorData = useSelector((state) =>
+    applyObjectSelector(loginSelector, state),
+  );
   const isNotLogin = !loginSelectorData.data.get('token');
   const role = loginSelectorData.data.get('role');
 
@@ -77,43 +80,69 @@ function MainBottomTab(props: any) {
         component={HomeStack}
         options={{
           tabBarLabel: t('bottom_tab:home'),
-          tabBarIcon: ({ focused, color, size }) => (focused ? (
-            <Icon
-              name="home"
-              type="material-community"
-              color={color}
-              size={26}
-            />
-          ) : (
-            <Icon
-              name="home-outline"
-              type="material-community"
-              color={color}
-              size={22}
-            />
-          )),
+          tabBarIcon: ({ focused, color, size }) =>
+            focused ? (
+              <Icon
+                name="home"
+                type="material-community"
+                color={color}
+                size={26}
+              />
+            ) : (
+              <Icon
+                name="home-outline"
+                type="material-community"
+                color={color}
+                size={22}
+              />
+            ),
         }}
       />
+
       <BottomTabs.Screen
         name={mainBottomTab.briefcaseStack}
         component={MyJobsStack}
         options={{
           tabBarLabel: t('bottom_tab:myjob'),
-          tabBarIcon: ({ focused, color, size }) => (focused ? (
-            <Icon
-              name="briefcase"
-              type="material-community"
-              color={color}
-              size={26}
-            />
-          ) : (
-            <Icon
-              name="briefcase-outline"
-              type="material-community"
-              color={color}
-              size={22}
-            />
-          )),
+          tabBarIcon: ({ focused, color, size }) =>
+            focused ? (
+              <Icon
+                name="briefcase"
+                type="material-community"
+                color={color}
+                size={26}
+              />
+            ) : (
+              <Icon
+                name="briefcase-outline"
+                type="material-community"
+                color={color}
+                size={22}
+              />
+            ),
+        }}
+      />
+      <BottomTabs.Screen
+        name={mainBottomTab.postStack}
+        component={PostStack}
+        options={{
+          tabBarLabel: t('bottom_tab:Post'),
+          tabBarIcon: ({ focused, color, size }) =>
+            focused ? (
+              <Icon
+                name="post"
+                type="material-community"
+                color={color}
+                size={26}
+              />
+            ) : (
+              <Icon
+                name="post-outline"
+                type="material-community"
+                color={color}
+                size={22}
+              />
+            ),
         }}
       />
       <BottomTabs.Screen
@@ -121,21 +150,22 @@ function MainBottomTab(props: any) {
         component={ExploreScreen}
         options={{
           tabBarLabel: t('bottom_tab:explore'),
-          tabBarIcon: ({ focused, color, size }) => (focused ? (
-            <Icon
-              name="newspaper"
-              type="material-community"
-              color={color}
-              size={26}
-            />
-          ) : (
-            <Icon
-              name="newspaper"
-              type="material-community"
-              color={color}
-              size={22}
-            />
-          )),
+          tabBarIcon: ({ focused, color, size }) =>
+            focused ? (
+              <Icon
+                name="newspaper"
+                type="material-community"
+                color={color}
+                size={26}
+              />
+            ) : (
+              <Icon
+                name="newspaper"
+                type="material-community"
+                color={color}
+                size={22}
+              />
+            ),
         }}
       />
       <BottomTabs.Screen
@@ -143,11 +173,12 @@ function MainBottomTab(props: any) {
         component={MoreStack}
         options={{
           tabBarLabel: t('bottom_tab:more'),
-          tabBarIcon: ({ focused, color, size }) => (focused ? (
-            <Icon name="bars" type="font-awesome" color={color} size={20} />
-          ) : (
-            <Icon name="bars" type="font-awesome" color={color} size={16} />
-          )),
+          tabBarIcon: ({ focused, color, size }) =>
+            focused ? (
+              <Icon name="bars" type="font-awesome" color={color} size={20} />
+            ) : (
+              <Icon name="bars" type="font-awesome" color={color} size={16} />
+            ),
         }}
       />
     </BottomTabs.Navigator>
