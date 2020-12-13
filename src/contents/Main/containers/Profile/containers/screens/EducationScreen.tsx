@@ -1,6 +1,4 @@
-import {
-  Body, Container, Header, QuickView, Text,
-} from '@components';
+import { Body, Container, Header, QuickView, Text } from '@components';
 import NavigationService from '@utils/navigation';
 import React, { PureComponent } from 'react';
 import { TouchableOpacity } from 'react-native';
@@ -8,10 +6,7 @@ import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import profileStack from '../../routes';
 
-class SkillScreen extends PureComponent {
-  // centerComponent =() => (
-
-  // )
+class EducationScreen extends PureComponent {
   render() {
     return (
       <Container>
@@ -36,7 +31,7 @@ class SkillScreen extends PureComponent {
                 justifyContent: 'center',
               }}
               onPress={() => {
-                NavigationService.navigate(profileStack.DetailSkillScreen);
+                NavigationService.navigate(profileStack.detailEducationScreen);
               }}
             >
               <Icon type="entypo" name="plus" color="#fff" />
@@ -52,4 +47,7 @@ const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(SkillScreen as any);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EducationScreen as any);

@@ -126,6 +126,7 @@ function MainBottomTab(props: any) {
         name={mainBottomTab.postStack}
         component={PostStack}
         options={{
+          tabBarVisible: false,
           tabBarLabel: t('bottom_tab:Post'),
           tabBarIcon: ({ focused, color, size }) =>
             focused ? (
@@ -149,6 +150,7 @@ function MainBottomTab(props: any) {
         name={mainBottomTab.exploreStack}
         component={ExploreScreen}
         options={{
+          tabBarVisible: false,
           tabBarLabel: t('bottom_tab:explore'),
           tabBarIcon: ({ focused, color, size }) =>
             focused ? (

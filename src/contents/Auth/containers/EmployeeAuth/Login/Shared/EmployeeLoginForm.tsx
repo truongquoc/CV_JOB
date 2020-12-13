@@ -49,7 +49,7 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
           ref={(ref: any) => {
             this.email = ref;
           }}
-          value="Delta_Schaefer@gmail.com"
+          value="Fritz62@hotmail.com"
           leftIcon={{ name: 'email-outline', color: '#ffffff' }}
           placeholder="Email"
           validationField="email"
@@ -143,8 +143,6 @@ class EmployeeLoginForm extends PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: any) => {
-  console.log('state', state.auth.login.toJS());
-
   return {
     loginData: applyObjectSelector(loginSelector, state),
   };

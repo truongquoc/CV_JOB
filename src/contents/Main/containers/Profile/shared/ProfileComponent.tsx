@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { QuickView, Text } from '@components';
 import { Icon } from 'react-native-elements';

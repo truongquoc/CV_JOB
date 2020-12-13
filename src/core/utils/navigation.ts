@@ -9,8 +9,7 @@ interface IScreen {
 
 const navigationRef: any = React.createRef();
 
-const navigate = (stack: string, screen?: any) =>
-  navigationRef.current?.navigate(stack, screen);
+const navigate = (stack: string, screen?: any) => navigationRef.current?.navigate(stack, screen);
 
 const getCurrentRoute = () => navigationRef.current?.getCurrentRoute();
 
@@ -21,11 +20,9 @@ const getRootState = () => navigationRef.current?.getRootState();
 const goBack = () => navigationRef.current?.goBack();
 
 // eslint-disable-next-line max-len
-const push = (stack: string, screen?: any) =>
-  navigationRef.current?.dispatch(StackActions.push(stack, screen));
+const push = (stack: string, screen?: any) => navigationRef.current?.dispatch(StackActions.push(stack, screen));
 
-const pop = (count: number = 1) =>
-  navigationRef.current?.dispatch(StackActions.pop(count));
+const pop = (count: number = 1) => navigationRef.current?.dispatch(StackActions.pop(count));
 
 const popToTop = () => navigationRef.current?.dispatch(StackActions.popToTop());
 

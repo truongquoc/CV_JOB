@@ -1,5 +1,3 @@
 import loginSaga from '@contents/Auth/containers/Index/Login/redux/saga';
-
-export default [
-  ...loginSaga,
-];
+import registerSaga from '@contents/Auth/containers/EmployeeAuth/Register/redux/saga';
+export default [...loginSaga, ...registerSaga];

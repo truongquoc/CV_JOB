@@ -1,4 +1,4 @@
-import { Avatar, Button, QuickView, Text } from '@components';
+import { Avatar, QuickView, Text } from '@components';
 import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
 import { logout } from '@contents/Auth/containers/Index/Login/redux/slice';
 import { themeSelector } from '@contents/Config/redux/selector';
@@ -11,13 +11,9 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { Overlay, withTheme } from 'react-native-elements';
+import { Overlay } from 'react-native-elements';
 
-import Modal, {
-  ModalButton,
-  ModalContent,
-  ModalFooter,
-} from 'react-native-modals';
+import { ModalButton, ModalFooter } from 'react-native-modals';
 import { connect } from 'react-redux';
 
 interface Props {
@@ -49,8 +45,8 @@ class SidebarLoginScreen extends PureComponent<Props, State> {
         <ModalButton
           text="Yes"
           onPress={() => {
-            // reduxLogout();
-            // this.setState({ isVisibleBackdrop: false });
+            reduxLogout();
+            this.setState({ isVisibleBackdrop: false });
           }}
         />
       </ModalFooter>
@@ -72,8 +68,8 @@ class SidebarLoginScreen extends PureComponent<Props, State> {
             size="large"
             source={{
               uri:
-                loginSelectorData.data.profile?.profileUrl ||
-                'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                loginSelectorData.data.profile?.profileUrl
+                || 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
             }}
             title="A1"
           />

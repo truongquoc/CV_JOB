@@ -1,4 +1,5 @@
 import login from '@contents/Auth/containers/Index/Login/redux/slice';
+import register from '@contents/Auth/containers/EmployeeAuth/Register/redux/slice';
 import { combineReducers } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-community/async-storage';
 import { persistReducer } from 'redux-persist';
@@ -12,8 +13,10 @@ const persistConfig = {
 };
 
 const auth = persistReducer(
-  persistConfig, combineReducers({
+  persistConfig,
+  combineReducers({
     login,
+    register,
   }),
 );
 export default auth;

@@ -20,9 +20,7 @@ const jobSlice = createSlice({
     ...createObjectReducer<TDetail>(`${NAME}GetDetail`, DETAIL, LIST),
     ...createObjectReducer<T>(`${NAME}Applies`),
     ...createArrayReducer<TListCate>(`${NAME}GetListCate`, LIST_CATE),
-    setFilter: (state: any, action: any) => {
-      return state.set('setFilter', action.payload.s);
-    },
+    setFilter: (state: any, action: any) => state.set('setFilter', action.payload.s),
   },
 });
 export const {

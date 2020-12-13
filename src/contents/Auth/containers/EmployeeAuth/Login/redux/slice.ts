@@ -28,6 +28,8 @@ const slice = createSlice({
   },
 });
 
-export const { login, loginSuccess, loginFail, logout } = slice.actions;
+export const {
+  login, loginSuccess, loginFail, logout,
+} = slice.actions;
 
 export default slice.reducer;

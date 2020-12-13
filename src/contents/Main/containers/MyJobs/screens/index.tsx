@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import {
-  QuickView, Text, Container, Header, Body, Image,
-} from '@components';
+import { QuickView, Text, Container, Header, Body, Image } from '@components';
 import { StatusBar } from 'react-native';
 import MyJobTopTab from '../containers/index.toptab';
+import { Divider } from 'react-native-elements';
 
 class MyJobScreen extends PureComponent {
   render() {
@@ -13,7 +12,6 @@ class MyJobScreen extends PureComponent {
       <Container>
         {/* <Header /> */}
         <StatusBar backgroundColor="transparent" />
-
         <Header
           backgroundColor="#a5cbf0"
           style={{ opacity: 0.1 }}

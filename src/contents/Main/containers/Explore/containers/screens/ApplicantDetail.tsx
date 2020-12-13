@@ -13,9 +13,8 @@ import {
   Image,
   Button,
 } from '@components';
-import { Icon, Divider, withTheme, Overlay } from 'react-native-elements';
-import { ActivityIndicator, TouchableOpacity } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Icon, withTheme, Overlay } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native';
 import { getIdFromParams, Global } from '@utils/appHelper';
 import { applyObjectSelector, parseObjectSelector } from '@utils/selector';
 import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
@@ -26,6 +25,7 @@ import TopTabs from './TopTabs';
 import { jobApplies, jobGetDetail } from '../../redux/slice';
 import { jobDetailSelector } from '../../redux/selector';
 import { appliesJob } from '../../redux/api';
+import exploreStack from '../../routes';
 
 interface Props {
   getDetail: (id: string) => any;
@@ -65,7 +65,6 @@ class ApplicantScreens extends PureComponent<Props, State> {
   componentDidMount() {
     const { getDetail } = this.props;
     getDetail(getIdFromParams(this.props));
-    console.log('detail', this.props.detail);
   }
 
   render() {
@@ -194,13 +193,9 @@ class ApplicantScreens extends PureComponent<Props, State> {
                     if (!token) {
                       NavigationService.navigate(rootStack.authStack);
                     } else {
-                      // appliesJob(data.data?.id);
-                      try {
-                        const result = await appliesJob(data.id);
-                      } catch (error) {
-                        this.setState({ isVisible: true });
-                        this.setState({ errMsg: error.message });
-                      }
+                      NavigationService.navigate(exploreStack.applyScreen, {
+                        id: data.id,
+                      });
                     }
                   }}
                 >
@@ -252,7 +247,6 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   getDetail: (id: string) => dispatch(jobGetDetail({ id })),
-  // appliesJob: (id: string) => dispatch(jobApplies({ id })),
 });
 
 export default connect(

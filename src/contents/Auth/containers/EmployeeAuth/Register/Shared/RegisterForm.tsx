@@ -1,13 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Keyboard } from 'react-native';
-import { applyObjectSelector } from '@utils/selector';
 import { TObjectRedux } from '@utils/redux';
 import { Color } from '@themes/Theme';
 import { withTheme, Icon } from 'react-native-elements';
-import {
-  QuickView, TextError, AuthButton, Text,
-} from '@components';
+import { QuickView, TextError, AuthButton, Text } from '@components';
 import AuthInput from '@contents/Auth/containers/Index/Shared/AuthInput';
 import {
   TouchableWithoutFeedback,
@@ -16,17 +13,18 @@ import {
 import authStack from '@contents/Auth/containers/routes';
 import NavigationService from '@utils/navigation';
 import rootStack from '@contents/routes';
-import { ILogInInput } from '../redux/model';
-import { login, logout } from '../redux/slice';
-import { loginSelector } from '../redux/selector';
-
+import { IRegisterInput } from '../redux/model';
+import { applyObjectSelector } from '@utils/selector';
+import { registerSelector } from '../redux/selector';
+import { register } from '../redux/slice';
 interface Props {
-  loginData: TObjectRedux;
-  reduxLogin: (data: ILogInInput) => any;
+  registerData: TObjectRedux;
+  registerRedux: (data: IRegisterInput) => any;
   theme?: any;
 }
 interface State {
   check: boolean;
+  err: object;
 }
 class RegisterForm extends PureComponent<Props, State> {
   private email: any;
@@ -41,15 +39,38 @@ class RegisterForm extends PureComponent<Props, State> {
     super(props);
     this.state = {
       check: false,
+      err: {
+        code: 400,
+        message: ['Please fill all the inforamtion'],
+      },
     };
   }
 
+  validateForm = () => {
+    console.log('email', this.email.getText());
+
+    // if (this.email.getText() === '') {
+    //   console.log();
+    // };
+    // if(this.name.getText() === '') {
+
+    // }
+    // if(this.password.getText() === '') {
+
+    // }
+    // if(this.confirmPassword.getText() === '') {
+
+    // }
+  };
+
+  componentDidMount() {}
+
   render() {
-    const { loginData, reduxLogin } = this.props;
-    const { check } = this.state;
+    const { registerData, registerRedux } = this.props;
+    const { check, err } = this.state;
     return (
       <>
-        <TextError error={loginData.error} color="#FA8072" />
+        <TextError error={registerData?.error} color="#FA8072" />
         <AuthInput
           ref={(ref: any) => {
             this.email = ref;
@@ -59,6 +80,8 @@ class RegisterForm extends PureComponent<Props, State> {
           fontSize={10}
           validationField="email"
           color="#ffffff"
+          borderBottomColor="red"
+          borderWidth={2}
           keyboardType="email-address"
           backgroundColor="#343434"
         />
@@ -82,7 +105,6 @@ class RegisterForm extends PureComponent<Props, State> {
           placeholder="Password"
           color="#ffffff"
           rightIconColor="#28D8A1"
-          validationField="password"
           onSubmitEditing={() => Keyboard.dismiss()}
           blurOnSubmit={false}
           secureTextEntry
@@ -91,14 +113,13 @@ class RegisterForm extends PureComponent<Props, State> {
         />
         <AuthInput
           ref={(ref: any) => {
-            this.password = ref;
+            this.confirmPassword = ref;
           }}
           leftIcon={{ name: 'lock-outline', color: '#ffffff' }}
           textContentType="oneTimeCode"
           placeholder="Confirm Password"
           color="#ffffff"
           rightIconColor="#28D8A1"
-          validationField="password"
           onSubmitEditing={() => Keyboard.dismiss()}
           blurOnSubmit={false}
           secureTextEntry
@@ -135,12 +156,16 @@ class RegisterForm extends PureComponent<Props, State> {
             backgroundColor="#28d8a1"
             shadow
             onPress={() => {
-              reduxLogin({
-                email: this.email.getText(),
-                password: this.password.getText(),
+              registerRedux({
+                email: this.email?.getText(),
+                password: this.password?.getText(),
+                confirmPassword: this.confirmPassword?.getText(),
+                name: this.name?.getText(),
               });
+              if (registerData.error === null) {
+                NavigationService.navigate(authStack.greetingScreen);
+              }
             }}
-            loading={loginData.loading}
           />
         </QuickView>
         <QuickView row center>
@@ -160,12 +185,11 @@ class RegisterForm extends PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: any) => ({
-  loginData: applyObjectSelector(loginSelector, state),
+  registerData: applyObjectSelector(registerSelector, state),
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  reduxLogin: (data: ILogInInput) => dispatch(login({ data })),
-  reduxLogout: () => dispatch(logout()),
+  registerRedux: (data: IRegisterInput) => dispatch(register({ data })),
 });
 
 export default connect(

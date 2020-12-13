@@ -6,4 +6,4 @@ export const root = (state: any) => {
   return state[NAME];
 };
 
-export const loginSelector = createObjectSelector(root);
+export const registerSelector = createObjectSelector(root);

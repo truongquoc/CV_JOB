@@ -9,7 +9,6 @@ const slice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     ...createObjectReducer<T>(NAME),
-    logout: (state: any) => state,
   },
   extraReducers: {
     // Redux Persist (REHYDRATE)
@@ -28,8 +27,6 @@ const slice = createSlice({
   },
 });
 
-export const {
-  login, loginSuccess, loginFail, logout,
-} = slice.actions;
+export const { register, registerSuccess, registerFail } = slice.actions;
 
 export default slice.reducer;

@@ -10,6 +10,7 @@ import { applyObjectSelector, parseObjectSelector } from '@utils/selector';
 import profileStack from '../routes';
 import { profileGetDetail } from '../redux/slice';
 import { profileSelector } from '../redux/selector';
+import FastImage from 'react-native-fast-image';
 
 const styles = StyleSheet.create({
   linearGradient: {
@@ -78,7 +79,7 @@ class ProfileScreen extends PureComponent<Props, any> {
         <Header
           backIcon
           leftColor="#fff"
-          backgroundColor="#1f4780"
+          backgroundColor="#6ca9e6"
           height={100}
           centerComponent={this.renderCenterComponent()}
           rightComponent={this.renderRightComponent()}
@@ -107,20 +108,28 @@ class ProfileScreen extends PureComponent<Props, any> {
                 </Text>
               </QuickView>
               <QuickView row flex={1}>
-                <QuickView flex={3}>
-                  <Image
-                    width={150}
-                    height={200}
+                <QuickView flex={3} center>
+                  <FastImage
+                    style={{ width: 120, height: 150, borderRadius: 5 }}
                     resizeMode="cover"
                     source={{
-                      uri:
-                        'https://cdn.vox-cdn.com/thumbor/rES5fxTJl-z014NcJV7Rradtxrc=/0x86:706x557/1400x1400/filters:focal(0x86:706x557):format(png)/cdn.vox-cdn.com/imported_assets/847184/stevejobs.png',
+                      uri: `${
+                        data?.profile?.profileUrl
+                          ? data.profile.profileUrl
+                          : 'https://cdn0.iconfinder.com/data/icons/banking-and-finance-86/100/employee__user__avatar__man__male-512.png'
+                      }`,
                     }}
                   />
                 </QuickView>
-                <QuickView flex={5} paddingLeft={20} paddingTop={20}>
-                  <Text color="#535D7E" fontSize={20}>
-                    Creative designer from UXDesigner
+                <QuickView flex={5} paddingLeft={20}>
+                  <Text marginTop={20} style={{ opacity: 0.4 }}>
+                    <Icon
+                      name="phone"
+                      type="antdesign"
+                      color="#404F68"
+                      size={16}
+                    />
+                    <Text color="#404F68">{data.profile.phone}</Text>
                   </Text>
                   <Text marginTop={20} style={{ opacity: 0.4 }}>
                     <Icon
@@ -139,8 +148,7 @@ class ProfileScreen extends PureComponent<Props, any> {
                       size={16}
                     />
                     <Text color="#404F68">
-                      {' '}
-                      <Text color="#404F68">Stevejob@gmail.com</Text>
+                      <Text color="#404F68">{data.email}</Text>
                     </Text>
                   </Text>
                   <QuickView row marginTop={20}>
@@ -302,26 +310,26 @@ class ProfileScreen extends PureComponent<Props, any> {
             </Body>
             <QuickView style={styles.informationCard}>
               <QuickView row marginBottom={10} justifyContent="space-between">
-                <Text color="#2c3236">Education</Text>
-                <Icon name="edit" type="antdesign" size={18} color="#377cab" />
-              </QuickView>
-              <QuickView row alignItems="center">
-                <QuickView
-                  flex={1}
-                  backgroundColor="#9e9991"
-                  paddingTop={10}
-                  paddingBottom={10}
-                  borderRadius={5}
-                >
-                  <Icon name="home" type="antdesign" size={18} color="#fff" />
+                <QuickView row>
+                  <Icon
+                    name="home"
+                    type="antdesign"
+                    size={18}
+                    color="#377cab"
+                  />
+                  <Text color="#2c3236">Acedemic Level</Text>
                 </QuickView>
-                <QuickView flex={7} marginLeft={10}>
-                  <Text color="#000" fontSize={18} fontWeight="bold">
-                    Truong Dai hoc Bach khoa Da Nang
-                  </Text>
-                  <Text color="#5A5F69">2017-2022</Text>
-                </QuickView>
+                <Icon
+                  name="edit"
+                  type="antdesign"
+                  size={18}
+                  color="#377cab"
+                  onPress={() => {
+                    NavigationService.navigate(profileStack.educationScreen);
+                  }}
+                />
               </QuickView>
+              <QuickView row></QuickView>
               <QuickView>
                 <Text center color="#377cab" fontWeight="bold" marginTop={20}>
                   SEE ALL

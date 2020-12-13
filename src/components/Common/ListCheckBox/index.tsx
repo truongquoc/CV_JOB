@@ -25,6 +25,7 @@ export interface Props {
   checkBoxProps?: Omit<ECheckBoxProps, 'checked'>;
   backgroundColor?: string;
   containerStyle?: any;
+  horizontal?: boolean;
 }
 
 const styles = StyleSheet.create({
@@ -128,6 +129,7 @@ class ListCheckBox extends PureComponent<Props, State> {
       checkBoxProps,
       backgroundColor,
       containerStyle,
+      horizontal,
     } = this.props;
     const { dataRender, value } = this.state;
     const wrapStyles: any = StyleSheet.flatten([
@@ -169,18 +171,8 @@ class ListCheckBox extends PureComponent<Props, State> {
         </View>
       );
     }
-    return (
-      <View style={wrapStyles} testID="ListCheckBox">
-        {dataRender.map((item: any) => (
-          <CheckBox
-            containerStyle={buttonContainer}
-            key={item.id}
-            title={item.name}
-            checked={item.isChecked}
-            onPress={this.toggleCheckbox(item.id)}
-            {...checkBoxProps}
-          />
-        ))}
+    if (horizontal)
+      return (
         <FlatList
           data={dataRender}
           renderItem={({ item }) => (
@@ -198,6 +190,19 @@ class ListCheckBox extends PureComponent<Props, State> {
             flexWrap: 'wrap',
           }}
         />
+      );
+    return (
+      <View style={wrapStyles} testID="ListCheckBox">
+        {dataRender.map((item: any) => (
+          <CheckBox
+            containerStyle={buttonContainer}
+            key={item.id}
+            title={item.name}
+            checked={item.isChecked}
+            onPress={this.toggleCheckbox(item.id)}
+            {...checkBoxProps}
+          />
+        ))}
       </View>
     );
   }

@@ -7,7 +7,6 @@ import {
   Text,
   Header,
   FlatList,
-  ButtonGroup,
   Picker,
   Button,
   Body,
@@ -21,9 +20,7 @@ import * as _ from 'lodash';
 import { Dimensions } from 'react-native';
 import NavigationService from '@utils/navigation';
 import { stringifyQuery, TQuery } from '@utils/redux';
-import { fetchAllJobs } from '../../redux/api';
 import { jobGetList, setFilter } from '../../redux/slice';
-import exploreStack from '../../routes';
 
 const jobType = [
   { id: 0, name: 'Full Time', type: 'FULLTIME' },
@@ -44,6 +41,8 @@ interface State {
   MultiSliderFristvalue: number;
   multiValue: Array<string>;
   MultiSliderSecondvalue: number;
+  selectedSalary?: any;
+  selectedCity?: any;
 }
 const screenWidth = Math.round(Dimensions.get('window').width);
 const options = [
@@ -78,10 +77,12 @@ const companyList = [
   },
 ];
 const data = [
-  { id: '1', name: '100$' },
-  { id: '2', name: '300$' },
-  { id: '3', name: '600$' },
-  { id: '4', name: '1000$' },
+  { id: '1', name: '< 500$' },
+  { id: '2', name: '500$ to 1000$' },
+  { id: '3', name: '1000$ to 1500$' },
+  { id: '4', name: '1500$ to 2000$' },
+  { id: '5', name: '2000$ to 3000$' },
+  { id: '6', name: 'Above 3000$' },
 ];
 class FilterScreen extends PureComponent<Props, State> {
   private pickerRef: any;
@@ -96,18 +97,85 @@ class FilterScreen extends PureComponent<Props, State> {
     };
   }
 
+  componentDidMount() {
+    if (this.props.filterObject.hasOwnProperty('s')) {
+      const {
+        filterObject: {
+          s: { $and },
+        },
+      } = this.props;
+      $and.forEach((data: any) => {
+        if (data.hasOwnProperty('type') && data.type == 'FULLTIME') {
+          this.setState((state) => {
+            state.jobStatus[0] = true;
+          });
+        }
+        if (data.hasOwnProperty('address.city')) {
+          this.setState({ selectedCity: data['address.city'] });
+        }
+      });
+    }
+    this.forceUpdate();
+  }
+
   applyFilter = async () => {
-    const { jobStatus } = this.state;
+    const { jobStatus, selectedSalary, selectedCity } = this.state;
     const { setFilterRedux, getList, filterObject } = this.props;
     const querySelected: Array<any> = [];
-    const index = _.findIndex(jobStatus, (status) => {
-      return status === true;
-    });
-    const s = { type: jobType[index].type };
+    const index = _.findIndex(jobStatus, (status) => status === true);
+    const objectFilter = [];
+    if (index >= 0) {
+      objectFilter.push({ type: jobType[index].type });
+    }
+    if (selectedSalary && selectedSalary.id == 1) {
+      objectFilter.push({ lowestWage: { $lt: 500 } });
+    }
+    if (selectedSalary && selectedSalary.id == 2) {
+      objectFilter.push(
+        { lowestWage: { $gt: 500 } },
+        { highestWage: { $lt: 1000 } },
+      );
+    }
+    if (selectedSalary && selectedSalary.id == 3) {
+      objectFilter.push(
+        { lowestWage: { $gt: 1000 } },
+        { highestWage: { $lt: 1500 } },
+      );
+    }
+    if (selectedSalary && selectedSalary.id == 4) {
+      objectFilter.push(
+        { lowestWage: { $gt: 1500 } },
+        { highestWage: { $lt: 2000 } },
+      );
+    }
+    if (selectedSalary && selectedSalary.id == 5) {
+      objectFilter.push(
+        { lowestWage: { $gt: 2000 } },
+        { highestWage: { $lt: 3000 } },
+      );
+    }
+    if (selectedSalary && selectedSalary.id == 6) {
+      objectFilter.push({ lowestWage: { $gt: 3000 } });
+    }
+    if (selectedCity) {
+      console.log('selected city', selectedCity);
+
+      objectFilter.push({ 'address.city': selectedCity });
+    }
+    const s = {
+      $and: objectFilter,
+    };
+
     setFilterRedux({ s });
 
     getList({ s });
     NavigationService.goBack();
+  };
+  findObject = (value: any) => {
+    const result = _.find(data, function (o) {
+      return o.id == value[0];
+    });
+    this.setState({ selectedSalary: result });
   };
 
   renderJobsType = ({ item }: { item: any }) => {
@@ -298,11 +366,19 @@ class FilterScreen extends PureComponent<Props, State> {
     />
   );
 
+  multiSliderValuesChange = (values: any) => {
+    this.setState({ MultiSliderFristvalue: values[0] });
+    this.setState({ MultiSliderSecondvalue: values[1] });
+    console.log('value', values);
+  };
+
   render() {
     const {
       MultiSliderSecondvalue,
       MultiSliderFristvalue,
       multiValue,
+      selectedCity,
+      selectedSalary,
     } = this.state;
 
     return (
@@ -331,13 +407,59 @@ class FilterScreen extends PureComponent<Props, State> {
               </QuickView>
             </QuickView>
             <QuickView marginTop={10}>
-              <Text fontSize={20} fontWeight="bold" color="#787a80">
-                Select City
-              </Text>
+              <QuickView row marginTop={20} marginBottom={10}>
+                <Icon type="material-community" name="city" color="#64b4d9" />
+                <Text
+                  fontSize={20}
+                  fontWeight="bold"
+                  color="#787a80"
+                  style={{ marginLeft: 10 }}
+                >
+                  Select City
+                </Text>
+              </QuickView>
+              <Picker
+                labels={[
+                  'Thành phố Hồ Chí Minh',
+                  'Thành phố Đà Nẵng',
+                  'Thành phố Hà Nội',
+                ]}
+                values={['79', '48', '01']}
+                width={screenWidth - 40}
+                height={40}
+                shadow
+                placeholder="Select Location"
+                selectedValue={selectedCity}
+                ref={(ref) => {
+                  this.pickerRef = ref;
+                }}
+                style={{ backgroundColor: '#fff' }}
+                onValueChange={(value) => {
+                  this.setState({ selectedCity: value });
+                }}
+              />
+            </QuickView>
+
+            <QuickView>
+              <QuickView row marginTop={20} marginBottom={10}>
+                <Icon
+                  name="office-building"
+                  type="material-community"
+                  color="#64b4d9"
+                />
+                <Text
+                  fontSize={20}
+                  fontWeight="bold"
+                  color="#545050"
+                  style={{ marginLeft: 10 }}
+                >
+                  Company
+                </Text>
+              </QuickView>
               <Picker
                 labels={['Java', 'Javascript']}
                 values={['java', 'js']}
-                width={screenWidth - 20}
+                width={screenWidth - 40}
                 height={40}
                 shadow
                 placeholder="Select Location"
@@ -352,37 +474,29 @@ class FilterScreen extends PureComponent<Props, State> {
               />
             </QuickView>
 
-            <QuickView marginTop={10}>
-              <Text fontSize={20} fontWeight="bold" color="#545050">
-                Company
-              </Text>
-              <Picker
-                labels={['Java', 'Javascript']}
-                values={['java', 'js']}
-                width={screenWidth - 20}
-                height={40}
-                shadow
-                placeholder="Select Location"
-                // selectedValue={1}
-                ref={(ref) => {
-                  this.pickerRef = ref;
-                }}
-                style={{ backgroundColor: '#fff' }}
-                onValueChange={(value) => {
-                  // console.log('onValueChange: ', value);
-                }}
-              />
-            </QuickView>
-
-            <QuickView marginTop={10}>
-              <Text fontSize={20} fontWeight="bold" color="#545050">
-                Distance
-              </Text>
-
+            <QuickView>
+              <QuickView row marginTop={20} marginBottom={10}>
+                <QuickView row flex={4}>
+                  <Icon type="entypo" name="ruler" color="#64b4d9" />
+                  <Text
+                    fontSize={20}
+                    fontWeight="bold"
+                    color="#545050"
+                    style={{ marginLeft: 10 }}
+                  >
+                    Distance
+                  </Text>
+                </QuickView>
+                <QuickView flex={1}>
+                  <Text bold color="#64b4d9">
+                    {MultiSliderFristvalue}-{MultiSliderSecondvalue} km
+                  </Text>
+                </QuickView>
+              </QuickView>
               <MultiSlider
                 values={[MultiSliderFristvalue, MultiSliderSecondvalue]}
                 sliderLength={screenWidth - 30}
-                // onValuesChange={multiSliderValuesChange}
+                onValuesChange={this.multiSliderValuesChange}
                 selectedStyle={{ backgroundColor: '#4d2eab', height: 5 }}
                 trackStyle={{ height: 5, borderRadius: 5 }}
                 min={0}
@@ -410,29 +524,16 @@ class FilterScreen extends PureComponent<Props, State> {
 
             <QuickView marginTop={10}>
               <Text fontSize={20} fontWeight="bold" color="#545050">
-                Distance
-              </Text>
-              <QuickView>
-                <FlatList
-                  data={companyList}
-                  renderItem={this.renderJobsType}
-                  contentContainerStyle={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                  }}
-                />
-              </QuickView>
-            </QuickView>
-
-            <QuickView marginTop={10}>
-              <Text fontSize={20} fontWeight="bold" color="#545050">
                 Salary
               </Text>
               <QuickView>
                 <ListCheckBox
                   data={data}
-                  defaultValue={multiValue}
-                  // onChange={(value: any) => console.log('screenMulti', value)}
+                  containerStyle={{ color: '#64b4d9' }}
+                  horizontal
+                  onChange={(value: any) => {
+                    this.findObject(value);
+                  }}
                 />
               </QuickView>
             </QuickView>

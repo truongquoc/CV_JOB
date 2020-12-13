@@ -1,9 +1,11 @@
 {
   "exception": {
+    "400": "Invalid Input",
     "401": "Email or password is incorrect",
     "403": "Forbidden",
     "404": "Cannot find Item",
-    "500": "Something went wrong. Please try again later"
+    "500": "Something went wrong. Please try again later",
+    "409": "Email already Exists"
   },
   "common": {
     "theme": "Theme",

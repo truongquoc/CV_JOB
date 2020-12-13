@@ -19,15 +19,12 @@ const Stack = createStackNavigator();
 
 export default function RootStack() {
   const requireLogin = useSelector((state) => requireLoginSelector(state));
-  const loginSelectorData = useSelector((state) =>
-    applyObjectSelector(loginSelector, state),
-  );
+  const loginSelectorData = useSelector((state) => applyObjectSelector(loginSelector, state));
   const themeSelectorData = useSelector((state) => themeSelector(state));
   const isNotLogin = !!(requireLogin && !loginSelectorData.data.get('token'));
-  const backgroundColor =
-    themeSelectorData === ThemeEnum.LIGHT
-      ? lightTheme.colors.bgColor
-      : darkTheme.colors.bgColor;
+  const backgroundColor = themeSelectorData === ThemeEnum.LIGHT
+    ? lightTheme.colors.bgColor
+    : darkTheme.colors.bgColor;
   return (
     <Stack.Navigator
       headerMode="none"

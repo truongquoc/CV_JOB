@@ -21,7 +21,11 @@ import {
   ActivityIndicator,
   StatusBar,
 } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  ScrollView,
+  TouchableHighlight,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import NavigationService from '@utils/navigation';
 import rootStack from '@contents/routes';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -188,7 +192,6 @@ class ExploreScreen extends React.Component<Props, State> {
     };
     const getListQuery: TQuery = {
       s: { name: { $gte: 700 } },
-      limit: 10,
     };
     getList(payload);
 
@@ -226,53 +229,51 @@ class ExploreScreen extends React.Component<Props, State> {
   renderItem = (
     { item, index }: { item: any; index: any },
     parallaxProps: any,
-  ) => {
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          NavigationService.navigate(rootStack.exploreStack, {
-            screen: exploreStack.applicantscreens,
-            params: setIdIntoParams(item),
-          });
+  ) => (
+    <TouchableOpacity
+      onPress={() => {
+        NavigationService.navigate(rootStack.exploreStack, {
+          screen: exploreStack.applicantscreens,
+          params: setIdIntoParams(item),
+        });
+      }}
+    >
+      <FastImage
+        style={{ height: 200 }}
+        source={{
+          uri: 'https://i.imgur.com/lceHsT6l.jpg',
+          headers: { Authorization: 'someAuthToken' },
+          priority: FastImage.priority.normal,
         }}
+        resizeMode={FastImage.resizeMode.cover}
+      />
+      <QuickView
+        row
+        position="absolute"
+        bottom={0}
+        center
+        style={{ zIndex: 999 }}
       >
-        <FastImage
-          style={{ height: 200 }}
-          source={{
-            uri: 'https://i.imgur.com/lceHsT6l.jpg',
-            headers: { Authorization: 'someAuthToken' },
-            priority: FastImage.priority.normal,
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-        <QuickView
-          row
-          position="absolute"
-          bottom={0}
-          center
-          style={{ zIndex: 999 }}
-        >
-          <QuickView flex={1}>
-            <FastImage
-              style={{ height: 60, width: 60 }}
-              source={{
-                uri: item.user.profile.profileUrl,
-                headers: { Authorization: 'someAuthToken' },
-                priority: FastImage.priority.normal,
-              }}
-              resizeMode={FastImage.resizeMode.contain}
-            />
-          </QuickView>
-          <QuickView flex={4}>
-            <Text color="#fff" fontSize={20} fontWeight="bold">
-              {item.name}
-            </Text>
-            <Text color="#fff">{item.user.profile.name}</Text>
-          </QuickView>
+        <QuickView flex={1}>
+          <FastImage
+            style={{ height: 60, width: 60 }}
+            source={{
+              uri: item.user.profile.profileUrl,
+              headers: { Authorization: 'someAuthToken' },
+              priority: FastImage.priority.normal,
+            }}
+            resizeMode={FastImage.resizeMode.contain}
+          />
         </QuickView>
-      </TouchableOpacity>
-    );
-  };
+        <QuickView flex={4}>
+          <Text color="#fff" fontSize={20} fontWeight="bold">
+            {item.name}
+          </Text>
+          <Text color="#fff">{item.user.profile.name}</Text>
+        </QuickView>
+      </QuickView>
+    </TouchableOpacity>
+  );
 
   renderCenterComponent = () => (
     <QuickView row>
@@ -480,49 +481,74 @@ class ExploreScreen extends React.Component<Props, State> {
               />
             </QuickView>
           </QuickView>
-          <FlatList
-            data={data}
-            // style={styles.listItem}
-            renderItem={this.renderListJob}
-            onEndReached={this.loadMoreData}
-            ListHeaderComponent={() => (
-              <Carousel
-                containerCustomStyle={{ backgroundColor: '#fff' }}
-                vertical={false}
-                sliderWidth={screenWidth}
-                loop
-                slideStyle={{ width: screenWidth - 30 }}
-                itemWidth={screenWidth - 120}
-                data={listPopularJob}
-                // autoplay
-                renderItem={this.renderItem}
+          {data.length > 0 ? (
+            <FlatList
+              data={data}
+              renderItem={this.renderListJob}
+              onEndReached={this.loadMoreData}
+              ListHeaderComponent={() => (
+                <Carousel
+                  containerCustomStyle={{ backgroundColor: '#fff' }}
+                  vertical={false}
+                  sliderWidth={screenWidth}
+                  loop
+                  slideStyle={{ width: screenWidth - 30 }}
+                  itemWidth={screenWidth - 120}
+                  data={listPopularJob}
+                  renderItem={this.renderItem}
+                />
+              )}
+              onEndReachedThreshold={0.1}
+              ListFooterComponent={() => {
+                const { list } = this.props;
+                if (list.loading) {
+                  return (
+                    <QuickView style={{ flex: 1, alignItems: 'center' }}>
+                      <ActivityIndicator size="large" color="#ff6a00" />
+                    </QuickView>
+                  );
+                }
+                return <></>;
+              }}
+            />
+          ) : (
+            <QuickView
+              backgroundColor="#fff"
+              flex={1}
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Image
+                source={{
+                  uri:
+                    'https://www.startupindia.gov.in/content/dam/invest-india/Blogs/404.PNG',
+                }}
+                style={{ width: '100%' }}
               />
-            )}
-            onEndReachedThreshold={0.1}
-            ListFooterComponent={() => {
-              const { list } = this.props;
-              if (list.loading) {
-                return (
-                  <QuickView style={{ flex: 1, alignItems: 'center' }}>
-                    <ActivityIndicator size="large" color="#ff6a00" />
-                  </QuickView>
-                );
-              }
-              return <></>;
-            }}
-          />
+              <QuickView>
+                <Text
+                  style={{
+                    paddingHorizontal: 80,
+                    textAlign: 'center',
+                    color: '#000',
+                  }}
+                  bold
+                >
+                  We have not found jobs for this search at the moment
+                </Text>
+              </QuickView>
+            </QuickView>
+          )}
         </ImageBackground>
       </Container>
     );
   }
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    list: parseArraySelector(applyArraySelector(jobListSelector, state)),
-    filterObject: state.job.toJS().setFilter,
-  };
-};
+const mapStateToProps = (state: any) => ({
+  list: parseArraySelector(applyArraySelector(jobListSelector, state)),
+  filterObject: state.job.toJS().setFilter,
+});
 
 const mapDispatchToProps = (dispatch: any) => ({
   getList: (query?: TQuery) => dispatch(jobGetList({ query })),

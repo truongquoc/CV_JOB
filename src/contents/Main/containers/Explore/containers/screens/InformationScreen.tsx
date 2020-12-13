@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { Container, QuickView, Text, FlatList } from '@components';
+import {
+  Container, QuickView, Text, FlatList,
+} from '@components';
 import { Avatar, Divider, withTheme } from 'react-native-elements';
 import HTML from 'react-native-render-html';
 import { getIdFromParams } from '@utils/appHelper';

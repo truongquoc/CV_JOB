@@ -4,7 +4,6 @@ import {
   Container,
   FlatList,
   Header,
-  Image,
   QuickView,
   Text,
 } from '@components';
@@ -15,9 +14,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import CircleSlider from 'react-native-circle-slider';
 import FastImage from 'react-native-fast-image';
-import { applyArraySelector, parseArraySelector } from '@utils/selector';
 import { profileGetListSkill } from '../../redux/slice';
-import { skillSelector } from '../../redux/selector';
 
 interface Props {
   getListSkill: any;
@@ -28,74 +25,7 @@ interface State {
   value: number;
   indexActive: number;
 }
-// const data = [
-//   {
-//     url: 'https://drive.google.com/uc?id=16z4RKVJqta6fqhC3vPfWAIpGaHiDpvMF',
-//     name: 'ios',
-//     exp: 0,
-//     key: 0,
-//   },
-//   {
-//     url: 'https://drive.google.com/uc?id=1N33Fg6o2yMy-O5cDGWxrT6Tg406RN2wx',
-//     name: 'Android',
-//     exp: 0,
-//     key: 1,
-//   },
-//   {
-//     url: 'https://drive.google.com/uc?id=17gw0ctHIe4Z8NquQ6znubMhrE1vCOYVk',
-//     name: 'Backend',
-//     exp: 0,
-//     key: 2,
-//   },
-//   {
-//     url: 'https://drive.google.com/uc?id=1n_atZiqYVyEhIVKVQjj5c-Ps3gGxk6yb',
-//     name: 'Java',
-//     exp: 0,
-//     key: 3,
-//   },
-//   {
-//     url: 'https://drive.google.com/uc?id=15gkTZf6BISKDivxGG7g6mpNYVAbLHZqF',
-//     name: 'C/C++',
-//     exp: 0,
-//     key: 4,
-//   },
-//   {
-//     url: 'https://drive.google.com/uc?id=1W8PXg_XB_ZGHW8Vnt19M3kGav0zzePqx',
-//     name: 'ASP.NET',
-//     exp: 0,
-//     key: 5,
-//   },
-//   {
-//     url: 'https://drive.google.com/uc?id=1rPGZdYCaBvnFEDdmycAcopJYK1KnWk_Q',
-//     name: 'NodeJS',
-//     exp: 0,
-//     key: 6,
-//   },
-//   {
-//     url: 'https://drive.google.com/uc?id=1Ou_ueIICjmgh0uQAr2KZke-RC74MtbBj',
-//     name: 'PHP',
-//     exp: 0,
-//     key: 7,
-//   },
-//   {
-//     url: 'https://drive.google.com/uc?id=1SyXc94eexaCPkoLbLfm0w_IoDZfCD9Z6',
-//     name: 'Python',
-//     exp: 0,
-//     key: 8,
-//   },
-//   {
-//     url: 'https://drive.google.com/uc?id=1_KCz04dG8TyeTcSg6QEnXLkyjq52XKGl',
-//     name: 'Ruby',
-//     exp: 3,
-//     key: 9,
-//   },
-//   {
-//     url: 'https://drive.google.com/uc?id=1pgttLmAF2FOkd3wCf9DCNsWqVmkOCpGr',
-//     name: 'Javascript',
-//     exp: 2,
-//     key: 10,
-//   },
-// ];
+
 const data: any = [];
 class DetailSkillScreen extends PureComponent<Props, State> {
   constructor(props: Props) {

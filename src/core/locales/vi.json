@@ -1,9 +1,11 @@
 {
   "exception": {
+    "400": "Dữ liệu không  hợp lệ",
     "401": "Số điện thoại hoặc mật khẩu không chính xác",
     "403": "Tài khoản hiện tại không có quyền truy cập vào trang này",
     "404": "Nội dung hiện không có sẵn. Vui lòng thử lại sau",
-    "500": "Đã có lỗi xảy ra. Vui lòng thử lại sau"
+    "500": "Đã có lỗi xảy ra. Vui lòng thử lại sau",
+    "409": "Email đã tồn tại"
   },
   "common": {
     "theme": "Chủ đề",

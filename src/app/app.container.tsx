@@ -7,6 +7,7 @@ import FlashMessage, { showMessage } from 'react-native-flash-message';
 import { compose } from 'recompose';
 import { lightTheme, darkTheme } from '@themes/Theme';
 import i18n from '@config/i18n';
+import io from 'socket.io-client';
 import {
   languageSelector,
   themeSelector,
@@ -30,6 +31,9 @@ interface State {
   isInternetCheck: boolean;
   isConnected: boolean;
 }
+const socket = io('http://192.168.1.135:3000', {
+  transports: ['websocket'], // you need to explicitly tell it to use websockets
+});
 
 class AppContainer extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -40,6 +44,10 @@ class AppContainer extends React.Component<Props, State> {
     };
     const { loginSelectorData } = this.props;
     Global.token = loginSelectorData.data.get('token');
+    socket.emit('msgToServer', 'hello');
+    // socket.on('msgToClient', (message) => {
+    //   this.receivedMessage(message)
+    //  })
   }
 
   componentDidMount() {
@@ -88,7 +96,8 @@ class AppContainer extends React.Component<Props, State> {
     /**
      * Theme
      */
-    const themeColor: any = themeRedux === ThemeEnum.LIGHT ? lightTheme : darkTheme;
+    const themeColor: any =
+      themeRedux === ThemeEnum.LIGHT ? lightTheme : darkTheme;
 
     /**
      * Check Internet

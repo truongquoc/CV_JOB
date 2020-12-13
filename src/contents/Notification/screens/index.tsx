@@ -7,13 +7,13 @@ class NotificationScreen extends PureComponent {
     return (
       <Container>
         <Header />
-        <Body></Body>
+        <Body />
       </Container>
     );
   }
 }
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {};
 
