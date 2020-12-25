@@ -38,11 +38,8 @@ class DetailSkillScreen extends PureComponent<Props, State> {
   }
 
   componentDidMount() {
-    const { getListSkill, listSkill } = this.props;
+    const { getListSkill } = this.props;
     getListSkill();
-    listSkill.metadata?.map((skill: any, index: any) => {
-      data.push({ ...skill, exp: 0, index });
-    });
   }
 
   renderSkill = ({ item }: { item: any }) => (
@@ -65,6 +62,12 @@ class DetailSkillScreen extends PureComponent<Props, State> {
   );
 
   render() {
+    const { listSkill } = this.props;
+    if (listSkill.metadata) {
+      listSkill.metadata.map((skill: any, index: any) => {
+        data.push({ ...skill, exp: 0, index });
+      });
+    }
     const { isVisible, value } = this.state;
     const toggleOverlay = () => {
       this.setState({ isVisible: !isVisible });

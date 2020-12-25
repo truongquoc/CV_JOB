@@ -7,6 +7,8 @@ import EmployerScreens from './containers/screens/EmployerDetail';
 import FilterScreen from './containers/screens/FilterScreen';
 import SelectCateDetail from './containers/screens/SelectCateDetail';
 import ApplyScreen from './containers/screens/ApplyScreen';
+import CompanyDetailScreen from './containers/screens/CompanyDetailScreen';
+import SearchScreen from './containers/screens/SearchScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +30,13 @@ export default function ExploreStack() {
         component={SelectCateDetail}
       />
       <Stack.Screen name={exploreStack.applyScreen} component={ApplyScreen} />
+
+      <Stack.Screen
+        name={exploreStack.companyDetailScreen}
+        component={CompanyDetailScreen}
+      />
+
+      <Stack.Screen name={exploreStack.searchScreen} component={SearchScreen} />
     </Stack.Navigator>
   );
 }

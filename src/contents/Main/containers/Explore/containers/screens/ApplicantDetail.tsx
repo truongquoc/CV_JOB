@@ -32,6 +32,7 @@ interface Props {
   detail: any;
   loginSelectorData?: any;
   appliesJob: (id: string) => any;
+  data: any;
 }
 
 interface State {
@@ -64,6 +65,8 @@ class ApplicantScreens extends PureComponent<Props, State> {
 
   componentDidMount() {
     const { getDetail } = this.props;
+    console.log('get Detail');
+
     getDetail(getIdFromParams(this.props));
   }
 
@@ -75,6 +78,7 @@ class ApplicantScreens extends PureComponent<Props, State> {
     const {
       detail: { data, loading },
     } = this.props;
+    const { data: applied } = this.props.detail.data;
     if (
       this.DateDiff.inMinutes(
         new Date(data.createdat).getTime(),
@@ -111,8 +115,7 @@ class ApplicantScreens extends PureComponent<Props, State> {
         <ParallaxScrollView
           parallaxHeaderHeight={200}
           backgroundImageSource={{
-            uri:
-              'https://m.foolcdn.com/media/dubs/images/young_professionals.f065c757.fill-800x373.jpegquality-50.jpg',
+            uri: data?.introImg,
           }}
           renderStickyHeader={() => <Header backgroundColor="transparent" />}
         >
@@ -181,54 +184,73 @@ class ApplicantScreens extends PureComponent<Props, State> {
                 </TouchableOpacity>
               </QuickView>
               <QuickView flex={10} paddingLeft={10}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: '#6e5ce6',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    paddingVertical: 15,
-                    borderRadius: 5,
-                  }}
-                  onPress={async () => {
-                    if (!token) {
-                      NavigationService.navigate(rootStack.authStack);
-                    } else {
-                      NavigationService.navigate(exploreStack.applyScreen, {
-                        id: data.id,
-                      });
-                    }
-                  }}
-                >
-                  <Text color="#ffffff" fontWeight="medium" fontSize={18}>
-                    Apply Now
-                  </Text>
-                  <Overlay
-                    isVisible={isVisible}
-                    onBackdropPress={toggleOverlay}
-                    overlayStyle={{ borderRadius: 10 }}
+                {applied?.applied ? (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: '#a298e3',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      paddingVertical: 15,
+                      borderRadius: 5,
+                    }}
+                    disabled={true}
                   >
-                    <QuickView
-                      width={300}
-                      height={150}
-                      backgroundColor="#fff"
-                      // center
-                    >
-                      <QuickView flex={1} center>
-                        <Text color="#e32d14" fontSize={22} fontWeight="bold">
-                          Warning
-                        </Text>
-                      </QuickView>
-                      <QuickView center flex={1}>
-                        <Text color="#8a8786" style={{ opacity: 0.7 }}>
-                          {errMsg}
-                        </Text>
-                      </QuickView>
-                      <QuickView flex={2}>
-                        <Button title="Dismiss" center sharp color="#e32d14" />
-                      </QuickView>
+                    <Text color="#ffffff" fontWeight="medium" fontSize={18}>
+                      Apply Now
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: '#6e5ce6',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      paddingVertical: 15,
+                      borderRadius: 5,
+                    }}
+                    onPress={async () => {
+                      console.log('applied');
+                      if (!token) {
+                        NavigationService.navigate(rootStack.authStack);
+                      } else {
+                        NavigationService.navigate(exploreStack.applyScreen, {
+                          id: data.id,
+                        });
+                      }
+                    }}
+                  >
+                    <Text color="#ffffff" fontWeight="medium" fontSize={18}>
+                      Apply Now
+                    </Text>
+                  </TouchableOpacity>
+                )}
+
+                <Overlay
+                  isVisible={isVisible}
+                  onBackdropPress={toggleOverlay}
+                  overlayStyle={{ borderRadius: 10 }}
+                >
+                  <QuickView
+                    width={300}
+                    height={150}
+                    backgroundColor="#fff"
+                    // center
+                  >
+                    <QuickView flex={1} center>
+                      <Text color="#e32d14" fontSize={22} fontWeight="bold">
+                        Warning
+                      </Text>
                     </QuickView>
-                  </Overlay>
-                </TouchableOpacity>
+                    <QuickView center flex={1}>
+                      <Text color="#8a8786" style={{ opacity: 0.7 }}>
+                        {errMsg}
+                      </Text>
+                    </QuickView>
+                    <QuickView flex={2}>
+                      <Button title="Dismiss" center sharp color="#e32d14" />
+                    </QuickView>
+                  </QuickView>
+                </Overlay>
               </QuickView>
             </QuickView>
             <TopTabs />

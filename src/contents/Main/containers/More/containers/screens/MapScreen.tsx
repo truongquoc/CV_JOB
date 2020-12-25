@@ -12,11 +12,13 @@ import {
 } from '@components';
 import MapView, { Callout, Marker } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StatusBar, StyleSheet } from 'react-native';
 import { Color } from '@themes/Theme';
 import { vndPriceFormat } from '@utils/functions';
 import NavigationService from '@utils/navigation';
 import { lightPrimaryColor } from '@themes/ThemeComponent/Common/Color';
+import Geolocation from '@react-native-community/geolocation';
+import { Icon } from 'react-native-elements';
 
 const LATITUDE = 16.06375;
 const LONGITUDE = 108.17969;
@@ -67,6 +69,10 @@ class MapScreen extends PureComponent<Props, State> {
 
   map: any;
 
+  componentDidMount() {
+    Geolocation.getCurrentPosition((info) => console.log('infor', info));
+  }
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -76,35 +82,6 @@ class MapScreen extends PureComponent<Props, State> {
   }
 
   renderCarouselItem = ({ item }: { item: any }) => (
-    // <QuickView style={{
-    //   backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    //   height: 150,
-    //   width: 300,
-    //   padding: 24,
-    //   borderRadius: 24,
-    // }}
-    // >
-    //   <Text style={{
-    //     color: 'white',
-    //     fontSize: 22,
-    //     alignSelf: 'center',
-    //   }}
-    //   >
-    //     {item.name}
-
-    //   </Text>
-    //   <Image
-    //     style={{
-    //       height: 120,
-    //       width: 300,
-    //       bottom: 0,
-    //       position: 'absolute',
-    //       borderBottomLeftRadius: 24,
-    //       borderBottomRightRadius: 24,
-    //     }}
-    //     source={{ uri: item.image }}
-    //   />
-    // </QuickView>
     <QuickView
       key={item?.id}
       row
@@ -211,7 +188,7 @@ class MapScreen extends PureComponent<Props, State> {
     const { markers, propertyIndex } = this.state;
     return (
       <QuickView style={{ ...StyleSheet.absoluteFillObject }}>
-        <Header title="Bản đồ" backIcon />
+        <StatusBar backgroundColor="transparent" />
         <MapView
           ref={(map) => {
             this.map = map;
@@ -283,9 +260,13 @@ class MapScreen extends PureComponent<Props, State> {
           renderItem={this.renderCarouselItem}
           sliderWidth={Dimensions.get('window').width}
           itemWidth={Dimensions.get('window').width - 40}
-          // removeClippedSubviews = {false}
           vertical={false}
           onSnapToItem={(index) => this.onCarouselItemChange(index)}
+        />
+        <Icon
+          type="material"
+          name="my-location"
+          style={{ right: 0, position: 'absolute', zIndex: 100 }}
         />
       </QuickView>
     );

@@ -31,7 +31,7 @@ interface State {
   isInternetCheck: boolean;
   isConnected: boolean;
 }
-const socket = io('http://192.168.1.135:3000', {
+const socket = io('http://192.168.1.10:3000', {
   transports: ['websocket'], // you need to explicitly tell it to use websockets
 });
 
@@ -44,10 +44,12 @@ class AppContainer extends React.Component<Props, State> {
     };
     const { loginSelectorData } = this.props;
     Global.token = loginSelectorData.data.get('token');
-    socket.emit('msgToServer', 'hello');
-    // socket.on('msgToClient', (message) => {
-    //   this.receivedMessage(message)
-    //  })
+    // socket.emit('msgToServer', 'hello');
+    // socket.on('msgToClient', (message: any) => {
+    //   console.log('mess', message);
+
+    //   // this.receivedMessage(message);
+    // });
   }
 
   componentDidMount() {

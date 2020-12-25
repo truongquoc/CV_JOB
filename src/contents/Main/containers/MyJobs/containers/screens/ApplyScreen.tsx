@@ -18,6 +18,8 @@ import NavigationService from '@utils/navigation';
 import rootStack from '@contents/routes';
 import exploreStack from '@contents/Main/containers/Explore/routes';
 import { StyleSheet } from 'react-native';
+import { myJobsGetApplied } from '../../redux/slice';
+import { setIdIntoParams } from '@utils/appHelper';
 
 const styles = StyleSheet.create({
   listItem: {
@@ -81,7 +83,17 @@ const jobsSaved = [
   },
 ];
 
-class ApplyScreen extends PureComponent {
+interface Props {
+  getList: () => any;
+  myAppliedJobs: any;
+}
+
+class ApplyScreen extends PureComponent<Props, any> {
+  componentDidMount() {
+    const { getList } = this.props;
+    getList();
+  }
+
   renderListJob = ({ item }: { item: any }) => {
     let typeJob;
     if (item.type === 'FULLTIME') {
@@ -122,9 +134,12 @@ class ApplyScreen extends PureComponent {
     return (
       <TouchableWithoutFeedback
         style={styles.listItem}
-        onPress={() => NavigationService.navigate(rootStack.exploreStack, {
-          screen: exploreStack.applicantscreens,
-        })}
+        onPress={() =>
+          NavigationService.navigate(rootStack.exploreStack, {
+            screen: exploreStack.applicantscreens,
+            params: setIdIntoParams(item),
+          })
+        }
       >
         <QuickView>
           <QuickView row justifyContent="space-between">
@@ -181,10 +196,14 @@ class ApplyScreen extends PureComponent {
   };
 
   render() {
+    const {
+      myAppliedJobs: { metadata },
+    } = this.props;
+
     return (
       <QuickView>
         <FlatList
-          data={jobsSaved}
+          data={metadata}
           style={styles.listItem}
           renderItem={this.renderListJob}
         />
@@ -193,8 +212,14 @@ class ApplyScreen extends PureComponent {
   }
 }
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => {
+  return {
+    myAppliedJobs: state.myJobs.toJS().LIST_APPLIED,
+  };
+};
 
-const mapDispatchToProps = (dispatch: any) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+  getList: () => dispatch(myJobsGetApplied({})),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplyScreen);

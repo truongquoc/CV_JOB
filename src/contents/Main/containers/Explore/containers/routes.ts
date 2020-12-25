@@ -8,6 +8,8 @@ const detailStack = {
   jobDetailScreens: 'JobDetailScreens',
   relatedJobScreens: 'RelatedJobScreen',
   jobInformationScreen: 'InformationScreen',
+  companyIntroduction: 'CompanyIntroduction',
+  recruitment: 'Recruitment',
 };
 
 export default detailStack;

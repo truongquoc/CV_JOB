@@ -31,13 +31,13 @@ import rootStack from '@contents/routes';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { stringifyQuery, TQuery } from '@utils/redux';
 import { applyArraySelector, parseArraySelector } from '@utils/selector';
-import { setIdIntoParams } from '@utils/appHelper';
+import { Global, setIdIntoParams } from '@utils/appHelper';
 import { compose } from 'recompose';
 import FastImage from 'react-native-fast-image';
 import exploreStack from '../routes';
 import { jobGetList } from '../redux/slice';
 import { jobListSelector } from '../redux/selector';
-import { fetchAllJobs } from '../redux/api';
+import { fetchAllJobs, isFavorite } from '../redux/api';
 
 const colors = {
   black: '#1a1917',
@@ -165,6 +165,7 @@ interface State {
   search: string;
   page: number;
   listPopularJob: Array<any>;
+  bookmarks: any;
 }
 interface Props {
   list: any;
@@ -173,7 +174,7 @@ interface Props {
 
 class ExploreScreen extends React.Component<Props, State> {
   buttonGroup: any;
-
+  iconRef: any;
   constructor(props: any) {
     super(props);
     this.state = {
@@ -181,6 +182,7 @@ class ExploreScreen extends React.Component<Props, State> {
       search: '',
       page: 1,
       listPopularJob: [],
+      bookmarks: [],
     };
   }
 
@@ -193,8 +195,7 @@ class ExploreScreen extends React.Component<Props, State> {
     const getListQuery: TQuery = {
       s: { name: { $gte: 700 } },
     };
-    getList(payload);
-
+    await getList(payload);
     const getPopularJob = await fetchAllJobs(stringifyQuery(getListQuery));
     this.setState({ listPopularJob: getPopularJob.data.data });
   }
@@ -241,7 +242,7 @@ class ExploreScreen extends React.Component<Props, State> {
       <FastImage
         style={{ height: 200 }}
         source={{
-          uri: 'https://i.imgur.com/lceHsT6l.jpg',
+          uri: item.introImg,
           headers: { Authorization: 'someAuthToken' },
           priority: FastImage.priority.normal,
         }}
@@ -298,6 +299,8 @@ class ExploreScreen extends React.Component<Props, State> {
   );
 
   renderListJob = ({ item }: { item: any }) => {
+    const { token } = Global;
+    const { bookmarks } = this.state;
     let typeJob;
     if (item.type === 'FULLTIME') {
       typeJob = (
@@ -345,9 +348,8 @@ class ExploreScreen extends React.Component<Props, State> {
         }}
       >
         <QuickView>
-          <QuickView row justifyContent="space-between">
+          <QuickView row justifyContent="space-between" alignItems="center">
             <QuickView row alignItems="center">
-              {/* <Avatar source={{ uri: item.user.profile?.profileUrl }} /> */}
               <Image
                 source={{ uri: item.user.profile?.profileUrl }}
                 resizeMode="contain"
@@ -364,7 +366,40 @@ class ExploreScreen extends React.Component<Props, State> {
                 {item.user.profile?.name}
               </Text>
             </QuickView>
-            <Icon type="material" name="bookmark-border" />
+            {bookmarks.find((bookmark: any) => bookmark == item.id) ? (
+              <Icon
+                type="antdesign"
+                name="heart"
+                color="#f05b65"
+                backgroundColor="red"
+                onPress={async () => {
+                  if (!token) {
+                    NavigationService.navigate(rootStack.authStack);
+                  } else {
+                    const tmpArry: any = bookmarks.filter(
+                      (bookmark: any) => bookmark != item.id,
+                    );
+                    this.setState({ bookmarks: tmpArry });
+                    await isFavorite(item.id);
+                    this.forceUpdate();
+                  }
+                }}
+              />
+            ) : (
+              <Icon
+                type="antdesign"
+                name="hearto"
+                onPress={async () => {
+                  if (!token) {
+                    NavigationService.navigate(rootStack.authStack);
+                  } else {
+                    await isFavorite(item.id);
+                    bookmarks.push(item.id);
+                    this.forceUpdate();
+                  }
+                }}
+              />
+            )}
           </QuickView>
           <QuickView marginTop={15}>
             <Text
@@ -383,8 +418,8 @@ class ExploreScreen extends React.Component<Props, State> {
           <QuickView row justifyContent="space-between" marginTop={15}>
             <QuickView row flex={6} alignItems="center">
               <Icon type="entypo" name="location-pin" color="#707070" />
-              <Text color="#707070" fontSize={12}>
-                417 Wallet Street New York USA
+              <Text color="#707070" fontSize={12} numberOfLines={1}>
+                {item.address.description}
               </Text>
             </QuickView>
             <QuickView flex={2} marginLeft={50} row alignItems="center">
@@ -403,10 +438,23 @@ class ExploreScreen extends React.Component<Props, State> {
   };
 
   render() {
-    const { slider1ActiveSlide, search, listPopularJob } = this.state;
+    const {
+      slider1ActiveSlide,
+      search,
+      listPopularJob,
+      bookmarks,
+    } = this.state;
     const {
       list: { data },
     } = this.props;
+    data.map((job: any) => {
+      if (
+        !bookmarks.find((bookmark: any) => bookmark == job.id) &&
+        job.isFavorite
+      ) {
+        bookmarks.push(job.id);
+      }
+    });
 
     return (
       <Container>
@@ -441,7 +489,14 @@ class ExploreScreen extends React.Component<Props, State> {
                 leftIconContainerStyle={{}}
                 platform="android"
                 clearIcon
+                returnKeyType="search"
                 containerStyle={styles.containerSearch}
+                onFocus={() => {
+                  console.log('on focus');
+                  NavigationService.push(rootStack.exploreStack, {
+                    screen: exploreStack.searchScreen,
+                  });
+                }}
                 // onChangeText={this.updateSearch}
                 value={search}
               />
@@ -492,7 +547,7 @@ class ExploreScreen extends React.Component<Props, State> {
                   vertical={false}
                   sliderWidth={screenWidth}
                   loop
-                  slideStyle={{ width: screenWidth - 30 }}
+                  slideStyle={{ width: screenWidth - 30, zIndex: 3 }}
                   itemWidth={screenWidth - 120}
                   data={listPopularJob}
                   renderItem={this.renderItem}

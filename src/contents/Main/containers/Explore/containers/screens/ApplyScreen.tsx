@@ -8,17 +8,28 @@ import { ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
 import { jobApplies } from '../../redux/slice';
 import { applyObjectSelector, parseObjectSelector } from '@utils/selector';
 import { profileSelector } from '@contents/Main/containers/Profile/redux/selector';
-import { getIdFromParams } from '@utils/appHelper';
+import { getIdFromParams, Global } from '@utils/appHelper';
 import DocumentPicker from 'react-native-document-picker';
+import Config from 'react-native-config';
+import axios from 'axios';
+import NavigationService from '@utils/navigation';
+import { profileGetDetail } from '@contents/Main/containers/Profile/redux/slice';
+import { TQuery } from '@utils/redux';
 
 interface Props {
   appliesJob: (id: string) => any;
   id: any;
   profile: any;
+  getDetailProfile: any;
 }
 
 interface State {}
 class ApplyScreen extends PureComponent<Props, State> {
+  componentDidMount() {
+    const { getDetailProfile } = this.props;
+    getDetailProfile();
+  }
+
   render() {
     const {
       appliesJob,
@@ -74,19 +85,58 @@ class ApplyScreen extends PureComponent<Props, State> {
           <Button
             title="Confirm Apply"
             marginBottom={30}
+            // disabled={true}
             onPress={async () => {
-              try {
+              if (data.profile.cvURL) {
                 // const result = await appliesJob(getIdFromParams(this.props));
+                const token = Global.token;
+                const result: any = await axios.post(
+                  `http://careernetwork.ml/api/v1/jobs/${getIdFromParams(
+                    this.props,
+                  )}/applies`,
+                  data,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  },
+                );
+                NavigationService.goBack();
+              } else {
                 try {
-                  const res = await DocumentPicker.pick({
+                  const respnse = await DocumentPicker.pick({
                     type: [DocumentPicker.types.images],
                   });
-                  console.log(
-                    res.uri,
-                    res.type, // mime type
-                    res.name,
-                    res.size,
+                  const image: any = {
+                    uri: respnse.uri,
+                    type: respnse.type,
+                    name: respnse.name,
+                  };
+                  const data = new FormData();
+                  data.append('file', image);
+                  const result: any = await axios.post(
+                    'http://careernetwork.ml/api/v1/upload',
+                    data,
+                    {
+                      headers: {
+                        'Content-Type': 'multipart/form-data; ',
+                      },
+                    },
                   );
+
+                  const token = Global.token;
+                  await axios.patch(
+                    'http://careernetwork.ml/api/v1/auth/me/cv',
+                    {
+                      cvUrl: result.data.data.url,
+                    },
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                    },
+                  );
+                  NavigationService.goBack();
                 } catch (err) {
                   console.log('err', err);
 
@@ -96,7 +146,7 @@ class ApplyScreen extends PureComponent<Props, State> {
                     throw err;
                   }
                 }
-              } catch (error) {}
+              }
             }}
           />
         </Body>
@@ -111,6 +161,7 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   appliesJob: (id: string) => dispatch(jobApplies({ id })),
+  getDetailProfile: (query?: TQuery) => dispatch(profileGetDetail({ query })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplyScreen as any);

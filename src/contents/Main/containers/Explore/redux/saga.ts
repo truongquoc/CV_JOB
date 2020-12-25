@@ -12,13 +12,21 @@ import {
   jobGetListCate,
   jobGetListCateSuccess,
   jobGetListCateFail,
+  jobGetListCompany,
+  jobGetListCompanySuccess,
+  jobGetListCompanyFail,
+  jobGetListSearch,
+  jobGetListSearchSuccess,
+  jobGetListSearchFail,
 } from './slice';
 import {
   fetchAllJobs,
   fetchDetailJobs,
+  fetchDetailRecently,
   appliesJob,
   fetchAllCates,
 } from './api';
+import { Global } from '@utils/appHelper';
 
 export function* getListSaga({ payload }: { payload: any }) {
   try {
@@ -36,7 +44,12 @@ export function* getListPopularJob({ payload }: { payload: any }) {
 
 export function* getDetailSaga({ payload }: { payload: any }) {
   try {
-    const response = yield call(fetchDetailJobs, payload.id);
+    let response;
+    if (Global.token) {
+      response = yield call(fetchDetailRecently, payload.id);
+    } else {
+      response = yield call(fetchDetailJobs, payload.id);
+    }
     yield put(jobGetDetailSuccess(response));
     return true;
   } catch (error) {
@@ -60,8 +73,31 @@ export function* getListCatesSaga() {
     yield put(jobGetListCateFail(error));
   }
 }
+
+export function* getListJobCompany({ payload }: { payload: any }) {
+  try {
+    const data = yield call(fetchAllJobs, stringifyQuery(payload.query));
+    yield put(jobGetListCompanySuccess(data));
+  } catch (error) {
+    yield put(jobGetListCompanyFail(error));
+  }
+}
+
+export function* getListSearch({ payload }: { payload: any }) {
+  try {
+    const data = yield call(fetchAllJobs, stringifyQuery(payload.query));
+    console.log('data', data);
+
+    yield put(jobGetListSearchSuccess(data));
+  } catch (error) {
+    yield put(jobGetListSearchFail(error));
+  }
+}
+
 export default [
   takeLatest(jobGetList, getListSaga),
   takeLatest(jobGetDetail, getDetailSaga),
   takeLatest(jobGetListCate, getListCatesSaga),
+  takeLatest(jobGetListCompany, getListJobCompany),
+  takeLatest(jobGetListSearch, getListSearch),
 ];

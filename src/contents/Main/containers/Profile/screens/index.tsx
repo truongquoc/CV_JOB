@@ -11,6 +11,7 @@ import profileStack from '../routes';
 import { profileGetDetail } from '../redux/slice';
 import { profileSelector } from '../redux/selector';
 import FastImage from 'react-native-fast-image';
+import DocumentPicker from 'react-native-document-picker';
 
 const styles = StyleSheet.create({
   linearGradient: {
@@ -108,7 +109,29 @@ class ProfileScreen extends PureComponent<Props, any> {
                 </Text>
               </QuickView>
               <QuickView row flex={1}>
-                <QuickView flex={3} center>
+                <QuickView
+                  flex={3}
+                  center
+                  onPress={async () => {
+                    try {
+                      const res = await DocumentPicker.pick({
+                        type: [DocumentPicker.types.images],
+                      });
+                      console.log(
+                        res.uri,
+                        res.type, // mime type
+                        res.name,
+                        res.size,
+                      );
+                    } catch (err) {
+                      console.log('err', err);
+                      if (DocumentPicker.isCancel(err)) {
+                      } else {
+                        throw err;
+                      }
+                    }
+                  }}
+                >
                   <FastImage
                     style={{ width: 120, height: 150, borderRadius: 5 }}
                     resizeMode="cover"
@@ -122,14 +145,19 @@ class ProfileScreen extends PureComponent<Props, any> {
                   />
                 </QuickView>
                 <QuickView flex={5} paddingLeft={20}>
-                  <Text marginTop={20} style={{ opacity: 0.4 }}>
+                  <Text
+                    marginTop={20}
+                    style={{ opacity: 0.4, alignItems: 'center' }}
+                  >
                     <Icon
                       name="phone"
                       type="antdesign"
                       color="#404F68"
                       size={16}
                     />
-                    <Text color="#404F68">{data.profile.phone}</Text>
+                    <Text color="#404F68" marginLeft={5}>
+                      {data.profile.phone ? data.profile.phone : '012345678'}
+                    </Text>
                   </Text>
                   <Text marginTop={20} style={{ opacity: 0.4 }}>
                     <Icon
@@ -138,7 +166,9 @@ class ProfileScreen extends PureComponent<Props, any> {
                       color="#404F68"
                       size={16}
                     />
-                    <Text color="#404F68">Da nang, Viet Nam</Text>
+                    <Text color="#404F68" marginLeft={5}>
+                      Da nang, Viet Nam
+                    </Text>
                   </Text>
                   <Text marginTop={20} style={{ opacity: 0.4 }}>
                     <Icon
@@ -147,7 +177,7 @@ class ProfileScreen extends PureComponent<Props, any> {
                       color="#404F68"
                       size={16}
                     />
-                    <Text color="#404F68">
+                    <Text color="#404F68" marginLeft={5}>
                       <Text color="#404F68">{data.email}</Text>
                     </Text>
                   </Text>
@@ -314,10 +344,12 @@ class ProfileScreen extends PureComponent<Props, any> {
                   <Icon
                     name="home"
                     type="antdesign"
-                    size={18}
+                    size={22}
                     color="#377cab"
                   />
-                  <Text color="#2c3236">Acedemic Level</Text>
+                  <Text color="#2c3236" marginLeft={5}>
+                    Academic Level
+                  </Text>
                 </QuickView>
                 <Icon
                   name="edit"

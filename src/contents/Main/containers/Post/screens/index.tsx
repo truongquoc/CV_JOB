@@ -1,4 +1,4 @@
-import { Body, Container, Header, QuickView, Text } from '@components';
+import { Avatar, Body, Container, Header, QuickView, Text } from '@components';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -36,12 +36,35 @@ class PostScreen extends PureComponent {
   renderContent = () => (
     <QuickView
       style={{
-        backgroundColor: 'white',
-        padding: 16,
+        backgroundColor: '#fff',
         height: 450,
-      }}
+        borderWidth: 1,
+        borderRadius: 2,
+        borderColor: '#ddd',
+        borderBottomWidth: 0,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 24,
+        marginTop: 10,
+       }}
     >
-      <Text>Swipe down to close</Text>
+      <QuickView>
+        <QuickView width={70} height={5} backgroundColor="#615f5e" center borderRadius={5} marginTop={20}></QuickView>
+        <QuickView row alignItems="center" paddingHorizontal={20} paddingVertical={10}>
+          <Icon type="entypo" name="list" size={30}/>
+          <Text color="#615f5e" marginLeft={10} >Add Categories</Text>
+        </QuickView>
+        <QuickView row alignItems="center" paddingHorizontal={20} paddingVertical={10}>
+          <Icon type="entypo" name="image" size={30} color="#615f5e"/>
+          <Text color="#615f5e" marginLeft={10} fontWeight="heavy">Add an Image</Text>
+        </QuickView>
+        <QuickView row alignItems="center" paddingHorizontal={20} paddingVertical={10}>
+          <Icon type="ionicon" name="document" size={30} color="#615f5e"/>
+          <Text color="#615f5e" marginLeft={10} fontWeight="heavy">Add a document</Text>
+        </QuickView>
+      </QuickView>
     </QuickView>
   );
 
@@ -80,6 +103,14 @@ class PostScreen extends PureComponent {
     </QuickView>
   );
 
+  renderRightComponent = () => (
+    <QuickView>
+      <Text  color="#a6a2a1" fontSize={18}>
+        Post
+      </Text>
+    </QuickView>
+  );
+
   render() {
     return (
       <Container>
@@ -88,9 +119,14 @@ class PostScreen extends PureComponent {
           backgroundColor="#FFF"
           leftComponent={this.renderLeftComponent()}
           centerComponent={this.renderCenterComponent()}
+          rightComponent={this.renderRightComponent()}
         />
         <Divider />
         <Body>
+          <QuickView row marginTop={10}>
+            <Avatar source={{uri: 'https://cdn1.iconfinder.com/data/icons/avatar-3/512/Manager-512.png'}} size="medium"/>
+            <Text color="#000" bold marginLeft={10}>Nguyen Lam</Text>
+          </QuickView>
           <ScrollView style={[styles.scroll]} keyboardDismissMode={'none'}>
             <RichEditor
               // initialFocus={true}
@@ -105,14 +141,13 @@ class PostScreen extends PureComponent {
               onHeightChange={() => {}}
             />
           </ScrollView>
-
-          <BottomSheet
+        </Body>
+        <BottomSheet
             ref={sheetRef}
             snapPoints={[500, 250, 100]}
             renderContent={this.renderContent}
-            initialSnap={1}
+            initialSnap={1} 
           />
-        </Body>
       </Container>
     );
   }

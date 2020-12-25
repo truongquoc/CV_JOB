@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { View, Text } from 'react-native';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class DetailEducationScreen extends PureComponent {

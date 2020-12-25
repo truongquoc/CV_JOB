@@ -10,6 +10,10 @@ import {
   T,
   LIST_CATE,
   TListCate,
+  TListJobByCompany,
+  COMPANY_JOB,
+  TListSearch,
+  LIST_SEARCH,
 } from './constant';
 
 const jobSlice = createSlice({
@@ -20,7 +24,13 @@ const jobSlice = createSlice({
     ...createObjectReducer<TDetail>(`${NAME}GetDetail`, DETAIL, LIST),
     ...createObjectReducer<T>(`${NAME}Applies`),
     ...createArrayReducer<TListCate>(`${NAME}GetListCate`, LIST_CATE),
-    setFilter: (state: any, action: any) => state.set('setFilter', action.payload.s),
+    ...createArrayReducer<TListJobByCompany>(
+      `${NAME}GetListCompany`,
+      COMPANY_JOB,
+    ),
+    ...createArrayReducer<TListSearch>(`${NAME}GetListSearch`, LIST_SEARCH),
+    setFilter: (state: any, action: any) =>
+      state.set('setFilter', action.payload.s),
   },
 });
 export const {
@@ -37,6 +47,12 @@ export const {
   jobGetListCateSuccess,
   jobGetListCateFail,
   setFilter,
+  jobGetListCompany,
+  jobGetListCompanySuccess,
+  jobGetListCompanyFail,
+  jobGetListSearch,
+  jobGetListSearchSuccess,
+  jobGetListSearchFail,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

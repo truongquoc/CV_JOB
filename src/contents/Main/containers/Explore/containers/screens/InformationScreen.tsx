@@ -1,18 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import {
-  Container, QuickView, Text, FlatList,
-} from '@components';
+import { Container, QuickView, Text, FlatList } from '@components';
 import { Avatar, Divider, withTheme } from 'react-native-elements';
 import HTML from 'react-native-render-html';
-import { getIdFromParams } from '@utils/appHelper';
 import { applyObjectSelector, parseObjectSelector } from '@utils/selector';
 import { requireLoginSelector } from '@contents/Config/redux/selector';
 import { loginSelector } from '@contents/Auth/containers/Index/Login/redux/selector';
 import { ActivityIndicator } from 'react-native';
 import { jobDetailSelector } from '../../redux/selector';
-import { jobGetDetail } from '../../redux/slice';
 
 interface JobDetail {
   name: string;
@@ -41,9 +37,9 @@ const detailItem: JobDetail = {
     "<p><strong>Perfect for fans of </strong><i><strong>The Wonderful Things You Will Be</strong></i><strong> and </strong><i><strong>That's Me Loving You</strong></i><strong>, this picture book by a renowned astrophysicist is a lyrical meditation on the preciousness of one child and the vastness of the universe.</strong></p><p>&nbsp;</p><p><i>Just like the sun gives shine to the moon,</i></p><p><i>you light up the world beyond this room . . .</i></p><p><i>You are grand and marvelous, strong and mysterious.</i></p><p><i>The history of the world is in your fingertips.</i></p><p>&nbsp;</p><p>A lyrical meditation on the preciousness of one child and the vastness of the universe, this gorgeously illustrated picture book shares the immensity of a parent's love along with the message that we are all connected to the broader cosmos in important and intimate ways. A perfect bedtime read-aloud,&nbsp;</p><p><i>Child of the Universe</i></p><p>&nbsp;is a book to cherish forever.</p><p>&nbsp;</p><p>The author is an astrophysicist who has been fascinated by the universe since he was a child. As a parent, he has developed a new appreciation for the deep connections between billions of years of cosmic evolution and this one tiny human.</p>",
   location: '417 Wallet Street New York USA',
   tag: [
-    'Management',
+    'Android',
     'Development',
-    'Process',
+    '.NET',
     'Fullstack',
     'Agile',
     'Ruby on Rails',
@@ -173,7 +169,10 @@ class InformationScreen extends PureComponent<Props> {
                 <ActivityIndicator size="large" color="#ff6a00" />
               </QuickView>
             ) : (
-              <HTML html={data.data?.description} />
+              <QuickView>
+                <HTML html={data.data?.description} />
+                <HTML html={data.data?.content} />
+              </QuickView>
             )}
           </QuickView>
         </QuickView>

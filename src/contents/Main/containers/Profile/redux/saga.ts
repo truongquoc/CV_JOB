@@ -22,6 +22,8 @@ export function* getDetailProfile() {
 export function* getListSkills() {
   try {
     const response = yield call(fetchSkill);
+    console.log('list skill', response);
+
     yield put(profileGetListSkillSuccess(response));
     return true;
   } catch (error) {

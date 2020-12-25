@@ -8,6 +8,8 @@ const exploreStack = {
   FilterScreen: 'FilterScreen',
   selectCateScreen: 'SelectCateScreen',
   applyScreen: 'ApplyScreen',
+  companyDetailScreen: 'CompanyDetailScreen',
+  searchScreen: 'SearchScreen',
 };
 
 export default exploreStack;

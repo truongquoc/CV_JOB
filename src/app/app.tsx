@@ -7,6 +7,7 @@ const { store, persistor } = configureStore();
 
 class App extends PureComponent {
   render() {
+    console.disableYellowBox = true;
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

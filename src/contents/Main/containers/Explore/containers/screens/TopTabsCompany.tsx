@@ -5,24 +5,31 @@ import detailJobTopTab from '../routes';
 import InformationScreen from './InformationScreen';
 import CompanyScreen from './CompanyScreen';
 import RelatedJobScreen from './RelatedJobScreen';
+import CompanyIntroduction from './CompanyIntroductionScreen';
+import RecruimentScreen from './RecruitmentScreen';
 
 const TopTab = createMaterialTopTabNavigator();
 
-export default function MyJobTopTab() {
+export default function CompanyTobTabs() {
   return (
     <TopTab.Navigator
-      tabBarOptions={{ labelStyle: { fontSize: 12, width: 100 } }}
+      tabBarOptions={{
+        labelStyle: { fontSize: 12, width: 100 },
+        indicatorStyle: {
+          backgroundColor: '#6e5ce6',
+        },
+      }}
       backBehavior="none"
     >
       <TopTab.Screen
-        options={{ tabBarLabel: 'Information' }}
-        name={detailJobTopTab.jobInformationScreen}
-        component={InformationScreen}
+        options={{ tabBarLabel: 'Introduction' }}
+        name={detailJobTopTab.companyIntroduction}
+        component={CompanyIntroduction}
       />
       <TopTab.Screen
-        options={{ tabBarLabel: 'Company' }}
-        name={detailJobTopTab.companySreens}
-        component={CompanyScreen}
+        options={{ tabBarLabel: 'Recruitment' }}
+        name={detailJobTopTab.recruitment}
+        component={RecruimentScreen}
       />
       <TopTab.Screen
         options={{ tabBarLabel: 'Related Job' }}

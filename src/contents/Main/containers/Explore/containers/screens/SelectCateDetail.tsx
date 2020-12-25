@@ -12,12 +12,16 @@ import { connect } from 'react-redux';
 import { withTheme } from 'react-native-elements';
 import { TQuery } from '@utils/redux';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { jobGetListCate } from '../../redux/slice';
+import { jobGetList, jobGetListCate, setFilter } from '../../redux/slice';
+import NavigationService from '@utils/navigation';
+import exploreStack from '../../routes';
 
 interface Props {
   theme?: any;
   getListCate: any;
   listCate: any;
+  setFilterRedux: any;
+  getList: any;
 }
 
 interface State {
@@ -105,13 +109,23 @@ class SelectCateDetail extends PureComponent<Props, State> {
     </QuickView>
   );
 
-  renderRightHeaderComponent = () => (
-    <QuickView>
-      <Text color="#ffffff" fontSize={18}>
-        Skip
-      </Text>
-    </QuickView>
-  );
+  renderRightHeaderComponent = () => {
+    const { setFilterRedux, getList } = this.props;
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          const s = { $and: [{}] };
+          setFilterRedux({ s });
+          getList({ s });
+          NavigationService.goBack();
+        }}
+      >
+        <Text color="#ffffff" fontSize={18}>
+          Clear
+        </Text>
+      </TouchableOpacity>
+    );
+  };
 
   // selectOneCate = () => {
 
@@ -119,8 +133,10 @@ class SelectCateDetail extends PureComponent<Props, State> {
   render() {
     const {
       listCate: { metadata },
+      setFilterRedux,
+      getList,
     } = this.props;
-
+    const { onActive } = this.state;
     return (
       <Container>
         <Header
@@ -146,6 +162,12 @@ class SelectCateDetail extends PureComponent<Props, State> {
             borderRadius={5}
             marginTop={-5}
             paddingVertical={15}
+            onPress={() => {
+              const s = { $and: [{ 'categories.id': onActive }] };
+              setFilterRedux({ s });
+              getList({ s });
+              NavigationService.goBack();
+            }}
           />
         </Body>
       </Container>
@@ -159,6 +181,8 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   getListCate: (query?: TQuery) => dispatch(jobGetListCate({ query })),
+  setFilterRedux: (s: any) => dispatch(setFilter({ s })),
+  getList: (query?: TQuery) => dispatch(jobGetList({ query })),
 });
 
 export default connect(

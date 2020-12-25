@@ -1,6 +1,4 @@
-import {
-  put, call, takeLatest, select,
-} from 'redux-saga/effects';
+import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { handleException } from '@utils/exception';
 import { Global } from '@utils/appHelper';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -8,9 +6,7 @@ import { requireLoginSelector } from '@contents/Config/redux/selector';
 import NavigationService from '@utils/navigation';
 import exampleStack from '@contents/Example/routes';
 import mainBottomTab from '@contents/Main/routes';
-import {
-  loginSuccess, loginFail, login, logout,
-} from './slice';
+import { loginSuccess, loginFail, login, logout } from './slice';
 import { realtorLoginApi } from './api';
 
 export function* realtorLoginSaga({ payload }: { payload: any }) {
@@ -21,8 +17,8 @@ export function* realtorLoginSaga({ payload }: { payload: any }) {
     yield put(loginSuccess(response));
     const requiredLogin = yield select((state) => requireLoginSelector(state));
     if (!requiredLogin) {
-      // yield call(NavigationService.goBack);
-      yield call(NavigationService.navigate, mainBottomTab.homeStack);
+      yield call(NavigationService.goBack);
+      // yield call(NavigationService.navigate, mainBottomTab.homeStack);
     }
     return true;
   } catch (error) {

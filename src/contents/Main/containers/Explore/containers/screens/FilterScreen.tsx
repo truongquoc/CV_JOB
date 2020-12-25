@@ -115,6 +115,8 @@ class FilterScreen extends PureComponent<Props, State> {
         }
       });
     }
+    this.setState({ selectedSalary: 1 });
+
     this.forceUpdate();
   }
 

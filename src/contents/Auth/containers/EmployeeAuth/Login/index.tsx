@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react';
-import {
-  QuickView, Container, Text, Image,
-} from '@components';
+import { QuickView, Container, Text, Image } from '@components';
 import EmployeeLoginForm from './Shared/EmployeeLoginForm';
 import LoginBackIcon from '../../Index/Login/Shared/LoginBackIcon';
+import { StatusBar } from 'react-native';
 
 class EmployeeLoginScreen extends PureComponent {
   render() {
     return (
       <Container>
+        <StatusBar backgroundColor="transparent" />
+
         <QuickView paddingHorizontal={20} backgroundColor="#0E0E0E" flex={1}>
           <LoginBackIcon />
           <QuickView alignItems="center" marginTop={30}>

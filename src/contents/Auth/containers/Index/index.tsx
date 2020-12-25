@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import {
-  QuickView, Text, Container, Header, Body, Image,
-} from '@components';
+import { QuickView, Text, Container, Header, Body, Image } from '@components';
 import {
   TouchableWithoutFeedback,
   TouchableOpacity,
@@ -12,11 +10,14 @@ import NavigationService from '@utils/navigation';
 import rootStack from '@contents/routes';
 import authStack from '../routes';
 import LoginBackIcon from './Login/Shared/LoginBackIcon';
+import { StatusBar } from 'react-native';
 
 class GreetingScreen extends PureComponent {
   render() {
     return (
       <Container>
+        <StatusBar backgroundColor="transparent" />
+
         <Body
           fullView
           backgroundImage={{
@@ -35,9 +36,11 @@ class GreetingScreen extends PureComponent {
                 marginLeft: 30,
                 marginTop: 50,
               }}
-              onPress={() => NavigationService.navigate(rootStack.authStack, {
-                screen: authStack.employeeLoginScreen,
-              })}
+              onPress={() =>
+                NavigationService.navigate(rootStack.authStack, {
+                  screen: authStack.employeeLoginScreen,
+                })
+              }
             >
               <Image
                 source={require('@assets/images/loginAsEmployer.png')}
@@ -52,9 +55,11 @@ class GreetingScreen extends PureComponent {
                 marginBottom: 50,
                 alignSelf: 'flex-end',
               }}
-              onPress={() => NavigationService.navigate(rootStack.authStack, {
-                screen: authStack.jobSeekerRegisterScreen,
-              })}
+              onPress={() =>
+                NavigationService.navigate(rootStack.authStack, {
+                  screen: authStack.jobSeekerRegisterScreen,
+                })
+              }
             >
               <Text
                 color="#FFFFFF"
