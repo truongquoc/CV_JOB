@@ -7,6 +7,10 @@ import {
   TListFavorite,
   TListApplied,
   LIST_APPLIED,
+  TListRecently,
+  LIST_RECENTLY,
+  TListNearest,
+  LIST_NEAREST,
 } from './constant';
 
 const myJobsSlice = createSlice({
@@ -15,6 +19,8 @@ const myJobsSlice = createSlice({
   reducers: {
     ...createArrayReducer<TListFavorite>(`${NAME}GetFavorite`, LIST_FAVORITE),
     ...createArrayReducer<TListApplied>(`${NAME}GetApplied`, LIST_APPLIED),
+    ...createArrayReducer<TListRecently>(`${NAME}GetRecently`, LIST_RECENTLY),
+    ...createArrayReducer<TListNearest>(`${NAME}GetNearest`, LIST_NEAREST),
   },
 });
 
@@ -25,6 +31,12 @@ export const {
   myJobsGetApplied,
   myJobsGetAppliedFail,
   myJobsGetAppliedSuccess,
+  myJobsGetRecently,
+  myJobsGetRecentlySuccess,
+  myJobsGetRecentlyFail,
+  myJobsGetNearest,
+  myJobsGetNearestSuccess,
+  myJobsGetNearestFail,
 } = myJobsSlice.actions;
 
 export default myJobsSlice.reducer;

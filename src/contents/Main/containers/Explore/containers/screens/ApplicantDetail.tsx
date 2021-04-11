@@ -26,6 +26,7 @@ import { jobApplies, jobGetDetail } from '../../redux/slice';
 import { jobDetailSelector } from '../../redux/selector';
 import { appliesJob } from '../../redux/api';
 import exploreStack from '../../routes';
+import { myJobsGetRecently } from '@contents/Main/containers/MyJobs/redux/slice';
 
 interface Props {
   getDetail: (id: string) => any;
@@ -33,6 +34,7 @@ interface Props {
   loginSelectorData?: any;
   appliesJob: (id: string) => any;
   data: any;
+  getList: any;
 }
 
 interface State {
@@ -64,9 +66,8 @@ class ApplicantScreens extends PureComponent<Props, State> {
   }
 
   componentDidMount() {
-    const { getDetail } = this.props;
-    console.log('get Detail');
-
+    const { getDetail, getList } = this.props;
+    getList();
     getDetail(getIdFromParams(this.props));
   }
 
@@ -269,6 +270,7 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   getDetail: (id: string) => dispatch(jobGetDetail({ id })),
+  getList: () => dispatch(myJobsGetRecently({})),
 });
 
 export default connect(

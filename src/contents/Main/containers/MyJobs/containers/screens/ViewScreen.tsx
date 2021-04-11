@@ -16,6 +16,7 @@ import { Divider, Icon } from 'react-native-elements';
 import exploreStack from '@contents/Main/containers/Explore/routes';
 import NavigationService from '@utils/navigation';
 import rootStack from '@contents/routes';
+import { myJobsGetRecently } from '../../redux/slice';
 
 const styles = StyleSheet.create({
   listItem: {
@@ -32,55 +33,21 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.36,
     shadowRadius: 6.68,
     elevation: 11,
-    marginBottom: 20,
+    marginBottom: 30,
   },
 });
-const jobsSaved = [
-  {
-    createdat: '2020-10-15T16:29:06.605Z',
-    updatedat: '2020-10-15T16:29:06.605Z',
-    deletedat: null,
-    id: 9,
-    name: 'React Native Dev (iOS, Android)~1200$',
-    content:
-      '{"<ul><li>At least one year of real work experience with React Native, must understand basic philosophy of React Native and React component lifecycle;</li><li>Solid understanding of how to convert design into mobile application, ability to effectively layout to adapt to different screen sizes;</li><li>Experience with state management libraries (Such as Redux), Restful API, Push notification...</li><li>Familiarity with code versioning tools (Such as Git);</li><li>Familiarity with continuous integration;</li><li>Knowing about native programming for android and objective C/ swift is an advantage.</li></ul>"}',
-    lowestWage: '465',
-    highestWage: '1800',
-    description:
-      '{"<ul><li>Work as part of a team to build React Native iOS / Android applications.</li><li>Build reusable components for application with near pixel-perfect design.</li><li>Collaborate with a professional team through Scrum meetings every day.</li><li>Improve &amp; Maintain applications with clean code.</li></ul>"}',
-    type: 'FULLTIME',
-    experience: '2',
-    slug: 'react-native-dev-(ios-android)~1200dollar-1602779346604',
-    deadline: '2020-09-16',
-    expirationDate: false,
-    user: {
-      createdat: '2020-10-15T16:28:48.286Z',
-      updatedat: '2020-10-15T16:28:48.286Z',
-      deletedat: null,
-      id: '697b4ee1-0a7a-453b-b9a0-3f5dd4032ddb',
-      email: 'Heidi99@gmail.com',
-      active: true,
-      roleId: 4,
-      profile: {
-        createdat: '2020-10-15T16:28:47.960Z',
-        updatedat: '2020-10-15T16:28:47.960Z',
-        deletedat: null,
-        id: '1fcb301f-f75f-491b-93c3-b0ac84d1d284',
-        profileUrl:
-          'https://cdn.itviec.com/employers/cloud-technology/logo/w170/QnhXEmpzHa9LYBPgBbfzZx6K/Logo%20Cloud%20Technology_002_cr.jpg',
-        pageURL: null,
-        cvURL: null,
-        name: 'Cloud Technology',
-        introduction: 'What makes you special',
-        phone: null,
-        experience: null,
-        quantity: null,
-      },
-    },
-  },
-];
 
-class ViewScreen extends PureComponent {
+interface Props {
+  getList: () => any;
+  myRecentlyJob: any;
+}
+
+class ViewScreen extends PureComponent<Props, any> {
+  componentDidMount() {
+    const { getList } = this.props;
+    getList();
+  }
+
   renderListJob = ({ item }: { item: any }) => {
     let typeJob;
     if (item.type === 'FULLTIME') {
@@ -121,9 +88,11 @@ class ViewScreen extends PureComponent {
     return (
       <TouchableWithoutFeedback
         style={styles.listItem}
-        onPress={() => NavigationService.navigate(rootStack.exploreStack, {
-          screen: exploreStack.applicantscreens,
-        })}
+        onPress={() =>
+          NavigationService.navigate(rootStack.exploreStack, {
+            screen: exploreStack.applicantscreens,
+          })
+        }
       >
         <QuickView>
           <QuickView row justifyContent="space-between">
@@ -187,22 +156,28 @@ class ViewScreen extends PureComponent {
   };
 
   render() {
+    const {
+      myRecentlyJob: { metadata },
+    } = this.props;
+
     return (
       <Container>
         <QuickView>
-          <FlatList
-            data={jobsSaved}
-            style={styles.listItem}
-            renderItem={this.renderListJob}
-          />
+          <FlatList data={metadata} renderItem={this.renderListJob} />
         </QuickView>
       </Container>
     );
   }
 }
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => {
+  return {
+    myRecentlyJob: state.myJobs.toJS().LIST_RECENTLY,
+  };
+};
 
-const mapDispatchToProps = (dispatch: any) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+  getList: () => dispatch(myJobsGetRecently({})),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewScreen);

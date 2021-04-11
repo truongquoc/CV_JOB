@@ -19,7 +19,8 @@ import NavigationService from '@utils/navigation';
 import { lightPrimaryColor } from '@themes/ThemeComponent/Common/Color';
 import Geolocation from '@react-native-community/geolocation';
 import { Icon } from 'react-native-elements';
-
+import { myJobsGetNearest } from '../../../MyJobs/redux/slice';
+import { info } from 'console';
 const LATITUDE = 16.06375;
 const LONGITUDE = 108.17969;
 const coordinates = [
@@ -59,7 +60,9 @@ const coordinates = [
     price: 950000,
   },
 ];
-interface Props {}
+interface Props {
+  getList: any;
+}
 interface State {
   markers: any;
   propertyIndex: number;
@@ -69,8 +72,15 @@ class MapScreen extends PureComponent<Props, State> {
 
   map: any;
 
-  componentDidMount() {
-    Geolocation.getCurrentPosition((info) => console.log('infor', info));
+  async componentDidMount() {
+    const { getList } = this.props;
+    // await Geolocation.getCurrentPosition((info) => {
+    //   getList({
+    //     lat: info.coords.latitude,
+    //     long: info.coords.longitude,
+    //     distance: 10,
+    //   });
+    // });
   }
 
   constructor(props: Props) {
@@ -275,6 +285,8 @@ class MapScreen extends PureComponent<Props, State> {
 
 const mapStateToProps = (state: any) => ({});
 
-const mapDispatchToProps = (dispatch: any) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+  getList: (data: any) => dispatch(myJobsGetNearest({ data })),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);

@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 export default function MoreStack() {
   return (
     <Stack.Navigator headerMode="none">
-      <Stack.Screen name={moreStack.index} component={MoreScreen} />
+      {/* <Stack.Screen name={moreStack.index} component={MoreScreen} /> */}
       <Stack.Screen name={moreStack.mapScreen} component={MapScreen} />
     </Stack.Navigator>
   );

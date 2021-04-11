@@ -15,12 +15,14 @@ import axios from 'axios';
 import NavigationService from '@utils/navigation';
 import { profileGetDetail } from '@contents/Main/containers/Profile/redux/slice';
 import { TQuery } from '@utils/redux';
+import { myJobsGetApplied } from '@contents/Main/containers/MyJobs/redux/slice';
 
 interface Props {
   appliesJob: (id: string) => any;
   id: any;
   profile: any;
   getDetailProfile: any;
+  getListApplied: any;
 }
 
 interface State {}
@@ -34,6 +36,7 @@ class ApplyScreen extends PureComponent<Props, State> {
     const {
       appliesJob,
       profile: { data },
+      getListApplied,
     } = this.props;
 
     return (
@@ -101,11 +104,16 @@ class ApplyScreen extends PureComponent<Props, State> {
                     },
                   },
                 );
+                getListApplied();
                 NavigationService.goBack();
               } else {
                 try {
                   const respnse = await DocumentPicker.pick({
-                    type: [DocumentPicker.types.images],
+                    type: [
+                      DocumentPicker.types.pdf,
+                      DocumentPicker.types.docx,
+                      DocumentPicker.types.zip,
+                    ],
                   });
                   const image: any = {
                     uri: respnse.uri,
@@ -162,6 +170,7 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   appliesJob: (id: string) => dispatch(jobApplies({ id })),
   getDetailProfile: (query?: TQuery) => dispatch(profileGetDetail({ query })),
+  getListApplied: () => dispatch(myJobsGetApplied({})),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplyScreen as any);
